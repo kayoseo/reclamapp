@@ -1,0 +1,63 @@
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Fecha</th>
+      <th scope="col">Transcurrido</th>
+      <th scope="col">Comunidad</th>
+      <th scope="col">Torre</th>
+      <th scope="col">Dirección</th>
+      <th scope="col">Residente</th>
+      <th scope="col">Descripción</th>
+      <th scope="col">Estado</th>
+      <th scope="col">Solucion</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let reclamo of reclamos;let indice=index" (click)="mostrarDetalle(indice)">
+      <th>{{reclamo.numero}}</th>
+      <td>Mi 5 Oct 14:50</td>
+      <td>{{reclamo.tiempoTranscurrido}}</td>
+      <td>
+        <div class="form-group col-md-12 col-xl-12 col-xs-12">
+          <select id="inputState" class="form-control">
+            <option selected>""</option>
+          </select>
+        </div>
+      </td>
+      <td>
+        <div class="form-group col-md-12 col-xl-12 col-xs-12">
+          <select id="inputState" class="form-control">
+            <option selected>""</option>
+          </select>
+        </div>
+      </td>
+      <td>{{reclamo.torreDpto}}</td>
+      <td>{{reclamo.residente}}</td>
+      <td>{{reclamo.descripcion}}</td>
+      <td>
+        <div class="form-group col-md-12 col-xl-12 col-xs-12">
+          <select id="inputState" class="form-control">
+            <option selected>{{reclamo.estado}}</option>
+            <option *ngIf="reclamo.estado!='En proceso'">En proceso</option>
+            <option *ngIf="reclamo.estado!='Externo'">Externo</option>
+            <option *ngIf="reclamo.estado!='Finalizado'">Finalizado</option>
+          </select>
+        </div>
+      </td>
+      <td>
+        <div class="form-group">
+          <input type="text" class="form-control" id="exampleFormControlInput1">
+        </div>
+      </td>
+      <button type="button" class="btn btn-primary">Actualizar</button>
+    </tr>
+  </tbody>
+</table>
+
+<table *ngIf="indices>=0">
+  <h2>
+    {{reclamos[indices].numero}}
+  </h2>
+</table>
+
