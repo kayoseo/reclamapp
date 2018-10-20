@@ -10,16 +10,16 @@
   <div class="row">
     <div class="col-md-12">
       <ul class="nav nav-pills nav-stacked">
-        <li [ngStyle]="opcion=='nada'&& {'background-color':'blue'}"><a ><i class="fa fa-home fa-fw"></i>Home</a></li>
-        <li [ngStyle]="opcion=='admin' && {'background-color':'blue'}" (click)="cambiarOp('admin')"><a><i   class="fas fa-plus-circle"></i>Administrador</a></li>
-        <li [ngStyle]="opcion=='comu' && {'background-color':'blue'}" (click)="cambiarOp('comu')"><a><i   class="fas fa-building"></i>Comunidad</a></li>
+        <li [ngStyle]="opcion=='nada'&& {'background-color':'blue','color':'white', 'border-radius':'10px'}"><a ><i class="fa fa-home fa-fw"></i>Home</a></li>
+        <li [ngStyle]="opcion=='admin' && {'background-color':'blue','color':'white', 'border-radius':'10px'}" (click)="cambiarOp('admin')"><a><i   class="fas fa-plus-circle"></i>Administrador</a></li>
+        <li [ngStyle]="opcion=='comu' && {'background-color':'blue','color':'white', 'border-radius':'10px'}" (click)="cambiarOp('comu')"><a><i   class="fas fa-building"></i>Comunidad</a></li>
       </ul>
     </div>
     <div class="col-md-6 ">
       <ul class="nav nav-pills nav-stacked">
-        <li [ngStyle]="accion=='nuevo'&& {'background-color':'blue','font color':'blue'} " (click)="cambiarAc('nuevo')"><a><i   class="fas fa-plus-circle"></i>Nuevo</a></li>
-        <li [ngStyle]="accion=='editar'&& {'background-color':'blue'}" (click)="cambiarAc('editar')"><a><i   class="fas fa-edit"></i>Editar</a></li>
-        <li [ngStyle]="accion=='eliminar'&& {'background-color':'blue'}" (click)="cambiarAc('eliminar')"><a><i   class="fas fa-trash-alt"></i>Eliminar</a></li>
+        <li [ngStyle]="accion=='nuevo'&& {'background-color':'blue','color':'white', 'border-radius':'10px'} " (click)="cambiarAc('nuevo')"><a><i   class="fas fa-plus-circle"></i>Nuevo</a></li>
+        <li [ngStyle]="accion=='editar'&& {'background-color':'blue','color':'white', 'border-radius':'10px'}" (click)="cambiarAc('editar')"><a><i   class="fas fa-edit"></i>Editar</a></li>
+        <li [ngStyle]="accion=='eliminar'&& {'background-color':'blue','color':'white', 'border-radius':'10px'}" (click)="cambiarAc('eliminar')"><a><i   class="fas fa-trash-alt"></i>Eliminar</a></li>
       </ul>
     </div>
   </div>
