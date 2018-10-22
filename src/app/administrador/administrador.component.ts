@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Reclamos} from '../PlantillaReclamos/reclamos';
+import {Reclamos} from '../Plantilla/reclamos';
 
 @Component({
   selector: 'app-administrador',

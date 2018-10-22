@@ -14,6 +14,7 @@ import {SecretariaComponent} from "./secretaria/secretaria.component";
 const appRoutes: Routes= [
     {path: '',component: ReclamoComponent},
     {path: 'verReclamo',component: VerReclamoComponent},
+    {path: 'verReclamo/:numero',component: VerReclamoComponent},
     {path: 'administrador',component: AdministradorComponent},
     {path: 'login',component: LoginComponent},
     {path: 'gerente',component: GerenteComponent},

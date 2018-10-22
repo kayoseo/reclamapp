@@ -3,7 +3,7 @@
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz"
   crossorigin="anonymous">
-<!------ Include the above in your HEAD tag ---------->
+
 
 <!--menu horizontal-->
 <div class="container">
@@ -28,7 +28,7 @@
 <!--
   Comunidad
 -->
-
+<div id="formulario">
 <!--Nueva comunidad-->
 <div *ngIf="opcion=='comu'&&accion=='nuevo'" id=NuevaComun>
   <h3>Nueva Comunidad</h3>
@@ -161,4 +161,6 @@
     <input type="password" class="form-control" id="exampleFormControlInput1">
   </div>
   <button type="button" class="btn btn-primary">Editar</button>
+</div>
+
 </div>

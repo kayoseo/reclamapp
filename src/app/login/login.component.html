@@ -1,36 +1,31 @@
-<div>
-<p>Presione el tipo de usuario</p>
-<button type="submit" class="btn btn-default login-popup-btn" (click)="SelectUsuario('admin')" >Administrador</button>
-<br>
-<button type="submit" class="btn btn-default login-popup-btn" (click)="SelectUsuario('gerente')" >Gerente</button>
-<br>
-<button type="submit" class="btn btn-default login-popup-btn"  (click)="SelectUsuario('secretaria')">Secretaria</button>
-</div>
-
+<!--https://bootsnipp.com/snippets/350np-->
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <!------ Include the above in your HEAD tag ---------->
 
 <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+
+
+
+
 <div class="login-popup-wrap new_login_popup">
   <div class="login-popup-heading text-center">
     <h4><i class="fa fa-lock" aria-hidden="true"></i> Login </h4>
   </div>
-  <!--<form accept-charset="utf-8" method="post" action="">-->
-  <form id="loginMember" role="form" action="" method="post">
+  <form #formLogin="ngForm" >
     <div class="form-group">
-      <input type="text" class="form-control" id="user_id" placeholder="Correo" name="user_id">
+      <input type="text" class="form-control" id="user_id" placeholder="Correo" name="usuario" #usuario="ngModel" [(ngModel)]="acceso.usuario">
     </div>
     <div class="form-group">
-      <input type="password" class="form-control" id="password" placeholder="Contraseña" name="password">
+      <input type="password" class="form-control" id="password" placeholder="Contraseña" name="clave" #clave="ngModel" [(ngModel)]="acceso.clave">
     </div>
-    <button *ngIf="usuario=='admin'" [routerLink]="'/administrador'" type="submit" class="btn btn-default login-popup-btn" name="submit" value="1">Login</button>
-    <button *ngIf="usuario=='gerente'" [routerLink]="'/gerente'" type="submit" class="btn btn-default login-popup-btn" name="submit" value="1">Login</button>
-    <button *ngIf="usuario=='secretaria'" [routerLink]="'/secretaria'" type="submit" class="btn btn-default login-popup-btn" name="submit" value="1">Login</button>
+    <button  [routerLink]="'/administrador'" type="submit" class="btn btn-default login-popup-btn" name="submit" value="1">Login como Admin</button>
+    <button  [routerLink]="'/gerente'" type="submit" class="btn btn-default login-popup-btn" name="submit" value="1">Login como gerente</button>
+    <button  [routerLink]="'/secretaria'" type="submit" class="btn btn-default login-popup-btn" name="submit" value="1">Login como secretaria</button>
   </form>
   
   
 </div>
 
-<!--https://bootsnipp.com/snippets/350np-->

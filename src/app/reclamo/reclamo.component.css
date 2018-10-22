@@ -7,3 +7,16 @@
 {
     margin-left:  20px;
 }
+
+
+#formulario {
+    border-radius: 2px;
+    min-height: 332px;
+    width: 500px;
+    margin: 0px auto;
+}
+ 
+a{
+     color: #258b47;
+     font-size: 18px;
+}

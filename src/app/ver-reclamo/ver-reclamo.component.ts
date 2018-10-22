@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute, Params } from '@angular/router';
+
 
 @Component({
   selector: 'app-ver-reclamo',
@@ -7,9 +9,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class VerReclamoComponent implements OnInit {
 
-  constructor() { }
+  public id_reclamo:string;
+  constructor(private _route: ActivatedRoute, 
+    private _router: Router
+  ) {
+
+
+  }
 
   ngOnInit() {
+    this._route.params.subscribe((params: Params) =>{
+      this.id_reclamo=params.nombre;
+      console.log(this.id_reclamo);
+    });
   }
 
 }
