@@ -34,21 +34,22 @@
     </div>
   </div>
   <div class="form-group">
-    <label for="adiministrador">Administrador</label>
+    <label for="adiministrador">Administrador de su comunidad</label>
     <select class="form-control" name="administrador" #administrador="ngModel" [(ngModel)]="reclamoForm.administrador" required>
       <option>Sergio Román</option>
       <option></option>
       <option></option>
       <option></option>
-      <option></option>
+      <option>No me se el nombre del administrador</option>
     </select>
+    <p>**En caso de no conocer el nombre de su administrador pinche "Desconosco el nombre del Administrador"</p>
     <div class="alert alert-danger" *ngIf="administrador.touched && !administrador.valid">
       <strong>¡Error!</strong> Campo obligatorio
     </div>
   </div>
 
   <div class="form-group">
-    <label for="direccion">Dirección</label>
+    <label for="direccion">Dirección de su comunidad</label>
     <input type="text" class="form-control" name="direccion" #direccion="ngModel" [(ngModel)]="reclamoForm.direccion" placeholder="Ejercito 441 Torre A dpto 550"  required>
     
     <div class="alert alert-danger" *ngIf="direccion.touched && !direccion.valid">

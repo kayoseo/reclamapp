@@ -4,8 +4,6 @@ import {FormsModule} from '@angular/forms';
 import {routing,appRoutingProviders} from './app.routing';
 
 import { AppComponent } from './app.component';
-import { NuevoadminComponent } from "./nuevoAdmin/nuevoAdmin.component";
-import { ComunidadComponent } from './comunidad/comunidad.component';
 import { AdministradorComponent } from './administrador/administrador.component';
 import { ReclamoComponent } from './reclamo/reclamo.component';
 import { VerReclamoComponent } from './ver-reclamo/ver-reclamo.component';
@@ -16,8 +14,6 @@ import { SecretariaComponent } from './secretaria/secretaria.component';
 @NgModule({
   declarations: [
     AppComponent,
-    NuevoadminComponent,
-    ComunidadComponent,
     AdministradorComponent,
     ReclamoComponent,
     VerReclamoComponent,

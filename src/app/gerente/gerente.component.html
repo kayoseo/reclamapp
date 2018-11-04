@@ -11,7 +11,7 @@
     <div class="col-md-12">
       <ul class="nav nav-pills nav-stacked">
         <li [ngStyle]="opcion=='nada'&& {'background-color':'blue','color':'white', 'border-radius':'10px'}"><a ><i class="fa fa-home fa-fw"></i>Home</a></li>
-        <li [ngStyle]="opcion=='admin' && {'background-color':'blue','color':'white', 'border-radius':'10px'}" (click)="cambiarOp('admin')"><a><i   class="fas fa-plus-circle"></i>Administrador</a></li>
+        <li [ngStyle]="opcion=='admin' && {'background-color':'blue','color':'white', 'border-radius':'10px'}" (click)="cambiarOp('admin')"><a><i   class="fas fa-user-tie"></i>Administrador</a></li>
         <li [ngStyle]="opcion=='comu' && {'background-color':'blue','color':'white', 'border-radius':'10px'}" (click)="cambiarOp('comu')"><a><i   class="fas fa-building"></i>Comunidad</a></li>
       </ul>
     </div>
@@ -31,46 +31,62 @@
 <div id="formulario">
 <!--Nueva comunidad-->
 <div *ngIf="opcion=='comu'&&accion=='nuevo'" id=NuevaComun>
-  <h3>Nueva Comunidad</h3>
-  <form>
+    <div class="login-popup-wrap new_login_popup">
+        <div class="login-popup-heading text-center">
+          <h4><i class="fas fa-building" aria-hidden="true"></i> Nueva</h4>
+        </div>
+        </div>
+  <form #formComunidad="ngForm"  id="formulario1" (ngSubmit)="onSubmit()">
     <div class="form-group">
       <label for="exampleFormControlInput1">Nombre de la comunidad</label>
-      <input type="text" class="form-control" id="exampleFormControlInput1">
+      <input type="text" class="form-control" name="nombre" required>
+      <div class="alert alert-danger" *ngIf="nombre.touched && !nombre.valid">
+        <strong>¡Error!</strong> Campo obligatorio
+      </div>
     </div>
     <div class="form-group">
       <label for="exampleFormControlInput1">Dirección</label>
-      <input type="text" class="form-control" id="exampleFormControlInput1">
+      <input type="text" class="form-control" name="direccion" required>
+      <div class="alert alert-danger" *ngIf="direccion.touched && !direccion.valid">
+        <strong>¡Error!</strong> Campo obligatorio
+      </div>
     </div>
     <div class="form-group">
       <label for="exampleFormControlSelect1">Administrador</label>
-      <select class="form-control" id="exampleFormControlSelect1">
+      <select class="form-control" name="administrador" required>
         <option>Sergio Román</option>
         <option>Manuel Montt</option>
         <option>Ejercito</option>
       </select>
+      <div class="alert alert-danger" *ngIf="administrador.touched && !administrador.valid">
+        <strong>¡Error!</strong> Campo obligatorio
+      </div>
     </div>
     <div class="form-group">
       <label for="exampleFormControlInput1">Numero de Edificios</label>
-      <input type="number" class="form-control" id="exampleFormControlInput1" value="2">
+      <input type="number" class="form-control" [(ngModel)]="numeros" value="2">
+ 
     </div>
-    <div id="nombreEdificios">
+    {{numeros}}
+    <div id="nombreEdificios" >
       <div class="form-group">
         <label for="exampleFormControlInput1">Nombre edificio 1</label>
         <input type="" class="form-control" id="exampleFormControlInput1" placeholder="Torre A">
       </div>
-      <div class="form-group">
-        <label for="exampleFormControlInput1">Nombre edificio 2</label>
-        <input type="" class="form-control" id="exampleFormControlInput1" placeholder="Torre B">
-      </div>
     </div>
+    <button type="button" class="btn btn-primary">Crear</button>
   </form>
-  <button type="button" class="btn btn-primary">Crear</button>
+  
 </div>
 
 
   <!--Editar comunidad-->
   <div id="editar" *ngIf="opcion=='comu'&&accion=='editar'">
-    <h2>Editar comunidad</h2>
+      <div class="login-popup-wrap new_login_popup">
+          <div class="login-popup-heading text-center">
+            <h4><i class="fas fa-building" aria-hidden="true"></i> Editar</h4>
+          </div>
+          </div>
     <div class="form-group">
       <label for="exampleFormControlSelect1">Comunidad</label>
       <select class="form-control" id="exampleFormControlSelect1">
@@ -93,7 +109,11 @@
 
 <!--Eliminar comunidad-->
 <div *ngIf="opcion=='comu'&&accion=='eliminar'">
-  <h2>Eliminar comunidad</h2>
+    <div class="login-popup-wrap new_login_popup">
+        <div class="login-popup-heading text-center">
+          <h4><i class="fas fa-building" aria-hidden="true"></i> Eliminar</h4>
+        </div>
+        </div>
   <div class="form-group">
     <label for="exampleFormControlSelect1">Comunidad</label>
     <select class="form-control" id="exampleFormControlSelect1">
@@ -111,27 +131,44 @@
 
 <!--Agregar Administrador-->
 <div id="agregarAdministrador" *ngIf="opcion=='admin'&&accion=='nuevo'">
-  <h2>Nuevo administrador</h2>
-  <form>
+    <div class="login-popup-wrap new_login_popup">
+        <div class="login-popup-heading text-center">
+          <h4><i class="fas fa-user-tie" aria-hidden="true"></i> Nuevo</h4>
+        </div>
+        </div>
+  <form #formAdministrador="ngForm"  id="formulario" (ngSubmit)="onSubmit()">
     <div class="form-group">
       <label for="exampleFormControlInput1">Nombre</label>
-      <input type="text" class="form-control" id="exampleFormControlInput1">
+      <input type="text" class="form-control" name="nombre" #nombre="ngModel" [(ngModel)]="nuevoAdmin.nombre" required>
+      <div class="alert alert-danger" *ngIf="nombre.touched && !nombre.valid">
+        <strong>¡Error!</strong> Campo obligatorio
+      </div>
     </div>
     <div class="form-group">
       <label for="exampleFormControlInput1">Mail</label>
-      <input type="text" class="form-control" id="exampleFormControlInput1">
+      <input type="text" class="form-control" name="mail" #mail="ngModel" [(ngModel)]="nuevoAdmin.mail" required>
+      <div class="alert alert-danger" *ngIf="mail.touched && !mail.valid">
+        <strong>¡Error!</strong> Campo obligatorio
+      </div>
     </div>
     <div class="form-group">
       <label for="exampleFormControlInput1">Contraseña</label>
-      <input type="password" class="form-control" id="exampleFormControlInput1">
+      <input type="password" class="form-control" name="clave" #clave="ngModel" [(ngModel)]="nuevoAdmin.clave" required>
+      <div class="alert alert-danger" *ngIf="clave.touched && !clave.valid">
+        <strong>¡Error!</strong> Campo obligatorio
+      </div>
     </div>
-
+    <button type="button" class="btn btn-primary">Agregar</button>
   </form>
-  <button type="button" class="btn btn-primary">Agregar</button>
+  
 </div>
 <!--BorrarAdministrador-->
 <div id="eliminar" *ngIf="opcion=='admin'&&accion=='eliminar'">
-  <h2>Eliminar administrador</h2>
+    <div class="login-popup-wrap new_login_popup">
+        <div class="login-popup-heading text-center">
+          <h4><i class="fas fa-user-tie" aria-hidden="true"></i> Eliminar</h4>
+        </div>
+        </div>
   <div class="form-group">
     <label for="exampleFormControlSelect1">Administrador</label>
     <select class="form-control" id="exampleFormControlSelect1">
@@ -144,7 +181,11 @@
 
 <!--Editar Administrador-->
 <div id="editar" *ngIf="opcion=='admin'&&accion=='editar'">
-  <h2>Editar administrador</h2>
+    <div class="login-popup-wrap new_login_popup">
+        <div class="login-popup-heading text-center">
+          <h4><i class="fas fa-user-tie" aria-hidden="true"></i> Editar</h4>
+        </div>
+        </div>
   <div class="form-group">
     <label for="exampleFormControlSelect1">Administrador</label>
     <select class="form-control" id="exampleFormControlSelect1">
