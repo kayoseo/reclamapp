@@ -3,7 +3,7 @@ export class Comunidad{
         public nombre:string,
         public direccion: string,
         public administrador: string,
-        public torreDpto:object[],
+        public torreDpto:any[],
         
     )
     {}

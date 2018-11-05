@@ -14,8 +14,8 @@
 <form #formReclamo="ngForm"  id="formulario" (ngSubmit)="onSubmit()">
   <div class="form-group">
     <label for="nombre">Nombre</label>
-    <input type="text" class="form-control" name="nombre" #nombre="ngModel" [(ngModel)]="reclamoForm.nombre" required>
-    <div class="alert alert-danger" *ngIf="nombre.touched && !nombre.valid">
+    <input type="text" class="form-control" name="nombres" #nombres="ngModel" [(ngModel)]="reclamoForm.nombre" required>
+    <div class="alert alert-danger" *ngIf="nombres.touched && !nombres.valid">
       <strong>¡Error!</strong> Campo obligatorio
     </div>
   </div>

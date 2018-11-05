@@ -3,6 +3,7 @@ import {Administrador} from '../Plantilla/administrador';
 import {Comunidad} from '../Plantilla/comunidad';
 import { AdministradorComponent } from '../administrador/administrador.component';
 
+
 @Component({
   selector: 'app-gerente',
   templateUrl: './gerente.component.html',
@@ -13,13 +14,16 @@ public opcion:string;
 public accion:string;
 public nuevoAdmin: Administrador;
 public nuevaComun:Comunidad;
+//public nuevoEdificio:any;
+public repetir:any;
 public numeros:number;
   constructor() { 
+
     this.opcion='nada';
     this.accion='nada';
     this.nuevoAdmin=new Administrador('','','');
     this.nuevaComun=new Comunidad('','','',[]);
-    this.numeros=1;
+    //this.nuevoEdificio=new Array('');
   }
 
   ngOnInit() {
@@ -37,6 +41,16 @@ public numeros:number;
   }
 
   onSubmit()
-  {}
+  {
+    console.log(this.nuevoAdmin);
+    //console.log(this.nuevoEdificio);
+    console.log(this.nuevaComun);
+  }
+
+  asignar(numeross)
+  {
+    this.numeros=numeross;
+    this.repetir=new Array(this.numeros);
+  }
 
 }
