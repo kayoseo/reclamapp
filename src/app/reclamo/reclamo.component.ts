@@ -11,12 +11,22 @@ export class ReclamoComponent implements OnInit {
   public reclamoForm: Reclamos;
   public buscador: Numero;
   public fecha:Date;
-  public numero:number;
+  public numero:string;
   public buscar:number;
 
+
   constructor() { 
-    this.numero;
-    this.fecha=new Date();
+    
+    this.fecha=new Date();//creando el numero de reclamo
+    var año=this.fecha.getFullYear();
+    var mes=this.fecha.getMonth()+1;
+    var dia=this.fecha.getDate();
+    var minutos=this.fecha.getMinutes();
+    var segundos=this.fecha.getSeconds();
+    var mili=this.fecha.getMilliseconds();
+    this.numero=mes+""+año+""+""+dia+""+minutos+""+mili+""+segundos;
+    //hasta aquí
+    
     this.reclamoForm=new Reclamos(this.numero,this.fecha,'','','','','','','','');
   this.buscador=new Numero('');
   }

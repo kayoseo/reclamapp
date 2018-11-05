@@ -1,6 +1,6 @@
 export class Reclamos{
     constructor(
-        public numero:number,
+        public numero:string,
         public fecha: Date,
         public nombre:string, //nombre residente
         public telefono:string,
