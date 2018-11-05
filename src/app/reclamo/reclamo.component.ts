@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import {Reclamos} from '../Plantilla/reclamosformulario';
 import {Numero} from '../Plantilla/buscar';
+import {ReclamoService} from '../services/reclamo.service';
 
 @Component({
   selector: 'app-reclamo',
   templateUrl: './reclamo.component.html',
-  styleUrls: ['./reclamo.component.css']
+  styleUrls: ['./reclamo.component.css'],
+  providers:[ReclamoService]
 })
 export class ReclamoComponent implements OnInit {
   public reclamoForm: Reclamos;
@@ -14,8 +16,10 @@ export class ReclamoComponent implements OnInit {
   public numero:string;
   public buscar:number;
 
+  public user:any;
 
-  constructor() { 
+
+  constructor(private _reclamoService:ReclamoService) { 
     
     this.fecha=new Date();//creando el numero de reclamo
     var año=this.fecha.getFullYear();
@@ -29,14 +33,25 @@ export class ReclamoComponent implements OnInit {
     
     this.reclamoForm=new Reclamos(this.numero,this.fecha,'','','','','','','','');
   this.buscador=new Numero('');
+
+  
   }
 
   ngOnInit() {
+  
   }
 
   onSubmit()
   {
     console.log("submit lanzado", this.reclamoForm);
+    this._reclamoService.AddReclamo(this.reclamoForm).subscribe(
+      response => {
+        console.log(response.data);
+      },
+      error=>{
+        console.log(<any>error);
+      }
+    )
   }
   onBuscar()
   {
