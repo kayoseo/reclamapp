@@ -21,7 +21,7 @@ public numeros:number;
 
     this.opcion='nada';
     this.accion='nada';
-    this.nuevoAdmin=new Administrador('','','');
+    this.nuevoAdmin=new Administrador('','','','');
     this.nuevaComun=new Comunidad('','','',[]);
     //this.nuevoEdificio=new Array('');
   }

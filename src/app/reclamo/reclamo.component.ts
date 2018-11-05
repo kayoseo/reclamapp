@@ -17,7 +17,7 @@ export class ReclamoComponent implements OnInit {
   constructor() { 
     this.numero;
     this.fecha=new Date();
-    this.reclamoForm=new Reclamos(this.numero,this.fecha,'','','','','','');
+    this.reclamoForm=new Reclamos(this.numero,this.fecha,'','','','','','','','');
   this.buscador=new Numero('');
   }
 

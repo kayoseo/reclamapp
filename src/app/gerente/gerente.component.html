@@ -166,6 +166,14 @@
         <strong>¡Error!</strong> Campo obligatorio
       </div>
     </div>
+    <div class="form-group">
+      <label >Tipo de usuario</label>
+      <select class="form-control" name="usuario" #usuario="ngModel" [(ngModel)]="nuevoAdmin.usuario" required>
+        <option>Administrador</option>
+        <option>Secretaria</option>
+        <option>Gerente</option>
+      </select>
+    </div>
     <button type="submit"  [disabled]="!formAdministrador.valid" class="btn btn-primary">Agregar</button>
   </form>
   

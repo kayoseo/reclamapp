@@ -3,8 +3,8 @@ export class Comunidad{
         public nombre:string,
         public direccion: string,
         public administrador: string,
-        public torreDpto:any[],
-        
+        public torreDpto:any[],  //es un array con el nombre 
+                                //de las torres que tiene
     )
     {}
 }
