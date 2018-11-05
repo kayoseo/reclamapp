@@ -11,7 +11,7 @@
 </nav>
 
 
-<form #formReclamo="ngForm"  id="formulario" (ngSubmit)="onSubmit()">
+<form #formReclamo="ngForm"  id="formulario" (ngSubmit)="onSubmit(formReclamo)" *ngIf="mostrarForm==true">
   <div class="form-group">
     <label for="nombre">Nombre</label>
     <input type="text" class="form-control" name="nombres" #nombres="ngModel" [(ngModel)]="reclamoForm.nombre" required>
@@ -42,7 +42,7 @@
       <option></option>
       <option>Desconocido</option>
     </select>
-    <p>**Si desconoce el administrador marque la opción "Desconocido"</p>
+    <p>**Si desconoce el administrador, seleccione la opción "Desconocido"</p>
     <div class="alert alert-danger" *ngIf="administrador.touched && !administrador.valid">
       <strong>¡Error!</strong> Campo obligatorio
     </div>
@@ -66,3 +66,7 @@
 
   <input type="submit" value="Enviar" [disabled]="!formReclamo.valid"/>
 </form>
+
+<div class="alert alert-success" *ngIf="mostrarForm==false">
+  <strong>Reclamo Enviado</strong> Su numero de reclamo es {{reclamoForm.numero}}
+</div>

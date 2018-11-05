@@ -24,3 +24,12 @@ a{
 p{
     color:#365899
 }
+
+alert-success
+{
+    border-radius: 2px;
+    min-height: 332px;
+    width: 332px;
+    margin: 0px auto;
+    font-size: 18px;
+}

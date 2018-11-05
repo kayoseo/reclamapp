@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Administrador} from '../Plantilla/administrador';
 import {Comunidad} from '../Plantilla/comunidad';
-import { AdministradorComponent } from '../administrador/administrador.component';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 
 
 @Component({
@@ -17,7 +17,10 @@ public nuevaComun:Comunidad;
 //public nuevoEdificio:any;
 public repetir:any;
 public numeros:number;
-  constructor() { 
+
+public rut:string;
+  constructor(private _route: ActivatedRoute, 
+    private _router: Router ) { 
 
     this.opcion='nada';
     this.accion='nada';
@@ -27,6 +30,10 @@ public numeros:number;
   }
 
   ngOnInit() {
+    this._route.params.subscribe((params: Params) =>{
+      this.rut=params.rut;
+      console.log(this.rut);
+    });
   }
 
   cambiarOp(option:string)

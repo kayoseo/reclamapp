@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Reclamos} from '../Plantilla/reclamos';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 
 @Component({
   selector: 'app-administrador',
@@ -12,7 +13,10 @@ export class AdministradorComponent implements OnInit {
   public fechan:any;
   public indices:number;
 
-  constructor() { 
+  public rut:string;
+
+  constructor(private _route: ActivatedRoute, 
+    private _router: Router) { 
      this.fechan=Date.now();
   console.log(this.fechan);
     this.fecha=new Date();
@@ -28,7 +32,10 @@ export class AdministradorComponent implements OnInit {
     console.log("el index es:", this.indices);
   }
   ngOnInit() {
-    
+    this._route.params.subscribe((params: Params) =>{
+      this.rut=params.rut;
+      console.log(this.rut);
+    });
   }
 
 }
