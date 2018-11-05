@@ -15,9 +15,12 @@ const appRoutes: Routes= [
     {path: '',component: ReclamoComponent},
     {path: 'verReclamo',component: VerReclamoComponent},
     {path: 'verReclamo/:numero',component: VerReclamoComponent},
+    {path: 'administrador',component: AdministradorComponent},
     {path: 'administrador/:rut',component: AdministradorComponent},
     {path: 'login',component: LoginComponent},
+    {path: 'gerente',component: GerenteComponent},
     {path: 'gerente/:rut',component: GerenteComponent},
+    {path: 'secretaria',component: SecretariaComponent},
     {path: 'secretaria/:rut',component: SecretariaComponent},
     {path: '**',component: ReclamoComponent}
 ];

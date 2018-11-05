@@ -16,6 +16,8 @@ export class SecretariaComponent implements OnInit {
       this.rut=params.rut;
       console.log(this.rut);
     });
+
+   
   }
 
 }

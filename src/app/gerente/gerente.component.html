@@ -36,7 +36,7 @@
           <h4><i class="fas fa-building" aria-hidden="true"></i> Nueva</h4>
         </div>
         </div>
-  <form #formComunidad="ngForm" id="formulario1" (ngSubmit)="onSubmit()">
+  <form #formComunidad="ngForm" id="formulario1" (ngSubmit)="onComuni(formComunidad)">
     <div class="form-group">
       <label >Nombre de la comunidad</label>
       <input type="text" class="form-control" name="nombre"  #nombre="ngModel" [(ngModel)]="nuevaComun.nombre" required>

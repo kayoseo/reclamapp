@@ -2,12 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import {Administrador} from '../Plantilla/administrador';
 import {Comunidad} from '../Plantilla/comunidad';
 import { Router, ActivatedRoute, Params } from '@angular/router';
+import {ComunidadService} from '../services/comunidad.service';
 
 
 @Component({
   selector: 'app-gerente',
   templateUrl: './gerente.component.html',
-  styleUrls: ['./gerente.component.css']
+  styleUrls: ['./gerente.component.css'],
+  providers:[ComunidadService]
 })
 export class GerenteComponent implements OnInit {
 public opcion:string;
@@ -19,14 +21,30 @@ public repetir:any;
 public numeros:number;
 
 public rut:string;
+
+public comunidades:any;
+
   constructor(private _route: ActivatedRoute, 
-    private _router: Router ) { 
+    private _router: Router, private _comunidadService:ComunidadService ) { 
 
     this.opcion='nada';
     this.accion='nada';
     this.nuevoAdmin=new Administrador('','','','');
     this.nuevaComun=new Comunidad('','','',[]);
     //this.nuevoEdificio=new Array('');
+
+  //buscando comunidades
+    this._comunidadService.VerComunidades(this.rut).subscribe(
+      response => {
+        console.log(response.data);
+        this.comunidades=response.data;
+      },
+      error=>{
+        console.log(<any>error);
+       
+        
+      }
+    )
   }
 
   ngOnInit() {
@@ -52,6 +70,20 @@ public rut:string;
     console.log(this.nuevoAdmin);
     //console.log(this.nuevoEdificio);
     console.log(this.nuevaComun);
+  }
+
+  onComuni(form)
+  {
+    this._comunidadService.AddComun(this.nuevaComun).subscribe(
+      response => {
+        console.log(response.data);
+      },
+      error=>{
+        console.log(<any>error);
+       
+        
+      }
+    )
   }
 
   asignar(numeross)
