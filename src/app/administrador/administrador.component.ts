@@ -2,12 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import {Reclamos} from '../Plantilla/reclamos';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import {ComunidadService} from '../services/comunidad.service';
+import {ReclamoService} from '../services/reclamo.service';
 
 @Component({
   selector: 'app-administrador',
   templateUrl: './administrador.component.html',
   styleUrls: ['./administrador.component.css'],
-  providers:[ComunidadService]
+  providers:[ComunidadService,ReclamoService]
 })
 export class AdministradorComponent implements OnInit {
   public reclamos: Array<Reclamos>;
@@ -19,15 +20,15 @@ export class AdministradorComponent implements OnInit {
   public comunidades:any;
 
   constructor(private _route: ActivatedRoute, 
-    private _router: Router,private _comunidadService:ComunidadService) { 
+    private _router: Router,private _comunidadService:ComunidadService, private _reclamoService:ReclamoService) { 
      this.fechan=Date.now();
   console.log(this.fechan);
     this.fecha=new Date();
     this.reclamos=[
-      new Reclamos('15547',this.fecha,'12 horas 15 minutos','El Bosque sur','Calle 2 Torre A dpto 502','Jorge','No hay agua caliente','En proceso'),
-      new Reclamos('15547',this.fecha,'2 horas','Los Talas','Calle 43 Torre A dpto 809','Juan Ra','Sin luz','En proceso')
+      new Reclamos('15547',this.fecha,'12 horas 15 minutos','El Bosque sur','Calle 2 Torre A dpto 502','Jorge','No hay agua caliente','En proceso',''),
+      new Reclamos('15547',this.fecha,'2 horas','Los Talas','Calle 43 Torre A dpto 809','Juan Ra','Sin luz','En proceso','')
     ];
-     //buscando comunidades
+//buscando comunidades
      this._comunidadService.VerComunidades(this.rut).subscribe(
       response => {
         console.log(response.data);
@@ -35,10 +36,22 @@ export class AdministradorComponent implements OnInit {
       },
       error=>{
         console.log(<any>error);
-       
-        
       }
     )
+    ///////////////////////
+
+//llamando servio para ver los reclamos asignados al administrador
+    this._reclamoService.VerReclamosAdmin(this.rut).subscribe(
+      response => {
+        console.log(response.data);
+        this.reclamos=response.data;
+      },
+      error=>{
+        console.log(<any>error);
+       }
+    )
+  ////////////////////
+
   }
 
   mostrarDetalle(indice)
@@ -52,5 +65,19 @@ export class AdministradorComponent implements OnInit {
       console.log(this.rut);
     });
   }
-
+ 
+  Actualizar(reclamo:any){
+    console.log(reclamo);
+    this._reclamoService.UpdateReclamo(reclamo).subscribe(
+      response => {
+        console.log(response.data);
+        this.comunidades=response.data;
+      },
+      error=>{
+        console.log(<any>error);
+       
+        
+      }
+    )
+  }
 }

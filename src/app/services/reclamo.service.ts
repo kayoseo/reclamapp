@@ -14,6 +14,10 @@ VerReclamo(id): Observable<any>{
     return this._http.get(this.url+'api/users/'+id);
 }
 
+VerReclamosAdmin(rut): Observable<any>{
+    return this._http.get(this.url+'api/users/'+rut);
+}
+
 AddReclamo(reclamo:any):Observable<any>{
     let params=JSON.stringify(reclamo);
     let headers=new HttpHeaders().set('Content-Type','application/json');

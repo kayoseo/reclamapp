@@ -7,7 +7,8 @@ export class Reclamos{
         public torreDpto:string,
         public residente:string, 
         public descripcion:string,
-        public estado:string
+        public estado:string,
+        public solucion:string
     )
     {}
 }
