@@ -6,7 +6,8 @@ import {ComunidadService} from '../services/comunidad.service';
 @Component({
   selector: 'app-administrador',
   templateUrl: './administrador.component.html',
-  styleUrls: ['./administrador.component.css']
+  styleUrls: ['./administrador.component.css'],
+  providers:[ComunidadService]
 })
 export class AdministradorComponent implements OnInit {
   public reclamos: Array<Reclamos>;
