@@ -25,8 +25,8 @@ export class ReclamoComponent implements OnInit {
 
   constructor(private _reclamoService: ReclamoService, private _administradorService: AdministradorService) {
     this._administradorService.VerAdmin().subscribe(
-      response => {
-        console.log(response.data);
+      request => {
+        console.log(request);
       },
       error => {
         console.log(<any>error);
@@ -34,6 +34,10 @@ export class ReclamoComponent implements OnInit {
 
       }
     )
+
+    //
+    
+    //
     this.mostrarForm = true;
     this.fecha = new Date();//creando el numero de reclamo
     var año = this.fecha.getFullYear();
@@ -46,7 +50,7 @@ export class ReclamoComponent implements OnInit {
     //hasta aquí
 
 
-    this.reclamoForm = new Reclamos(this.numero, this.fecha, '', '', '', '', '', '', '', '');
+    this.reclamoForm = new Reclamos(this.numero, this.fecha, '', '', '', '', '', '', 'kl', 'kl');
     this.buscador = new Numero('');
 
 
@@ -60,7 +64,7 @@ export class ReclamoComponent implements OnInit {
     console.log("submit lanzado", this.reclamoForm);
     this._reclamoService.AddReclamo(this.reclamoForm).subscribe(
       response => {
-        console.log(response.data);
+        console.log(response);
         this.mostrarForm = false;
         this.fecha = new Date();
         //creando el numero de reclamo

@@ -11,7 +11,7 @@ import { VerReclamoComponent } from './ver-reclamo/ver-reclamo.component';
 import { LoginComponent } from './login/login.component';
 import { GerenteComponent } from './gerente/gerente.component';
 import { SecretariaComponent } from './secretaria/secretaria.component';
-
+import {InterceptorModule} from '../app/interceptor.module';
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,7 +26,8 @@ import { SecretariaComponent } from './secretaria/secretaria.component';
     BrowserModule,
     FormsModule,
     routing,
-    HttpClientModule
+    HttpClientModule,
+    InterceptorModule
   ],
   providers: [
     appRoutingProviders

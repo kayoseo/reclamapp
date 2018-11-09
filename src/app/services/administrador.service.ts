@@ -5,10 +5,12 @@ import { Observable } from 'rxjs';
 export class AdministradorService {
     public url: string;
     constructor(public _http: HttpClient) {
-        this.url = "http://reqres.in/";
+        this.url = "http://localhost:80/";
     }
     VerAdmin(): Observable<any> {
-        return this._http.get(this.url + 'api/users/');
+        
+        return this._http.get(this.url+'penguins');
+        
     }
     AddAdmin(administrador: any): Observable<any> {
         let params = JSON.stringify(administrador);
