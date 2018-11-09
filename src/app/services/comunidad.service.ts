@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 export class ComunidadService {
     public url: string;
     constructor(public _http: HttpClient) {
-        this.url = "http://reqres.in/";
+        this.url="http://localhost:3000/";
     }
     VerComunidades(rut): Observable<any> {
         return this._http.get(this.url + 'api/users/' + rut);
