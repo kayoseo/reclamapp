@@ -19,6 +19,10 @@ export class ReclamoService {
         return this._http.get(this.url + 'reclamo/' + rut);
     }
 
+    VerReclamosSecre(): Observable<any> {
+        return this._http.get(this.url + 'desconocido/');
+    }
+
    
 
     AddReclamo(reclamo:any):Observable<any>{
@@ -35,10 +39,10 @@ export class ReclamoService {
         return this._http.delete(this.url + 'reclamo/', { headers: headers });
     }
 
-    UpdateReclamo(reclamo: any): Observable<any> {
+    UpdateReclamo(reclamo): Observable<any> {
         let params = JSON.stringify(reclamo);
         let headers = new HttpHeaders().set('Content-Type', 'application/json');
 
-        return this._http.put(this.url + 'reclamo/', params, { headers: headers });
+        return this._http.put(this.url + 'reclamo/'+reclamo._id, params, { headers: headers });
     }
 }

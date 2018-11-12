@@ -1,17 +1,26 @@
 import { Component, OnInit } from '@angular/core';
-import {Loguearse} from '../Plantilla/userLogin'
+import {Login} from '../Plantilla/login';
+import { UsuarioService } from '../services/usuario.service';
+import { Router,ActivatedRoute,Params } from '@angular/router';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
+  providers: [UsuarioService]
 })
 export class LoginComponent implements OnInit {
   public usuario:string;
-  public acceso: Loguearse;
-  constructor() { 
+  public acceso: Login;
+  public numeroUser:any;
+  public tipoUser:any;
+  public respuesta:any;
+  public alerta:boolean;
+  constructor(private _usuarioService: UsuarioService, private _router:Router) { 
    this.usuario="nada";
-   this.acceso=new Loguearse('','');
+   this.acceso=new Login('','');
+  this.alerta=false;
+
   }
 
   ngOnInit() {
@@ -21,6 +30,48 @@ export class LoginComponent implements OnInit {
   {
 this.usuario=user;
 console.log(this.usuario);
+  }
+
+  Logearse(form)
+  {
+    console.log("submit lanzado", this.acceso);
+    this._usuarioService.Login(this.acceso).subscribe(
+      response => {
+        this.respuesta=response;  
+        console.log(this.respuesta);
+        if(response[0] === undefined )
+        {
+          this.alerta=true;
+        }
+        else
+        {
+        this.numeroUser=response[0]._id;
+        console.log(this.numeroUser);
+        this.tipoUser=response[0].usuario;
+        console.log(this.numeroUser);
+        console.log(this.tipoUser);
+        
+        if(this.tipoUser=="secretaria")
+        {
+        this._router.navigate(['/secretaria/',this.numeroUser]);
+        }
+        if(this.tipoUser=="administrador")
+        {
+        this._router.navigate(['/administrador/',this.numeroUser]);
+        }
+        if(this.tipoUser=="gerente")
+        {
+        this._router.navigate(['/gerente/',this.numeroUser]);
+        }
+        form.reset();
+      }
+      },
+      error => {
+        console.log(<any>error);
+
+
+      }
+    )
   }
 
 }

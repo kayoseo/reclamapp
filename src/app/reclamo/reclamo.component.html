@@ -36,10 +36,8 @@
   <div class="form-group">
     <label for="adiministrador">Administrador de su comunidad</label>
     <select class="form-control" name="administrador" #administrador="ngModel" [(ngModel)]="reclamoForm.administrador" required>
-      <option>Sergio Román</option>
       <option></option>
-      <option></option>
-      <option></option>
+      <option *ngFor="let item of resultado">{{item.nombre}}</option>
       <option>Desconocido</option>
     </select>
     <p>**Si desconoce el administrador, seleccione la opción "Desconocido"</p>

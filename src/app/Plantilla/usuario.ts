@@ -1,4 +1,4 @@
-export class Administrador{
+export class Usuario{
     constructor(
         public nombre:string,
         public mail:string,

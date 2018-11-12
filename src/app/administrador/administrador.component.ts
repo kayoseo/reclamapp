@@ -25,8 +25,8 @@ export class AdministradorComponent implements OnInit {
   console.log(this.fechan);
     this.fecha=new Date();
     this.reclamos=[
-      new Reclamos('15547',this.fecha,'12 horas 15 minutos','El Bosque sur','Calle 2 Torre A dpto 502','Jorge','No hay agua caliente','En proceso',''),
-      new Reclamos('15547',this.fecha,'2 horas','Los Talas','Calle 43 Torre A dpto 809','Juan Ra','Sin luz','En proceso','')
+      new Reclamos('',this.fecha,'','','','','','','',''),
+      new Reclamos('',this.fecha,'','','','','','','','')
     ];
 //buscando comunidades
      this._comunidadService.VerComunidades(this.rut).subscribe(

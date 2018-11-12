@@ -14,18 +14,24 @@
   <div class="login-popup-heading text-center">
     <h4><i class="fa fa-lock" aria-hidden="true"></i> Login </h4>
   </div>
-  <form #formLogin="ngForm" >
+  <form #formLogin="ngForm" (ngSubmit)="Logearse(formLogin)">
     <div class="form-group">
-      <input type="text" class="form-control" id="user_id" placeholder="Correo" name="usuario" #usuario="ngModel" [(ngModel)]="acceso.usuario">
+      <input type="text" class="form-control" id="user_id" placeholder="Correo" name="usuario" #usuario="ngModel" [(ngModel)]="acceso.mail" required>
+      <div class="alert alert-danger" *ngIf="usuario.touched && !usuario.valid">
+        <strong>¡Error!</strong> Campo obligatorio
+      </div>
     </div>
     <div class="form-group">
-      <input type="password" class="form-control" id="password" placeholder="Contraseña" name="clave" #clave="ngModel" [(ngModel)]="acceso.clave">
+      <input type="password" class="form-control" id="password" placeholder="Contraseña" name="clave" #clave="ngModel" [(ngModel)]="acceso.clave" required>
+      <div class="alert alert-danger" *ngIf="clave.touched && !clave.valid">
+        <strong>¡Error!</strong> Campo obligatorio
+      </div>
     </div>
-    <button  [routerLink]="'/administrador'" type="submit" class="btn btn-default login-popup-btn" name="submit" value="1">Login como Admin</button>
-    <button  [routerLink]="'/gerente'" type="submit" class="btn btn-default login-popup-btn" name="submit" value="1">Login como gerente</button>
-    <button  [routerLink]="'/secretaria'" type="submit" class="btn btn-default login-popup-btn" name="submit" value="1">Login como secretaria</button>
+    <input type="submit" value="Iniciar sesión" [disabled]="!formLogin.valid"/>
   </form>
-  
+  <div class="alert alert-danger" *ngIf="alerta==true">
+    <strong>¡Error!</strong> Correo o usuario incorrectos
+  </div>
   
 </div>
 

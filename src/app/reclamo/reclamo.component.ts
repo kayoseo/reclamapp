@@ -2,13 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { Reclamos } from '../Plantilla/reclamosformulario';
 import { Numero } from '../Plantilla/buscar';
 import { ReclamoService } from '../services/reclamo.service';
-import { AdministradorService } from '../services/administrador.service';
+import { UsuarioService } from '../services/usuario.service';
 
 @Component({
   selector: 'app-reclamo',
   templateUrl: './reclamo.component.html',
   styleUrls: ['./reclamo.component.css'],
-  providers: [ReclamoService, AdministradorService]
+  providers: [ReclamoService, UsuarioService]
 })
 export class ReclamoComponent implements OnInit {
   public reclamoForm: Reclamos;
@@ -24,19 +24,20 @@ export class ReclamoComponent implements OnInit {
 
   public numeroReclamo:any;
   public resultado:any;
+  public i:any;
 
 
-  constructor(private _reclamoService: ReclamoService, private _administradorService: AdministradorService) {
-   var i=0;
-    this._administradorService.VerAdmin().subscribe(
+  constructor(private _reclamoService: ReclamoService, private _usuarioService: UsuarioService) {
+   this.i=1;
+    this._usuarioService.VerAdmin().subscribe(
       request => {
         this.resultado=request;
         console.log(request);
-        for(let i;i<this.resultado.length;i++)
+        for(var admin of this.resultado)
         {
-          console.log(i);
-          this.admin[i].push(this.resultado);
-         
+          console.log(admin);
+          this.admin=this.resultado;
+        
       }
         console.log(this.admin);
       },

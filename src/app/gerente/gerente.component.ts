@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {Administrador} from '../Plantilla/administrador';
+import {Usuario} from '../Plantilla/usuario';
 import {Comunidad} from '../Plantilla/comunidad';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import {ComunidadService} from '../services/comunidad.service';
+import { ReclamoService } from '../services/reclamo.service';
+import { UsuarioService } from '../services/usuario.service';
 
 
 @Component({
@@ -14,7 +16,7 @@ import {ComunidadService} from '../services/comunidad.service';
 export class GerenteComponent implements OnInit {
 public opcion:string;
 public accion:string;
-public nuevoAdmin: Administrador;
+public nuevoUsuario: Usuario;
 public nuevaComun:Comunidad;
 //public nuevoEdificio:any;
 public repetir:any;
@@ -29,7 +31,7 @@ public comunidades:any;
 
     this.opcion='nada';
     this.accion='nada';
-    this.nuevoAdmin=new Administrador('','','','');
+    this.nuevoUsuario=new Usuario('','','','');
     this.nuevaComun=new Comunidad('','','',[]);
     //this.nuevoEdificio=new Array('');
 
@@ -67,7 +69,7 @@ public comunidades:any;
 
   onSubmit()
   {
-    console.log(this.nuevoAdmin);
+    console.log(this.nuevoUsuario);
     //console.log(this.nuevoEdificio);
     console.log(this.nuevaComun);
   }

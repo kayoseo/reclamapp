@@ -27,7 +27,7 @@ export class VerReclamoComponent implements OnInit {
     });
     this._reclamoService.VerReclamo(this.id_reclamo).subscribe(
       result => {
-        this.reclamo=result.data;
+        this.reclamo=result;
         console.log(this.reclamo);
       },
       error=>{
