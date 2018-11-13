@@ -4,8 +4,8 @@
 <nav class="navbar navbar-light bg-light">
   <a class="navbar-brand"></a>
   <form class="form-inline" #formBuscar="ngForm" >
-    <input class="form-control mr-sm-2" type="search" placeholder="Buscar por nº reclamo" aria-label="Buscar" name="buscar" #buscar="ngModel" [(ngModel)]="buscador.numero">
-    <button [routerLink]="['/verReclamo',buscador.numero]" class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
+    <input class="form-control mr-sm-2" type="search" placeholder="Buscar por nº reclamo" aria-label="Buscar" name="buscar" #buscar="ngModel" [(ngModel)]="buscador.numero" required>
+    <button [routerLink]="['/verReclamo',buscador.numero]" class="btn btn-outline-success my-2 my-sm-0" type="submit" [disabled]="!formBuscar.valid">Buscar</button>
     <button id="iniciar" type="button" class="btn btn-success" [routerLink]="'/login'">Iniciar Sesión</button>
   </form>
 </nav>

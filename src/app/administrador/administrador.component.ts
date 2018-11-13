@@ -96,9 +96,10 @@ export class AdministradorComponent implements OnInit {
   
 Comunidad()
 {
-  /*this.arreglo=["A","B","C","D"];
+  /*
+  this.arreglo=["A","B","C","D"];
   this.comunidades=
-    new Comunidad('El bosque','el bosque sur','giorgio',this.arreglo);
+    new Comunidad('San Bernardo','san bernardo 14','admin 3',this.arreglo);
     
   
   this._comunidadService.AddComun(this.comunidades).subscribe(
@@ -112,6 +113,7 @@ Comunidad()
       
     }
 */
+
 this._comunidadService.VerComunidades(this.nombre).subscribe(
       response => {
         console.log("las comunidades son:",response);
@@ -123,7 +125,7 @@ this._comunidadService.VerComunidades(this.nombre).subscribe(
        }
     )
   
-
+  
 }
 
 Actualizar(item:any)

@@ -1,3 +1,5 @@
+<div>
+  
 <table class="table table-striped">
   <thead>
     <tr>
@@ -12,7 +14,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let reclamo of reclamos" >
+    <tr *ngFor="let reclamo of reclamos"  >
       <td>{{reclamo.fecha}}</td>
       <td></td>
       
@@ -45,7 +47,9 @@
     </tr>
   </tbody>
 </table>
+</div>
 <div class="alert alert-danger" *ngIf="actualizar==false">
   <strong>¡Error!</strong> No se pudo actualizar
 </div>
+
 
