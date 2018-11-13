@@ -13,10 +13,11 @@ export class VerReclamoComponent implements OnInit {
 
   public id_reclamo:string;
   public reclamo:any;
+  public existe:boolean;
   constructor(private _route: ActivatedRoute, 
     private _router: Router,private _reclamoService:ReclamoService
   ) {
-   
+   this.existe=true;
 
   }
 
@@ -32,6 +33,7 @@ export class VerReclamoComponent implements OnInit {
       },
       error=>{
         console.log(<any>error);
+        this.existe=false;
       }
     )
   }

@@ -1,11 +1,9 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <th scope="col">#</th>
       <th scope="col">Fecha</th>
       <th scope="col">Transcurrido</th>
       <th scope="col">Comunidad</th>
-      <th scope="col">Torre</th>
       <th scope="col">Dirección</th>
       <th scope="col">Residente</th>
       <th scope="col">Descripción</th>
@@ -14,28 +12,20 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let reclamo of reclamos;let indice=index" (click)="mostrarDetalle(indice)">
-      <th>{{reclamo.numero}}</th>
-      <td>Mi 5 Oct 14:50</td>
-      <td>{{reclamo.tiempoTranscurrido}}</td>
+    <tr *ngFor="let reclamo of reclamos" >
+      <td>{{reclamo.fecha}}</td>
+      <td></td>
       
       <td>
           <div class="form-group col-md-12 col-xl-12 col-xs-12">
-            <select id="inputState" class="form-control">
-              <option selected>""</option>
+            <select id="inputState" class="form-control"  name="comu" #comu="ngModel" [(ngModel)]="reclamo.comunidad" required>
+              <option selected *ngFor="let item of comunidades">{{item.nombre}}</option>
             </select>
           </div>
       </td>
-      <td>
-        <div class="form-group col-md-12 col-xl-12 col-xs-12">
-          <select id="inputState" class="form-control" name="torre" #torre="ngModel" [(ngModel)]="reclamo.torreDpto" required>
-            <option selected>""</option>
-          </select>
-        </div>
-      </td>
-      <td>{{reclamo.torreDpto}}</td>
-      <td>{{reclamo.residente}}</td>
-      <td>{{reclamo.descripcion}}</td>
+      <td>{{reclamo.direccion}}</td>
+      <td>{{reclamo.nombre}}</td>
+      <td>{{reclamo.problema}}</td>
       <td>
         <div class="form-group col-md-12 col-xl-12 col-xs-12">
           <select id="inputState" class="form-control" name="estado" #estado="ngModel" [(ngModel)]="reclamo.estado" required>
@@ -55,4 +45,7 @@
     </tr>
   </tbody>
 </table>
+<div class="alert alert-danger" *ngIf="actualizar==false">
+  <strong>¡Error!</strong> No se pudo actualizar
+</div>
 

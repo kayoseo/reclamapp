@@ -10,8 +10,8 @@ export class UsuarioService{
     ){
         this.url="http://localhost:3000/";
     }
-VerUsuario(): Observable<any>{
-    return this._http.get(this.url+'usuario');
+VerUsuario(id): Observable<any>{
+    return this._http.get(this.url+'usuario/'+id);
 }
 
 VerAdmin(): Observable<any>{

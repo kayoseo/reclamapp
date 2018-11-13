@@ -66,7 +66,7 @@ export class ReclamoComponent implements OnInit {
 
 
     //this.reclamoForm = new Reclamos(this.numero, this.fecha, '', '', '', '', '', '', 'kl', 'kl');
-    this.reclamoForm = new Reclamos(this.fecha, '', '', '', '', '', '', '', '');
+    this.reclamoForm = new Reclamos(this.fecha,'','', '','', '', '', '', '', '', '');
     this.buscador = new Numero('');
 
 
@@ -98,7 +98,7 @@ export class ReclamoComponent implements OnInit {
         //hasta aquí
 
         //this.reclamoForm = new Reclamos(this.numero, this.fecha, '', '', '', '', '', '', '', '');
-        this.reclamoForm = new Reclamos(this.fecha, '', '', '', '', '', '', '', '');
+        this.reclamoForm = new Reclamos(this.fecha,'','','', '', '', '', '', '', '', '');
         form.reset();
       },
       error => {

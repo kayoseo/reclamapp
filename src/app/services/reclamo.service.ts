@@ -15,8 +15,11 @@ export class ReclamoService {
         return this._http.get(this.url + 'reclamo/' + id);
     }
 
-    VerReclamosAdmin(rut): Observable<any> {
-        return this._http.get(this.url + 'reclamo/' + rut);
+    VerReclamosAdmin(nombre): Observable<any> {
+        let params=JSON.stringify(nombre);
+        console.log("esto va a mandar el servicio",params);
+        let headers=new HttpHeaders().set('Content-Type','application/json');
+        return this._http.post(this.url + 'adminrec',params, {headers:headers});
     }
 
     VerReclamosSecre(): Observable<any> {

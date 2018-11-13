@@ -6,6 +6,8 @@ export class Reclamos{
         public telefono:string,
         public email:string, 
         public administrador:string,
+        public comunidad:string,
+        public torreDpto:string,
         public direccion:string,
         public problema:string,
         public estado:string,
