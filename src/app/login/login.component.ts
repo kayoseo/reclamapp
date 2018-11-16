@@ -34,6 +34,7 @@ console.log(this.usuario);
 
   Logearse(form)
   {
+    this.acceso.mail=this.acceso.mail.toLowerCase();
     console.log("submit lanzado", this.acceso);
     this._usuarioService.Login(this.acceso).subscribe(
       response => {

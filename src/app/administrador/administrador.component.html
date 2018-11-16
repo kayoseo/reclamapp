@@ -1,5 +1,5 @@
-<div>
-  
+<div >
+  <h2 >Asignación de Comunidad pendiente</h2>
 <table class="table table-striped">
   <thead>
     <tr>
@@ -14,8 +14,64 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let reclamo of reclamos"  >
+      <ng-container *ngFor="let reclamo of reclamos">
+    <tr *ngIf="reclamo.comunidad===''" >
       <td>{{reclamo.fecha}}</td>
+      <td></td>
+      
+      <td>
+          <div class="form-group col-md-12 col-xl-12 col-xs-12">
+            <select id="inputState" class="form-control"  name="comu" #comu="ngModel" [(ngModel)]="nombreComunidad" required>
+              <option selected *ngFor="let item of comunidades">{{item.nombre}}</option>
+            </select>
+          </div>
+      </td>
+      <td>{{reclamo.direccion}}</td>
+      <td>{{reclamo.nombre}}</td>
+      <td>{{reclamo.problema}}</td>
+      <td>
+        <div class="form-group col-md-12 col-xl-12 col-xs-12">
+          <select id="inputState" class="form-control" name="estado" #estado="ngModel" [(ngModel)]="reclamo.estado" required>
+            <option selected>{{reclamo.estado}}</option>
+            <option *ngIf="reclamo.estado!='En proceso'">En proceso</option>
+            <option *ngIf="reclamo.estado!='Externo'">Externo</option>
+            <option *ngIf="reclamo.estado!='Finalizado'">Finalizado</option>
+          </select>
+        </div>
+      </td>
+      <td>
+        <div class="form-group">
+          <input type="text" class="form-control" name="solucion" #solucion="ngModel" [(ngModel)]="reclamo.solucion" required>
+        </div>
+      </td>
+      <button type="submit" (click)="Actualizar(reclamo)" class="btn btn-primary">Actualizar</button>
+    </tr>
+  </ng-container>
+  </tbody>
+</table>
+</div>
+
+<div *ngFor="let comunidad of comunidades">
+  <h2 >{{comunidad.nombre}}</h2>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Fecha</th>
+      <th scope="col">Transcurrido</th>
+      <th scope="col">Comunidad</th>
+      <th scope="col">Dirección</th>
+      <th scope="col">Residente</th>
+      <th scope="col">Descripción</th>
+      <th scope="col">Estado</th>
+      <th scope="col">Solucion</th>
+    </tr>
+  </thead>
+  <tbody>
+      <ng-container *ngFor="let reclamo of reclamos">
+     
+    <tr *ngIf="reclamo.comunidad===comunidad.nombre">
+      
+      <td >{{reclamo.fecha}}</td>
       <td></td>
       
       <td>
@@ -45,8 +101,11 @@
       </td>
       <button type="submit" (click)="Actualizar(reclamo)" class="btn btn-primary">Actualizar</button>
     </tr>
+  </ng-container>
+
   </tbody>
 </table>
+
 </div>
 <div class="alert alert-danger" *ngIf="actualizar==false">
   <strong>¡Error!</strong> No se pudo actualizar

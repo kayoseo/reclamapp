@@ -9,6 +9,7 @@ export class ReclamoService {
     constructor(
         public _http: HttpClient
     ) {
+        //this.url="http://192.168.100.6:3000/";
         this.url="http://localhost:3000/";
     }
     VerReclamo(id): Observable<any> {

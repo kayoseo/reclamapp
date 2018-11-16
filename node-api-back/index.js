@@ -172,7 +172,7 @@ app.delete('/reclamodelete', function (req, res) {
 
     // Borra un reclamo
     app.delete('/reclamo/:id', function (req, res) {
-        Reclamo.findById(req.params.id, function (error, reclamo) {
+        Reclamo.findById(req.body.id, function (error, reclamo) {
             if (error) return res.status(500).send(error);
 
             reclamo.remove(function (removingError) {

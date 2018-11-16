@@ -24,6 +24,7 @@ export class AdministradorComponent implements OnInit {
   public nombre:any;
   public arreglo:any;
   public actualizar: boolean;
+  public nombreComunidad:any;
   
 
   constructor(private _route: ActivatedRoute, 
@@ -132,6 +133,7 @@ Actualizar(item:any)
   {
     //this.nuevoReclamo = new Reclamos(item._id,item.fecha,item.nombre,item.telefono,item.email,this.nuevoAdmin,item.direccion,item.problema,item.estado,item.solucion);
 //console.log("el rut es",this.rut);
+item.comunidad=this.nombreComunidad;
     console.log("se presiono el objeto",item);
     
     this._reclamoService. UpdateReclamo(item).subscribe(

@@ -1,100 +1,120 @@
-<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz"
-  crossorigin="anonymous">
+<head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+    crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz"
+    crossorigin="anonymous">
+  <script>$('.dropdown-toggle').dropdown()</script>
+</head>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="btn-group">
+  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+    aria-expanded="false" (click)="cambiarOp('admin')">
+    <i class="fas fa-user-tie"></i>Empleado
+  </button>
+  <div class="dropdown-menu">
+    <a class="dropdown-item" (click)="cambiarAc('nuevo')"><i class="fas fa-plus-circle"></i>Nuevo</a>
+    <a class="dropdown-item" (click)="cambiarAc('editar')"><i class="fas fa-edit"></i>Editar</a>
+    <a class="dropdown-item" (click)="cambiarAc('eliminar')"><i class="fas fa-trash-alt"></i>Eliminar</a>
 
-
-<!--menu horizontal-->
-<div class="container">
-  <div class="row">
-    <div class="col-md-12">
-      <ul class="nav nav-pills nav-stacked">
-        <li [ngStyle]="opcion=='nada'&& {'background-color':'blue','color':'white', 'border-radius':'10px'}"><a ><i class="fa fa-home fa-fw"></i>Home</a></li>
-        <li [ngStyle]="opcion=='admin' && {'background-color':'blue','color':'white', 'border-radius':'10px'}" (click)="cambiarOp('admin')"><a><i   class="fas fa-user-tie"></i>Administrador</a></li>
-        <li [ngStyle]="opcion=='comu' && {'background-color':'blue','color':'white', 'border-radius':'10px'}" (click)="cambiarOp('comu')"><a><i   class="fas fa-building"></i>Comunidad</a></li>
-      </ul>
-    </div>
-    <div class="col-md-6 ">
-      <ul class="nav nav-pills nav-stacked">
-        <li [ngStyle]="accion=='nuevo'&& {'background-color':'blue','color':'white', 'border-radius':'10px'} " (click)="cambiarAc('nuevo')"><a><i   class="fas fa-plus-circle"></i>Nuevo</a></li>
-        <li [ngStyle]="accion=='editar'&& {'background-color':'blue','color':'white', 'border-radius':'10px'}" (click)="cambiarAc('editar')"><a><i   class="fas fa-edit"></i>Editar</a></li>
-        <li [ngStyle]="accion=='eliminar'&& {'background-color':'blue','color':'white', 'border-radius':'10px'}" (click)="cambiarAc('eliminar')"><a><i   class="fas fa-trash-alt"></i>Eliminar</a></li>
-      </ul>
-    </div>
   </div>
 </div>
+<div class="btn-group"> 
+  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+    aria-expanded="false" (click)="cambiarOp('comu')">
+    <i   class="fas fa-building"></i>Comunidad
+  </button>
+  <div class="dropdown-menu">
+    <a class="dropdown-item" (click)="cambiarAc('nuevo')"><i class="fas fa-plus-circle"></i>Nuevo</a>
+    <a class="dropdown-item" (click)="cambiarAc('editar')"><i class="fas fa-edit"></i>Editar</a>
+    <a class="dropdown-item" (click)="cambiarAc('eliminar')"><i class="fas fa-trash-alt"></i>Eliminar</a>
+
+  </div>
+</div>
+
+
+</nav>
+
+
+
 
 <!--
   Comunidad
 -->
 <div id="formulario">
-<!--Nueva comunidad-->
-<div *ngIf="opcion=='comu'&&accion=='nuevo'" id=NuevaComun>
+  <!--Nueva comunidad-->
+  <div *ngIf="opcion=='comu'&&accion=='nuevo'" id=NuevaComun>
     <div class="login-popup-wrap new_login_popup">
-        <div class="login-popup-heading text-center">
-          <h4><i class="fas fa-building" aria-hidden="true"></i> Nueva</h4>
-        </div>
-        </div>
-  <form #formComunidad="ngForm" id="formulario1" (ngSubmit)="onComuni(formComunidad)">
-    <div class="form-group">
-      <label >Nombre de la comunidad</label>
-      <input type="text" class="form-control" name="nombre"  #nombre="ngModel" [(ngModel)]="nuevaComun.nombre" required>
-      <div class="alert alert-danger" *ngIf="nombre.touched && !nombre.valid">
-        <strong>¡Error!</strong> Campo obligatorio
+      <div class="login-popup-heading text-center">
+        <h4><i class="fas fa-building" aria-hidden="true"></i> Nueva</h4>
       </div>
     </div>
-    <div class="form-group">
-      <label >Dirección</label>
-      <input type="text" class="form-control" name="direccion" #direccion="ngModel" [(ngModel)]="nuevaComun.direccion" required>
-      <div class="alert alert-danger" *ngIf="direccion.touched && !direccion.valid">
-        <strong>¡Error!</strong> Campo obligatorio
-      </div>
-    </div>
-    <div class="form-group">
-      <label for="exampleFormControlSelect1">Administrador</label>
-      <select class="form-control" name="administrador"  #administrador="ngModel" [(ngModel)]="nuevaComun.administrador"required>
-        <option>Sergio Román</option>
-        <option>Manuel Montt</option>
-        <option>Ejercito</option>
-      </select>
-      <div class="alert alert-danger" *ngIf="administrador.touched && !administrador.valid">
-        <strong>¡Error!</strong> Campo obligatorio
-      </div>
-    </div>
-    <form>
-    <div class="form-group">
-      <label >Numero de Edificios</label>
-      <input type="number" class="form-control" name="numeross" #numeross="ngModel" [(ngModel)]="numeros" required>
-      <div class="alert alert-danger" *ngIf="numeross.touched && !numeross.valid">
+    <form #formComunidad="ngForm" id="formulario1" (ngSubmit)="newComuni(formComunidad)">
+      <div class="form-group">
+        <label>Nombre de la comunidad</label>
+        <input type="text" class="form-control" name="nombre" #nombre="ngModel" [(ngModel)]="nuevaComun.nombre"
+          required>
+        <div class="alert alert-danger" *ngIf="nombre.touched && !nombre.valid">
           <strong>¡Error!</strong> Campo obligatorio
         </div>
-      <button type="submit" (click)="asignar(numeros)">Asignar nombres</button>
-    </div >
- 
-    <form #formTorres="ngForm" id="torre" *ngIf="numeros">
-    <div id="nombreEdificios" *ngFor="let item of repetir;let i = index" >
-      <div class="form-group">
-        <label >Edificio {{i+1}}</label>
-        <input type="text" class="form-control" name="nombreDep" #nombreDep="ngModel" [(ngModel)]="nuevaComun.torreDpto[i]" required placeholder="Nombre, letra o número">
       </div>
-    </div>
-  </form>
-  </form>
-    <button type="submit" class="btn btn-primary">Crear</button>
-  
-  </form>
-  
-</div>
+      <div class="form-group">
+        <label>Dirección</label>
+        <input type="text" class="form-control" name="direccion" #direccion="ngModel" [(ngModel)]="nuevaComun.direccion"
+          required>
+        <div class="alert alert-danger" *ngIf="direccion.touched && !direccion.valid">
+          <strong>¡Error!</strong> Campo obligatorio
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="exampleFormControlSelect1">Administrador</label>
+        <select class="form-control" name="administrador" #administrador="ngModel" [(ngModel)]="nuevaComun.administrador"
+          required>
+          <option *ngFor="let usuario of listaUser" >{{usuario.nombre}}</option>
+        </select>
+        <div class="alert alert-danger" *ngIf="administrador.touched && !administrador.valid">
+          <strong>¡Error!</strong> Campo obligatorio
+        </div>
+      </div>
+      <form>
+        <div class="form-group">
+          <label>Numero de Edificios</label>
+          <input type="number" class="form-control" name="numeross" #numeross="ngModel" [(ngModel)]="numeros" required>
+          <div class="alert alert-danger" *ngIf="numeross.touched && !numeross.valid">
+            <strong>¡Error!</strong> Campo obligatorio
+          </div>
+          <button type="submit" (click)="asignar(numeros)">Asignar nombres</button>
+        </div>
+
+        <form #formTorres="ngForm" id="torre" *ngIf="numeros">
+          <div id="nombreEdificios" *ngFor="let item of repetir;let i = index">
+            <div class="form-group">
+              <label>Edificio {{i+1}}</label>
+              <input type="text" class="form-control" name="nombreDep" #nombreDep="ngModel" [(ngModel)]="nuevaComun.torreDpto[i]"
+                required placeholder="Nombre, letra o número">
+            </div>
+          </div>
+        </form>
+      </form>
+      <button type="submit" class="btn btn-primary">Crear</button>
+
+    </form>
+
+  </div>
 
 
   <!--Editar comunidad-->
   <div id="editar" *ngIf="opcion=='comu'&&accion=='editar'">
-      <div class="login-popup-wrap new_login_popup">
-          <div class="login-popup-heading text-center">
-            <h4><i class="fas fa-building" aria-hidden="true"></i> Editar</h4>
-          </div>
-          </div>
+    <div class="login-popup-wrap new_login_popup">
+      <div class="login-popup-heading text-center">
+        <h4><i class="fas fa-building" aria-hidden="true"></i> Editar</h4>
+      </div>
+    </div>
     <div class="form-group">
       <label for="exampleFormControlSelect1">Comunidad</label>
       <select class="form-control" id="exampleFormControlSelect1">
@@ -111,113 +131,118 @@
       </select>
     </div>
     <button type="button" class="btn btn-primary">Editar</button>
- 
-</div>
 
-
-<!--Eliminar comunidad-->
-<div *ngIf="opcion=='comu'&&accion=='eliminar'">
-    <div class="login-popup-wrap new_login_popup">
-        <div class="login-popup-heading text-center">
-          <h4><i class="fas fa-building" aria-hidden="true"></i> Eliminar</h4>
-        </div>
-        </div>
-  <div class="form-group">
-    <label for="exampleFormControlSelect1">Comunidad</label>
-    <select class="form-control" id="exampleFormControlSelect1">
-      <option>Manuel Montt</option>
-      <option>Ejercito</option>
-    </select>
   </div>
-  <button type="button" class="btn btn-danger">Eliminar</button>
-</div>
 
 
-<!--
+  <!--Eliminar comunidad-->
+  <div *ngIf="opcion=='comu'&&accion=='eliminar'">
+    <div class="login-popup-wrap new_login_popup">
+      <div class="login-popup-heading text-center">
+        <h4><i class="fas fa-building" aria-hidden="true"></i> Eliminar</h4>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="exampleFormControlSelect1">Comunidad</label>
+      <select class="form-control" id="exampleFormControlSelect1">
+        <option>Manuel Montt</option>
+        <option>Ejercito</option>
+      </select>
+    </div>
+    <button type="button" class="btn btn-danger">Eliminar</button>
+  </div>
+
+
+  <!--
   Administrador
 -->
 
-<!--Agregar Administrador-->
-<div id="agregarAdministrador" *ngIf="opcion=='admin'&&accion=='nuevo'">
+  <!--Agregar Administrador-->
+  <div id="agregarAdministrador" *ngIf="opcion=='admin'&&accion=='nuevo'">
     <div class="login-popup-wrap new_login_popup">
-        <div class="login-popup-heading text-center">
-          <h4><i class="fas fa-user-tie" aria-hidden="true"></i> Nuevo</h4>
+      <div class="login-popup-heading text-center">
+        <h4><i class="fas fa-user-tie" aria-hidden="true"></i> Nuevo</h4>
+      </div>
+    </div>
+    <form #formAdministrador="ngForm" id="formulario" (ngSubmit)="newUsuario(formAdministrador)">
+      <div class="form-group">
+        <label>Nombre</label>
+        <input type="text" class="form-control" name="nombre" #nombre="ngModel" [(ngModel)]="nuevoUsuario.nombre"
+          required>
+        <div class="alert alert-danger" *ngIf="nombre.touched && !nombre.valid">
+          <strong>¡Error!</strong> Campo obligatorio
         </div>
+      </div>
+      <div class="form-group">
+        <label>Mail</label>
+        <input type="email" class="form-control"  pattern="[a-z0-9._%+-]+@sercolex\.cl" name="mail" #mail="ngModel" [(ngModel)]="nuevoUsuario.mail" required>
+        <div class="alert alert-danger" *ngIf="mail.touched && !mail.valid">
+          <strong>¡Error!</strong> Este campo es obligatorio y el correo tiene que ser @sercolex.cl
         </div>
-  <form #formAdministrador="ngForm"  id="formulario" (ngSubmit)="onSubmit()">
-    <div class="form-group">
-      <label >Nombre</label>
-      <input type="text" class="form-control" name="nombre" #nombre="ngModel" [(ngModel)]="nuevoAdmin.nombre" required>
-      <div class="alert alert-danger" *ngIf="nombre.touched && !nombre.valid">
-        <strong>¡Error!</strong> Campo obligatorio
+      </div>
+      <div class="form-group">
+        <label>Contraseña</label>
+        <input type="password" class="form-control" name="clave" #clave="ngModel" [(ngModel)]="nuevoUsuario.clave"
+          required>
+        <div class="alert alert-danger" *ngIf="clave.touched && !clave.valid">
+          <strong>¡Error!</strong> Campo obligatorio
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Tipo de usuario</label>
+        <select class="form-control" name="usuario" #usuario="ngModel" [(ngModel)]="nuevoUsuario.usuario" required>
+          <option>Administrador</option>
+          <option>Secretaria</option>
+          <option>Gerente</option>
+        </select>
+      </div>
+      <button type="submit" [disabled]="!formAdministrador.valid" class="btn btn-primary">Agregar</button>
+    </form>
+
+  </div>
+  <!--BorrarAdministrador-->
+  <div id="eliminar" *ngIf="opcion=='admin'&&accion=='eliminar'">
+    <div class="login-popup-wrap new_login_popup">
+      <div class="login-popup-heading text-center">
+        <h4><i class="fas fa-user-tie" aria-hidden="true"></i> Eliminar</h4>
       </div>
     </div>
+    <form #formEliminarAdmin="ngForm" id="formulario" (ngSubmit)="deleteUsuario(formEliminarAdmin)">
     <div class="form-group">
-      <label >Mail</label>
-      <input type="text" class="form-control" name="mail" #mail="ngModel" [(ngModel)]="nuevoAdmin.mail" required>
-      <div class="alert alert-danger" *ngIf="mail.touched && !mail.valid">
-        <strong>¡Error!</strong> Campo obligatorio
-      </div>
-    </div>
-    <div class="form-group">
-      <label >Contraseña</label>
-      <input type="password" class="form-control" name="clave" #clave="ngModel" [(ngModel)]="nuevoAdmin.clave" required>
-      <div class="alert alert-danger" *ngIf="clave.touched && !clave.valid">
-        <strong>¡Error!</strong> Campo obligatorio
-      </div>
-    </div>
-    <div class="form-group">
-      <label >Tipo de usuario</label>
-      <select class="form-control" name="usuario" #usuario="ngModel" [(ngModel)]="nuevoAdmin.usuario" required>
-        <option>Administrador</option>
-        <option>Secretaria</option>
-        <option>Gerente</option>
+      <label >Administrador</label>
+      <select class="form-control" name="idUsuario" #idUsuario="ngModel" [(ngModel)]="idDelete">
+        <option *ngFor="let usuario of allUser">{{usuario.nombre}}</option>
+      
       </select>
     </div>
-    <button type="submit"  [disabled]="!formAdministrador.valid" class="btn btn-primary">Agregar</button>
-  </form>
+    <button type="submit" class="btn btn-danger">Eliminar</button>
   
-</div>
-<!--BorrarAdministrador-->
-<div id="eliminar" *ngIf="opcion=='admin'&&accion=='eliminar'">
-    <div class="login-popup-wrap new_login_popup">
-        <div class="login-popup-heading text-center">
-          <h4><i class="fas fa-user-tie" aria-hidden="true"></i> Eliminar</h4>
-        </div>
-        </div>
-  <div class="form-group">
-    <label for="exampleFormControlSelect1">Administrador</label>
-    <select class="form-control" id="exampleFormControlSelect1">
-      <option>Sergio Román</option>
-      <option>Ejercito</option>
-    </select>
-  </div>
-  <button type="button" class="btn btn-danger">Eliminar</button>
-</div>
+</form>
 
-<!--Editar Administrador-->
-<div id="editar" *ngIf="opcion=='admin'&&accion=='editar'">
+  <!--Editar Administrador-->
+  <div id="editar" *ngIf="opcion=='admin'&&accion=='editar'">
     <div class="login-popup-wrap new_login_popup">
-        <div class="login-popup-heading text-center">
-          <h4><i class="fas fa-user-tie" aria-hidden="true"></i> Editar</h4>
-        </div>
-        </div>
-  <div class="form-group">
-    <label for="exampleFormControlSelect1">Administrador</label>
-    <select class="form-control" id="exampleFormControlSelect1">
-      <option>Sergio Román</option>
-      <option>Ejercito</option>
-    </select>
+      <div class="login-popup-heading text-center">
+        <h4><i class="fas fa-user-tie" aria-hidden="true"></i> Editar</h4>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="exampleFormControlSelect1">Administrador</label>
+      <select class="form-control" id="exampleFormControlSelect1">
+        <option>Sergio Román</option>
+        <option>Ejercito</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="exampleFormControlInput1">Mail</label>
+      <input type="text" class="form-control" id="exampleFormControlInput1" value="sergio@sercolex.cl">
+    </div>
+    <div class="form-group">
+      <label for="exampleFormControlInput1">Contraseña</label>
+      <input type="password" class="form-control" id="exampleFormControlInput1">
+    </div>
+    <button type="button" class="btn btn-primary">Editar</button>
   </div>
-  <div class="form-group">
-    <label for="exampleFormControlInput1">Mail</label>
-    <input type="text" class="form-control" id="exampleFormControlInput1" value="sergio@sercolex.cl">
-  </div>
-  <div class="form-group">
-    <label for="exampleFormControlInput1">Contraseña</label>
-    <input type="password" class="form-control" id="exampleFormControlInput1">
-  </div>
-  <button type="button" class="btn btn-primary">Editar</button>
-</div>
 
 </div>
+<script>$('.dropdown-toggle').dropdown()</script>
