@@ -26,16 +26,22 @@ export class AdministradorComponent implements OnInit {
   public arreglo:any;
   public actualizar: boolean;
   public nombreComunidad:any;
+  public idReclamo:any;
+
+  public correosGerenteSecreataria:any;
+
+  public datosGerente:any; //objeto para enviarlo al servicio de correo del gerente
   
 
   constructor(private _route: ActivatedRoute, 
     private _router: Router,private _usuarioService: UsuarioService,private _comunidadService:ComunidadService, private _reclamoService:ReclamoService, private _correoService:CorreoService) { 
      this.usuario=0;
      this.actualizar= true;
-      this._route.params.subscribe((params: Params) =>{
+     this.rut=localStorage.getItem("rut"); 
+     /*this._route.params.subscribe((params: Params) =>{
         this.rut=params.rut;
         console.log(this.rut);
-      });
+      });*/
       //buscando nombre del usuario para el respectivo id
       this._usuarioService.VerUsuario(this.rut).subscribe(
         response => {
@@ -63,6 +69,13 @@ export class AdministradorComponent implements OnInit {
 
   }
 
+  borrarStorage()
+  {
+    localStorage.clear();
+    this._router.navigate(['/login'])
+
+  }
+  
   mostrarDetalle(indice)
   {
     this.indices=indice;
@@ -136,7 +149,7 @@ Actualizar(item:any)
 //console.log("el rut es",this.rut);
 //item.comunidad=this.nombreComunidad;
     console.log("se presiono el objeto",item);
-    
+    this.idReclamo=item._id;
     this._reclamoService. UpdateReclamo(item).subscribe(
       response => {
         console.log(response);
@@ -157,6 +170,10 @@ Actualizar(item:any)
       this._correoService.correoupdate(item).subscribe(
         response => {
           console.log(response);
+          if(item.estado=="Externo")
+          {
+            this.mailGerente();
+          }
         },
         error => {
           console.log(<any>error);
@@ -165,5 +182,45 @@ Actualizar(item:any)
      
       )
       }
+
+      mailGerente()
+        {
+          this._usuarioService.VerAdmin().subscribe(
+            response => {
+              console.log(response);
+              this.correosGerenteSecreataria=response;
+             console.log("correos secretarias y gerentes:",this.correosGerenteSecreataria);
+             for(var item of this.correosGerenteSecreataria)
+             {
+               if(item.usuario=="gerente")
+               this.correoGerente(item);
+             }
+            },
+            error => {
+              console.log(<any>error);
+            }
+          )
+        }
+      
+      correoGerente(item)
+      {
+        this.datosGerente = 
+      {
+        'nombre':item.nombre,
+        '_id':this.idReclamo,
+        'email':item.mail
+                  };
+                  this._correoService.reclamogerente(this.datosGerente).subscribe(
+                    response => {
+                      console.log(response);
+                    },
+                    error => {
+                      console.log(<any>error);
+              
+                    }
+                 
+                  )
+                }
+        
     
 }

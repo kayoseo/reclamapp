@@ -58,10 +58,11 @@ export class SecretariaComponent implements OnInit {
   }
 
   ngOnInit() {
-    this._route.params.subscribe((params: Params) => {
+    this.rut=localStorage.getItem("rut");
+    /*this._route.params.subscribe((params: Params) => {
       this.rut = params.rut;
       console.log(this.rut);
-    });
+    });*/
 
 
   }
@@ -86,4 +87,10 @@ export class SecretariaComponent implements OnInit {
 
   }
 
+  borrarStorage()
+  {
+    localStorage.clear();
+    this._router.navigate(['/login'])
+
+  }
 }

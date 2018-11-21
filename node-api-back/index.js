@@ -83,6 +83,31 @@ var Comunidad = mongoose.model('Comunidad', comunidadSchema);
  ****************************
 */
 
+//Se cambia el estado de reclamo a externo y se le notifica al gerente.
+app.post('/correo/reclamogerente', function (req, res) {
+    
+ 
+    var mailOptions = {
+        from: 'Reclamo Sercolex<reclamo.sercolex@gmail.com>',
+        to: req.body.email,
+        subject: 'Reclamo externalizado',
+        html:'<p>Estimado Gerente,</p><p>Se le ha solicitado ayuda con el reclamo con <b>N° '+req.body._id+'</b> <p>Recuerde revisar y actualizar el estado del reclamo.</p>'
+        
+    }
+    
+    transporter.sendMail(mailOptions, function (err, res) {
+        if(err){
+            console.log(err);
+        } else {
+            res.json({ message: "Correo enviado" });
+            
+        }
+    })
+    res.json({ message: "Correo enviado al gerente" });
+    
+});
+
+
 //Se actualiza un reclamo y el residente recibe un correo con los datos.
 app.post('/correo/updatereclamo', function (req, res) {
     
@@ -104,7 +129,7 @@ app.post('/correo/updatereclamo', function (req, res) {
             //console.log('Email Sent');
         }
     })
-    res.json({ message: "Correo enviado" });
+    res.json({ message: "Correo de actualizacion enviado al residente" });
         
 });
 
@@ -128,7 +153,7 @@ app.post('/correo/reclamoresidente', function (req, res) {
         }
     })
     if(err)
-    res.json({ message: "Correo enviado" });
+    res.json({ message: "Correo enviado al residente" });
 });
 
 //Se crea el reclamo y el administrador recibe un correo con el numero de reclamo que se le ha adjudicado.
@@ -151,7 +176,7 @@ app.post('/correo/reclamoadministrador', function (req, res) {
             //console.log('Email Sent');
         }
     })
-    res.json({ message: "Correo enviado" });
+    res.json({ message: "Correo enviado al administrador" });
     
 });
 
@@ -176,7 +201,7 @@ app.post('/correo/reclamosecretaria', function (req, res) {
             //console.log('Email Sent');
         }
     })
-    res.json({ message: "Correo enviado" });
+    res.json({ message: "Correo enviado a la secretaria" });
     
 });
 

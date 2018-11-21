@@ -50,10 +50,11 @@ export class GerenteComponent implements OnInit {
   }
 
   ngOnInit() {
-    this._route.params.subscribe((params: Params) => {
+    this.rut=localStorage.getItem("rut");
+    /*this._route.params.subscribe((params: Params) => {
       this.rut = params.rut;
       console.log(this.rut);
-    });
+    });*/
   }
 
   cambiarOp(option: string) {
@@ -64,6 +65,14 @@ export class GerenteComponent implements OnInit {
     this.accion = action;
     console.log("la accion marcada es", this.accion);
   }
+
+  borrarStorage()
+  {
+    localStorage.clear();
+    this._router.navigate(['/login'])
+
+  }
+  
 
   onSubmit() {
 

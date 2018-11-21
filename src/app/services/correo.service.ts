@@ -13,6 +13,12 @@ export class CorreoService {
         this.url="http://localhost:3000/correo/";
     }
    
+    reclamogerente(datos): Observable<any> {
+        let params=JSON.stringify(datos);
+        console.log("esto va a mandar el servicio",params);
+        let headers=new HttpHeaders().set('Content-Type','application/json');
+        return this._http.post(this.url + 'reclamogerente',params, {headers:headers});
+    }
 
     correoupdate(datos): Observable<any> {
         let params=JSON.stringify(datos);

@@ -49,20 +49,21 @@ console.log(this.usuario);
         this.numeroUser=response[0]._id;
         console.log(this.numeroUser);
         this.tipoUser=response[0].usuario;
+        localStorage.setItem("rut",this.numeroUser);
         console.log(this.numeroUser);
         console.log(this.tipoUser);
         
         if(this.tipoUser=="secretaria")
         {
-        this._router.navigate(['/secretaria/',this.numeroUser]);
+        this._router.navigate(['/secretaria/']);
         }
         if(this.tipoUser=="administrador")
         {
-        this._router.navigate(['/administrador/',this.numeroUser]);
+        this._router.navigate(['/administrador/']);
         }
         if(this.tipoUser=="gerente")
         {
-        this._router.navigate(['/gerente/',this.numeroUser]);
+        this._router.navigate(['/gerente/']);
         }
         form.reset();
       }
