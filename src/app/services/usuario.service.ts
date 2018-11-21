@@ -24,6 +24,10 @@ VerAdmin(): Observable<any>{
     return this._http.get(this.url+'admin');
 }
 
+VerSecretaria():Observable<any>{
+    return this._http.get(this.url+'secretarias');
+}
+
 AddUsuario(usuario:any):Observable<any>{
     let params=JSON.stringify(usuario);
     let headers=new HttpHeaders().set('Content-Type','application/json');

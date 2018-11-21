@@ -2,6 +2,19 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var cors = require('cors');
+var nodemailer = require('nodemailer');
+
+var transporter = nodemailer.createTransport({
+    host: "smtp.gmail.com",
+    //service: 'gmail',
+    auth: {
+        type:"OAuth2",
+            user: 'reclamo.sercolex@gmail.com',
+            clientId: '865979561608-oqji5tku7e8rgqr76sp7s1ss815sjr6c.apps.googleusercontent.com',
+            clientSecret: 'yDp_7wGKGEnBvroaSmk3HJvd',
+            refreshToken: '1/4ybFGSBPeqx2yQcXDcP6XSmHRvNLVo13NyIHMukz6_Q'
+        }
+    });
 
 var app = express();
 app.use(bodyParser.json());
@@ -64,6 +77,111 @@ var comunidadSchema = new mongoose.Schema({
 });
 
 var Comunidad = mongoose.model('Comunidad', comunidadSchema);
+
+/**************************** 
+ *        ENDPOINTS  Correos       *
+ ****************************
+*/
+
+//Se actualiza un reclamo y el residente recibe un correo con los datos.
+app.post('/correo/updatereclamo', function (req, res) {
+    
+    
+
+    var mailOptions = {
+        from: 'Reclamo Sercolex<reclamo.sercolex@gmail.com>',
+        to: req.body.email,
+        subject: 'Reclamo actualizado',
+        html:'<p>Estimado '+req.body.nombre+',</p><p>El reclamo <b>N° '+req.body._id+'</b> se ha actualizado:</p><table style="font-family: arial, sans-serif; border-collapse:collapse; width: 100%;"><thead><tr><th style="border: 1px solid #dddddd; text-align: left; padding: 8px;">Fecha</th><th style="border: 1px solid #dddddd; text-align: left; padding: 8px;">Estado</th><th style="border: 1px solid #dddddd; text-align: left; padding: 8px;">Solucion</th></tr></thead><tbody><tr><td style="border: 1px solid #dddddd; text-align: left; padding: 8px;">'+req.body.fecha+'</td><td style="border: 1px solid #dddddd; text-align: left; padding: 8px;">'+req.body.estado+'</td><td style="border: 1px solid #dddddd; text-align: left; padding: 8px;">'+req.body.solucion+'</td></tr></tbody></table><p>Puede revisar el estado de su reclamo en el siguiente enlace:</p><p><a href="http://localhost:4200/verReclamo/' +req.body._id + '">Presione aquí</a></p><p><b>Este mensaje es automatico, no responda este correo.</b></p><p>Saludos.</p><p>Equipo de Sercolex.</p>'
+        
+    }
+    
+    transporter.sendMail(mailOptions, function (err, res) {
+        if(err){
+            console.log(err);
+        } else {
+            res.json({ message: "Correo enviado" });
+            //console.log('Email Sent');
+        }
+    })
+    res.json({ message: "Correo enviado" });
+        
+});
+
+//Se crea el reclamo y el residente recibe un correo con el numero de reclamo y su id de reclamo.
+app.post('/correo/reclamoresidente', function (req, res) {
+    
+    var mailOptions = {
+        from: 'Reclamo Sercolex<reclamo.sercolex@gmail.com>',
+        to: req.body.email,
+        subject: 'Reclamo realizado',
+        html:'<p>Estimado '+req.body.nombre+',</p><p>El reclamo <b>N° '+req.body._id+'</b> fue realizado exitosamente.</p><p>Puede revisar el estado de su reclamo en el siguiente enlace:</p><p><a href="http://localhost:4200/verReclamo/' +req.body._id + '">Presione aquí</a></p><p><b>Este mensaje es automatico, no responda este correo.</b></p><p>Saludos.</p><p>Equipo de Sercolex.</p>'
+        
+    }
+    
+    transporter.sendMail(mailOptions, function (err, res) {
+        if(err){
+            console.log(err);
+        } else {
+            res.json({ message: "Correo enviado" });
+            //console.log('Email Sent');
+        }
+    })
+    if(err)
+    res.json({ message: "Correo enviado" });
+});
+
+//Se crea el reclamo y el administrador recibe un correo con el numero de reclamo que se le ha adjudicado.
+app.post('/correo/reclamoadministrador', function (req, res) {
+    
+ 
+    var mailOptions = {
+        from: 'Reclamo Sercolex<reclamo.sercolex@gmail.com>',
+        to: req.body.email,
+        subject: 'Nuevo reclamo',
+        html:'<p>Estimado Administrador,</p><p>Se le ha realizado un reclamo con <b>N° '+req.body._id+'</b> <p>Recuerde revisar y actualizar el estado del reclamo.</p>'
+        
+    }
+    
+    transporter.sendMail(mailOptions, function (err, res) {
+        if(err){
+            console.log(err);
+        } else {
+            res.json({ message: "Correo enviado" });
+            //console.log('Email Sent');
+        }
+    })
+    res.json({ message: "Correo enviado" });
+    
+});
+
+
+//Se crea el reclamo y la secretaria recibe un correo con el numero de reclamo para que realice una modificacion.
+app.post('/correo/reclamosecretaria', function (req, res) {
+    
+
+    var mailOptions = {
+        from: 'Reclamo Sercolex<reclamo.sercolex@gmail.com>',
+        to: req.body.mail,
+        subject: 'Nuevo Reclamo',
+        html:'<p>Estimada Secretaria,</p><p>Se ha realizado un reclamo que necesita ser asignado a un Administrador.</p><p>Recuerde revisar el reclamo a la brevedad.<p>Saludos.</p>'
+        
+    }
+    
+    transporter.sendMail(mailOptions, function (err, res) {
+        if(err){
+            console.log(err);
+        } else {
+            res.json({ message: "Correo enviado" });
+            //console.log('Email Sent');
+        }
+    })
+    res.json({ message: "Correo enviado" });
+    
+});
+
+
+
 /**************************** 
  *        ENDPOINTS  Reclamo       *
  ****************************
@@ -277,7 +395,16 @@ app.delete('/reclamodelete', function (req, res) {
     });
     // Obtiene todos los usuario con su nombre y _id que sean gerente o administrador
     app.get('/admin', function (req, res) {
-        Usuario.find({ $or: [{ usuario: "gerente" }, { usuario: "administrador" }] }, { nombre: 1, usuario: 1 }, function (error, usuario) {
+        Usuario.find({ $or: [{ usuario: "gerente" }, { usuario: "administrador" }] }, { nombre: 1, usuario: 1, mail:1}, function (error, usuario) {
+            if (error) return res.status(500).send(error);
+            res.json(usuario);
+
+        });
+    });
+
+     // Obtiene todos los correos de la secretaria
+     app.get('/secretarias', function (req, res) {
+        Usuario.find( { usuario: "secretaria" }, { mail: 1, usuario: 1 }, function (error, usuario) {
             if (error) return res.status(500).send(error);
             res.json(usuario);
 

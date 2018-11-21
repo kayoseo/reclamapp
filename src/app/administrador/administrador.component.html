@@ -1,5 +1,5 @@
 <div >
-  <h2 >Asignación de Comunidad pendiente</h2>
+  <h2 >Comunidad pendiente</h2>
 <table class="table table-striped">
   <thead>
     <tr>
@@ -21,7 +21,7 @@
       
       <td>
           <div class="form-group col-md-12 col-xl-12 col-xs-12">
-            <select id="inputState" class="form-control"  name="comu" #comu="ngModel" [(ngModel)]="nombreComunidad" required>
+            <select id="inputState" class="form-control"  name="comu" #comu="ngModel" [(ngModel)]="reclamo.comunidad" required>
               <option selected *ngFor="let item of comunidades">{{item.nombre}}</option>
             </select>
           </div>

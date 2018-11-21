@@ -5,12 +5,13 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import {ComunidadService} from '../services/comunidad.service';
 import {ReclamoService} from '../services/reclamo.service';
 import { UsuarioService } from '../services/usuario.service';
+import { CorreoService } from '../services/correo.service';
 
 @Component({
   selector: 'app-administrador',
   templateUrl: './administrador.component.html',
   styleUrls: ['./administrador.component.css'],
-  providers:[ComunidadService,ReclamoService,UsuarioService]
+  providers:[ComunidadService,ReclamoService,UsuarioService,CorreoService]
 })
 export class AdministradorComponent implements OnInit {
   public reclamos: Array<Reclamos>;
@@ -28,7 +29,7 @@ export class AdministradorComponent implements OnInit {
   
 
   constructor(private _route: ActivatedRoute, 
-    private _router: Router,private _usuarioService: UsuarioService,private _comunidadService:ComunidadService, private _reclamoService:ReclamoService) { 
+    private _router: Router,private _usuarioService: UsuarioService,private _comunidadService:ComunidadService, private _reclamoService:ReclamoService, private _correoService:CorreoService) { 
      this.usuario=0;
      this.actualizar= true;
       this._route.params.subscribe((params: Params) =>{
@@ -133,12 +134,13 @@ Actualizar(item:any)
   {
     //this.nuevoReclamo = new Reclamos(item._id,item.fecha,item.nombre,item.telefono,item.email,this.nuevoAdmin,item.direccion,item.problema,item.estado,item.solucion);
 //console.log("el rut es",this.rut);
-item.comunidad=this.nombreComunidad;
+//item.comunidad=this.nombreComunidad;
     console.log("se presiono el objeto",item);
     
     this._reclamoService. UpdateReclamo(item).subscribe(
       response => {
         console.log(response);
+        this.correo(item);
       },
       error => {
         console.log(<any>error);
@@ -149,4 +151,19 @@ item.comunidad=this.nombreComunidad;
    
     )
     }
+
+    correo(item)
+    {
+      this._correoService.correoupdate(item).subscribe(
+        response => {
+          console.log(response);
+        },
+        error => {
+          console.log(<any>error);
+  
+        }
+     
+      )
+      }
+    
 }

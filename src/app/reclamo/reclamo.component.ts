@@ -3,12 +3,13 @@ import { Reclamos } from '../Plantilla/reclamosformulario';
 import { Numero } from '../Plantilla/buscar';
 import { ReclamoService } from '../services/reclamo.service';
 import { UsuarioService } from '../services/usuario.service';
+import { CorreoService } from '../services/correo.service';
 
 @Component({
   selector: 'app-reclamo',
   templateUrl: './reclamo.component.html',
   styleUrls: ['./reclamo.component.css'],
-  providers: [ReclamoService, UsuarioService]
+  providers: [ReclamoService, UsuarioService, CorreoService]
 })
 export class ReclamoComponent implements OnInit {
   public reclamoForm: Reclamos;
@@ -20,14 +21,17 @@ export class ReclamoComponent implements OnInit {
 
   public user: any;
 
-  public admin:object;
+  public admin:any;
 
   public numeroReclamo:any;
   public resultado:any;
   public i:any;
 
+  public datosCorreo:any;
+  public mailSecretaria:any;
 
-  constructor(private _reclamoService: ReclamoService, private _usuarioService: UsuarioService) {
+
+  constructor(private _reclamoService: ReclamoService, private _usuarioService: UsuarioService, private _correoService: CorreoService) {
    this.i=1;
     this._usuarioService.VerAdmin().subscribe(
       request => {
@@ -39,7 +43,7 @@ export class ReclamoComponent implements OnInit {
           this.admin=this.resultado;
         
       }
-        console.log(this.admin);
+        console.log("administradores",this.admin);
       },
       error => {
         console.log(<any>error);
@@ -98,8 +102,10 @@ export class ReclamoComponent implements OnInit {
         //hasta aquí
 
         //this.reclamoForm = new Reclamos(this.numero, this.fecha, '', '', '', '', '', '', '', '');
+        this.correo();
         this.reclamoForm = new Reclamos(this.fecha,'','','', '', '', '', '', '', '', '');
         form.reset();
+        
       },
       error => {
         console.log(<any>error);
@@ -107,8 +113,90 @@ export class ReclamoComponent implements OnInit {
 
       }
     )
+    
   }
   onBuscar() {
     console.log("numero", this.buscar)
   }
+
+
+correo()
+{
+  this.datosCorreo=
+      {
+        '_id': this.numeroReclamo,
+        'email':this.reclamoForm.email,
+        'nombre':this.reclamoForm.nombre
+      };
+  this._correoService.reclamoresidente(this.datosCorreo).subscribe(
+    response => {
+      console.log(response);
+      console.log("Correo enviado a: ", this.reclamoForm.email);
+    },
+    error => {
+      console.log(<any>error);
+    }
+  )
+if(this.reclamoForm.administrador=="Desconocido")
+{
+  this._usuarioService.VerSecretaria().subscribe(
+    response => {
+      console.log(response);
+      this.mailSecretaria=response;
+     console.log("correos secretarias:",this.mailSecretaria);
+     for(var item of this.mailSecretaria)
+     {
+       this.correoSecretaria(item);
+}
+    },
+    error => {
+      console.log(<any>error);
+    }
+  )
+
+
+}
+else
+{
+  for(var item of this.admin)
+  {
+    if(item.nombre==this.reclamoForm.administrador)
+    {
+      this.datosCorreo=
+      {
+        '_id': this.numeroReclamo,
+        'email':item.mail
+      };
+      this.correoAdministrador(this.datosCorreo);
+    }
+  }
+}
+
+}
+
+correoSecretaria(item)
+{
+  this._correoService.reclamosecretaria(item).subscribe(
+    response => {
+      console.log(response);
+      console.log("Correo enviado a: ", item);
+    },
+    error => {
+      console.log(<any>error);
+    }
+  )
+}
+
+correoAdministrador(item)
+{
+  this._correoService.reclamoadministrador(item).subscribe(
+    response => {
+      console.log(response);
+      console.log("Correo enviado a: ", item);
+    },
+    error => {
+      console.log(<any>error);
+    }
+  ) 
+}
 }

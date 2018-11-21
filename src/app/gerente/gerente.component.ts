@@ -83,6 +83,12 @@ export class GerenteComponent implements OnInit {
     )
   }
 
+
+  asignar(numeros)
+  {
+    this.numeros=numeros;
+    this.repetir=new Array(this.numeros);
+  }
   newUsuario(form) {
     this.nuevoUsuario.mail = this.nuevoUsuario.mail.toLocaleLowerCase();
     this._usuarioService.AddUsuario(this.nuevoUsuario).subscribe(
