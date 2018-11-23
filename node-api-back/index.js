@@ -291,8 +291,8 @@ app.delete('/reclamodelete', function (req, res) {
     });
 
     // Actualiza un reclamo
-    app.put('/reclamo/:id', function (req, res) {
-        Reclamo.findById(req.params.id, function (error, reclamo) {
+    app.put('/reclamo/:_id', function (req, res) {
+        Reclamo.findById(req.params._id, function (error, reclamo) {
             if (error) return res.status(500).send(error);
 
             reclamo.fecha = req.body.fecha; //required= true demtrp del parentesis so es qie es obligatorio.
@@ -331,6 +331,23 @@ app.delete('/reclamodelete', function (req, res) {
      *        ENDPOINTS  Comunidad     *
      ****************************
     */
+// Borra todos las comunidades
+
+app.delete('/comunidadDelete', function (req, res) {
+    Comunidad.find({}, function (error, comunidad) {
+        if (error) return res.status(500).send(error);
+        for(var item of comunidad)
+        {
+        item.remove(function (removingError) {
+            if (removingError) return res.status(500).send({ error: removingError });
+
+           
+        });
+    }
+    });
+    res.json({ message: "Todos las comunidades fueron Borrados" });
+    });
+
 
     //Obtiene todas las comunidad para el administrador que ingreso
     app.post('/comunadmin', function (req, res) {
@@ -411,6 +428,22 @@ app.delete('/reclamodelete', function (req, res) {
      *        ENDPOINTS  Usuario     *
      ****************************
     */
+
+    // Borra todos los usuarios
+app.delete('/usuarioDelete', function (req, res) {
+    Usuario.find({}, function (error, usuario) {
+        if (error) return res.status(500).send(error);
+        for(var item of usuario)
+        {
+        item.remove(function (removingError) {
+            if (removingError) return res.status(500).send({ error: removingError });
+
+           
+        });
+    }
+    });
+    res.json({ message: "Todos los usuario fueron Borrados" });
+    });
 
     // Obtiene todos los usuarios
     app.get('/usuario', function (req, res) {
