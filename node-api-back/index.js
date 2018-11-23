@@ -226,6 +226,7 @@ app.delete('/reclamodelete', function (req, res) {
         });
     }
     });
+    res.json({ message: "Todos los reclamos fueron Borrados" });
     });
 
 

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { ReclamoService } from '../services/reclamo.service';
 import { UsuarioService } from '../services/usuario.service';
+import { CorreoService } from '../services/correo.service';
 import { Reclamos } from '../Plantilla/reclamos';
 
 
@@ -9,7 +10,7 @@ import { Reclamos } from '../Plantilla/reclamos';
   selector: 'app-secretaria',
   templateUrl: './secretaria.component.html',
   styleUrls: ['./secretaria.component.css'],
-  providers: [ReclamoService, UsuarioService]
+  providers: [ReclamoService, UsuarioService, CorreoService]
 })
 export class SecretariaComponent implements OnInit {
   public rut: string;
@@ -19,8 +20,9 @@ export class SecretariaComponent implements OnInit {
   public reclamos: any;
   public nuevoAdmin: any;
   public actualizar: boolean;
+  public DatosCorreo: any;
   constructor(private _route: ActivatedRoute,
-    private _router: Router, private _reclamoService: ReclamoService, private _usuarioService: UsuarioService) {
+    private _router: Router, private _reclamoService: ReclamoService, private _usuarioService: UsuarioService, private _correoService: CorreoService) {
     this.actualizar = true;
     this._usuarioService.VerAdmin().subscribe(
       request => {
@@ -58,7 +60,7 @@ export class SecretariaComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.rut=localStorage.getItem("rut");
+    this.rut = localStorage.getItem("rut");
     /*this._route.params.subscribe((params: Params) => {
       this.rut = params.rut;
       console.log(this.rut);
@@ -75,6 +77,7 @@ export class SecretariaComponent implements OnInit {
     this._reclamoService.UpdateReclamo(item).subscribe(
       response => {
         console.log(response);
+        this.correoAdmin(item);
       },
       error => {
         console.log(<any>error);
@@ -87,10 +90,33 @@ export class SecretariaComponent implements OnInit {
 
   }
 
-  borrarStorage()
-  {
+  borrarStorage() {
     localStorage.clear();
     this._router.navigate(['/login'])
 
+  }
+
+  correoAdmin(item) {
+    for (var admin of this.admini) {
+      if (admin.nombre == item.administrador) {
+        this.DatosCorreo =
+          {
+            'nombre': admin.nombre,
+            '_id': item._id,
+            'email': admin.mail
+          };
+      }
+    }
+    this._correoService.reclamoadministrador(this.DatosCorreo).subscribe(
+      response => {
+        console.log(response);
+      },
+      error => {
+        console.log(<any>error);
+        
+
+      }
+
+    )
   }
 }
