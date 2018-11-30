@@ -15,6 +15,9 @@ export class ReclamoService {
     VerReclamo(id): Observable<any> {
         return this._http.get(this.url + 'reclamo/' + id);
     }
+    AllReclamo():Observable<any> {
+        return this._http.get(this.url + 'reclamo/');
+    }
 
     VerReclamosAdmin(nombre): Observable<any> {
         let params=JSON.stringify(nombre);

@@ -41,6 +41,13 @@ export class CorreoService {
         return this._http.post(this.url + 'reclamoadministrador',params, {headers:headers});
     }
 
+    updateadministrador(datos): Observable<any> {
+        let params=JSON.stringify(datos);
+        console.log("esto va a mandar el servicio",params);
+        let headers=new HttpHeaders().set('Content-Type','application/json');
+        return this._http.post(this.url + 'updateadministrador',params, {headers:headers});
+    }
+
     reclamosecretaria(datos): Observable<any> {
         let params=JSON.stringify(datos);
         console.log("esto va a mandar el servicio",params);

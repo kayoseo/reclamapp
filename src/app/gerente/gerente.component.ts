@@ -5,13 +5,14 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { ComunidadService } from '../services/comunidad.service';
 import { ReclamoService } from '../services/reclamo.service';
 import { UsuarioService } from '../services/usuario.service';
+import { CorreoService } from '../services/correo.service'
 
 
 @Component({
   selector: 'app-gerente',
   templateUrl: './gerente.component.html',
   styleUrls: ['./gerente.component.css'],
-  providers: [ComunidadService, ReclamoService, UsuarioService]
+  providers: [ComunidadService, ReclamoService, UsuarioService, CorreoService]
 })
 export class GerenteComponent implements OnInit {
   public opcion: string;
@@ -21,6 +22,19 @@ export class GerenteComponent implements OnInit {
   //public nuevoEdificio:any;
   public repetir: any;
   public numeros: number;
+  public fechaDate: any;
+
+  public datosAdministrador: any;
+
+  public idReclamo: any;
+
+  public contador: any;
+
+  public transcurrido: any;
+
+  public reclamos: any;
+
+  public allComunidad: any;
 
   public rut: string;
   public idDelete: string;
@@ -36,21 +50,22 @@ export class GerenteComponent implements OnInit {
 
 
   constructor(private _route: ActivatedRoute,
-    private _router: Router, private _comunidadService: ComunidadService, private _usuarioService: UsuarioService, private _reclamoService: ReclamoService) {
-
+    private _router: Router, private _comunidadService: ComunidadService, private _usuarioService: UsuarioService, private _reclamoService: ReclamoService, private _correoService: CorreoService) {
+    this.contador = 0;
     this.opcion = 'nada';
     this.accion = 'nada';
     this.nuevoUsuario = new Usuario('', '', '', '');
     this.nuevaComun = new Comunidad('', '', '', []);
 
     this.traerValoresAllUser();
+    this.Recuperar();
 
 
 
   }
 
   ngOnInit() {
-    this.rut=localStorage.getItem("rut");
+    this.rut = localStorage.getItem("rut");
     /*this._route.params.subscribe((params: Params) => {
       this.rut = params.rut;
       console.log(this.rut);
@@ -66,13 +81,60 @@ export class GerenteComponent implements OnInit {
     console.log("la accion marcada es", this.accion);
   }
 
-  borrarStorage()
-  {
+  borrarStorage() {
     localStorage.clear();
     this._router.navigate(['/login'])
 
   }
-  
+
+  Convertfecha(reclamosAdmin) {
+
+    var msecPerMinute = 1000 * 60;
+    var msecPerHour = msecPerMinute * 60;
+    var msecPerDay = msecPerHour * 24;
+
+    var horaActual = new Date();
+
+    // Get the difference in milliseconds.
+    var diferencia = horaActual.getTime() - reclamosAdmin.getTime();
+
+    // Calculate how many days the interval contains. Subtract that
+    // many days from the interval to determine the remainder.
+    var days = Math.floor(diferencia / msecPerDay);
+    diferencia = diferencia - (days * msecPerDay);
+
+    // Calculate the hours, minutes, and seconds.
+    var hours = Math.floor(diferencia / msecPerHour);
+    diferencia = diferencia - (hours * msecPerHour);
+
+    var minutes = Math.floor(diferencia / msecPerMinute);
+    diferencia = diferencia - (minutes * msecPerMinute);
+
+    var seconds = Math.floor(diferencia / 1000);
+
+    this.transcurrido[this.contador] = days + " días, " + hours + " horas, " + minutes + " minutos, " + seconds + " segundos."
+
+
+    var año = reclamosAdmin.getFullYear();
+    console.log("", año);
+    var mes = reclamosAdmin.getMonth() + 1;
+    console.log("", mes);
+    var dia = reclamosAdmin.getDate();
+    console.log("", dia);
+    var minutos = reclamosAdmin.getMinutes();
+    console.log("", minutos);
+    var segundos = reclamosAdmin.getSeconds();
+    console.log("", segundos);
+    var horas = reclamosAdmin.getHours();
+    console.log("", horas);
+
+
+    this.fechaDate[this.contador] = mes + '/' + dia + '/' + año + ' ' + horas + ':' + minutos + ':' + segundos;
+    this.contador = this.contador + 1;
+
+
+  }
+
 
   onSubmit() {
 
@@ -93,10 +155,9 @@ export class GerenteComponent implements OnInit {
   }
 
 
-  asignar(numeros)
-  {
-    this.numeros=numeros;
-    this.repetir=new Array(this.numeros);
+  asignar(numeros) {
+    this.numeros = numeros;
+    this.repetir = new Array(this.numeros);
   }
   newUsuario(form) {
     this.nuevoUsuario.mail = this.nuevoUsuario.mail.toLocaleLowerCase();
@@ -198,5 +259,138 @@ export class GerenteComponent implements OnInit {
 
   }
 
- 
+  Comunidad() {
+
+
+    this._comunidadService.AllComunidades().subscribe(
+      response => {
+        console.log("las comunidades son:", response);
+        this.allComunidad = response;
+        console.log("Todas las comunidades son:", this.allComunidad);
+      },
+      error => {
+        console.log(<any>error);
+      }
+    )
+
+
+  }
+
+  Recuperar() {
+
+
+    this.Comunidad();
+    //buscando reclamos
+    console.log("nombre:", this.nombre);
+    this._reclamoService.AllReclamo().subscribe(
+      response => {
+        console.log("reclamo son:", response);
+        this.reclamos = response;
+        this.fechaDate = new Array(this.reclamos.length);
+        this.transcurrido = new Array(this.reclamos.length);
+        for (var reclamo of this.reclamos) {
+          reclamo.fecha = new Date(reclamo.fecha);
+          this.Convertfecha(reclamo.fecha);
+
+        }
+        console.log("los reclamo son:", this.reclamos);
+      },
+      error => {
+        console.log(<any>error);
+      }
+    )
+
+  }
+
+
+  Actualizar(item: any) {
+    item.fecha = new Date(item.fecha);
+    console.log("se presiono el objeto", item);
+    this.idReclamo = item._id;
+    this._reclamoService.UpdateReclamo(item).subscribe(
+      response => {
+        console.log(response);
+        var año = item.fecha.getFullYear();
+
+        var mes = item.fecha.getMonth() + 1;
+
+        var dia = item.fecha.getDate();
+
+        var minutos = item.fecha.getMinutes();
+
+        var segundos = item.fecha.getSeconds();
+
+        var horas = item.fecha.getHours();
+
+        item.fecha = mes + '/' + dia + '/' + año + ' ' + horas + ':' + minutos + ':' + segundos;
+        this.correo(item);
+        alert("El reclamo ha sido actualizado y se ha notificado al residente");
+      },
+      error => {
+        console.log(<any>error);
+
+
+      }
+
+    )
+  }
+  //aviso al residente
+  correo(item) {
+    this._correoService.correoupdate(item).subscribe(
+      response => {
+        console.log(response);
+        this.mailAdministrador(item);
+      },
+      error => {
+        console.log(<any>error);
+
+      }
+
+    )
+  }
+
+  mailAdministrador(item) {
+
+    this._usuarioService.VerAllUsuario().subscribe(
+      response => {
+        console.log(response);
+        for (var admin of response) {
+          console.log(admin);
+          if (item.administrador == admin.nombre) {
+            this.datosAdministrador =
+              {
+                'nombre': admin.nombre,
+                '_id': this.idReclamo,
+                'email': admin.mail
+              };
+            this.correoAdministraodr(this.datosAdministrador);
+          }
+
+        }
+
+      },
+      error => {
+        console.log(<any>error);
+      }
+    )
+  }
+
+  correoAdministraodr(item) {
+
+    this._correoService.updateadministrador(item).subscribe(
+      response => {
+        console.log(response);
+      },
+      error => {
+        console.log(<any>error);
+
+      }
+
+    )
+  }
+
+
+
+
+
 }

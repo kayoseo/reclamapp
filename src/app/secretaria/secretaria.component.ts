@@ -4,6 +4,7 @@ import { ReclamoService } from '../services/reclamo.service';
 import { UsuarioService } from '../services/usuario.service';
 import { CorreoService } from '../services/correo.service';
 import { Reclamos } from '../Plantilla/reclamos';
+import { Alert } from 'selenium-webdriver';
 
 
 @Component({
@@ -78,6 +79,7 @@ export class SecretariaComponent implements OnInit {
       response => {
         console.log(response);
         this.correoAdmin(item);
+        alert("Administrador asignado con exito");
       },
       error => {
         console.log(<any>error);

@@ -5,8 +5,9 @@
   </button>
   <br>
 </div>
-<div >
-  <h2 >Comunidad pendiente</h2>
+<div>
+<div class="card">
+  <h3 class="card-title">Comunidad pendiente</h3>
 <table class="table table-striped">
   <thead>
     <tr>
@@ -18,13 +19,14 @@
       <th scope="col">Descripción</th>
       <th scope="col">Estado</th>
       <th scope="col">Solucion</th>
+      <th scope="col"></th>
     </tr>
   </thead>
   <tbody>
-      <ng-container *ngFor="let reclamo of reclamos">
+      <ng-container *ngFor="let reclamo of reclamos;let indice = index">
     <tr *ngIf="reclamo.comunidad===''" >
-      <td>{{reclamo.fecha}}</td>
-      <td></td>
+      <td>{{fechaDate[indice]}}</td>
+      <td>{{transcurrido[indice]}}</td>
       
       <td>
           <div class="form-group col-md-12 col-xl-12 col-xs-12">
@@ -47,11 +49,13 @@
         </div>
       </td>
       <td>
-        <div class="form-group">
-          <input type="text" class="form-control" name="solucion" #solucion="ngModel" [(ngModel)]="reclamo.solucion" required>
+        <div class="form-group" >
+          <input  type="text" class="form-control" name="solucion" #solucion="ngModel" [(ngModel)]="reclamo.solucion" required>
         </div>
       </td>
+      <td>
       <button type="submit" (click)="Actualizar(reclamo)" class="btn btn-primary">Actualizar</button>
+    </td>
     </tr>
   </ng-container>
   </tbody>
@@ -59,7 +63,8 @@
 </div>
 
 <div *ngFor="let comunidad of comunidades">
-  <h2 >{{comunidad.nombre}}</h2>
+  <div class="card" style="margin-bottom: 30ps;">
+  <h2 class="card-title">{{comunidad.nombre}}</h2>
 <table class="table table-striped">
   <thead>
     <tr>
@@ -71,15 +76,16 @@
       <th scope="col">Descripción</th>
       <th scope="col">Estado</th>
       <th scope="col">Solucion</th>
+      <th scope="col"></th>
     </tr>
   </thead>
   <tbody>
-      <ng-container *ngFor="let reclamo of reclamos">
+      <ng-container *ngFor="let reclamo of reclamos;let indice = index">
      
     <tr *ngIf="reclamo.comunidad===comunidad.nombre">
       
-      <td >{{reclamo.fecha}}</td>
-      <td></td>
+      <td >{{fechaDate[indice]}}</td>
+      <td>{{transcurrido[indice]}}</td>
       
       <td>
           <div class="form-group col-md-12 col-xl-12 col-xs-12">
@@ -103,16 +109,19 @@
       </td>
       <td>
         <div class="form-group">
-          <input type="text" class="form-control" name="solucion" #solucion="ngModel" [(ngModel)]="reclamo.solucion" required>
+          <input type="text"  class="form-control" name="solucion" #solucion="ngModel" [(ngModel)]="reclamo.solucion" required>
         </div>
       </td>
+      <td>
       <button type="submit" (click)="Actualizar(reclamo)" class="btn btn-primary">Actualizar</button>
+    </td>
     </tr>
   </ng-container>
 
   </tbody>
 </table>
-
+</div>
+</div>
 </div>
 <div class="alert alert-danger" *ngIf="actualizar==false">
   <strong>¡Error!</strong> No se pudo actualizar

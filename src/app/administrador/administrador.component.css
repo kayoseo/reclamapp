@@ -1,6 +1,19 @@
 .btn-primary
 {
-    margin-top: 12px
+    margin-top: 0px;
+
 
 }
 
+.btn-danger
+{
+    margin-bottom: 20px;
+
+
+}
+
+.card
+{
+    margin-top: 35px;
+    margin-bottom: 40px;
+}

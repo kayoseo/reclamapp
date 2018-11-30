@@ -56,17 +56,25 @@ export class ReclamoComponent implements OnInit {
     
     //
     this.mostrarForm = true;
-    this.fecha = new Date();//creando el numero de reclamo
-    /*
+    this.fecha = new Date();
+    
     var año = this.fecha.getFullYear();
+    console.log("",año);
     var mes = this.fecha.getMonth() + 1;
+    console.log("",mes);
     var dia = this.fecha.getDate();
+    console.log("",dia);
     var minutos = this.fecha.getMinutes();
+    console.log("",minutos);
     var segundos = this.fecha.getSeconds();
-    var mili = this.fecha.getMilliseconds();
-    this.numero = mes + "" + año + "" + "" + dia + "" + minutos + "" + mili + "" + segundos;
-    */
-    //hasta aquí
+    console.log("",segundos);
+    var horas=this.fecha.getHours();
+    console.log("",horas);
+    // The parameters are year, month, day, hours, minutes, seconds.
+    this.fecha= new Date(mes+'/'+dia+'/'+año+' '+horas+':'+minutos+':'+segundos);
+    console.log(this.fecha);
+    //this.numero = mes + "" + año + "" + "" + dia + "" + minutos + "" + mili + "" + segundos;
+  
 
 
     //this.reclamoForm = new Reclamos(this.numero, this.fecha, '', '', '', '', '', '', 'kl', 'kl');

@@ -111,7 +111,7 @@ app.post('/correo/reclamogerente', function (req, res) {
 //Se actualiza un reclamo y el residente recibe un correo con los datos.
 app.post('/correo/updatereclamo', function (req, res) {
     
-    
+   
 
     var mailOptions = {
         from: 'Reclamo Sercolex<reclamo.sercolex@gmail.com>',
@@ -154,6 +154,31 @@ app.post('/correo/reclamoresidente', function (req, res) {
     })
     if(err)
     res.json({ message: "Correo enviado al residente" });
+});
+
+
+//Gerente actualiza reclamo externalizado y el administrador es notificado.
+app.post('/correo/updateadministrador', function (req, res) {
+    
+ 
+    var mailOptions = {
+        from: 'Reclamo Sercolex<reclamo.sercolex@gmail.com>',
+        to: req.body.email,
+        subject: 'Actualización reclamo externalizado',
+        html:'<p>Estimado Administrador,</p><p>El reclamo con <b>N° '+req.body._id+'</b> ha sido actualizado por el Gerente <p>Recuerde revisar el estado del reclamo.</p>'
+        
+    }
+    
+    transporter.sendMail(mailOptions, function (err, res) {
+        if(err){
+            console.log(err);
+        } else {
+            res.json({ message: "Correo enviado" });
+            //console.log('Email Sent');
+        }
+    })
+    res.json({ message: "Correo enviado al administrador" });
+    
 });
 
 //Se crea el reclamo y el administrador recibe un correo con el numero de reclamo que se le ha adjudicado.

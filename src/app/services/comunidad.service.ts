@@ -14,6 +14,11 @@ export class ComunidadService {
         return this._http.post(this.url + 'comunadmin', params, { headers: headers });
      
     }
+
+    AllComunidades(): Observable<any> {
+        return this._http.get(this.url+'comunidad');
+    }
+
     AddComun(comunidad: any): Observable<any> {
         let params = JSON.stringify(comunidad);
         let headers = new HttpHeaders().set('Content-Type', 'application/json');
