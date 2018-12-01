@@ -46,13 +46,13 @@ Login(usuario:any):Observable<any>{
 DeleteUsuario(id:any):Observable<any>{
     let headers=new HttpHeaders().set('Content-Type','application/json');
 
-    return this._http.delete(this.url+'usuario', {headers:headers});
+    return this._http.delete(this.url+'usuario/'+id, {headers:headers});
 }
 
 UpdateUsuario(usuario:any):Observable<any>{
     let params=JSON.stringify(usuario);
     let headers=new HttpHeaders().set('Content-Type','application/json');
 
-    return this._http.put(this.url+'usuario',params, {headers:headers});
+    return this._http.put(this.url+'usuario/'+usuario._id,params, {headers:headers});
 }
 }

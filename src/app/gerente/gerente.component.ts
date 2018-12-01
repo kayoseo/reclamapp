@@ -6,6 +6,7 @@ import { ComunidadService } from '../services/comunidad.service';
 import { ReclamoService } from '../services/reclamo.service';
 import { UsuarioService } from '../services/usuario.service';
 import { CorreoService } from '../services/correo.service'
+import { Alert } from 'selenium-webdriver';
 
 
 @Component({
@@ -46,6 +47,8 @@ export class GerenteComponent implements OnInit {
   public resultado: any;
 
   public nombre: any; //nombre del cual quiero eliminar
+
+  public userEdit:any //nombre del usuario quien deseeo eliminar
 
 
 
@@ -183,13 +186,23 @@ export class GerenteComponent implements OnInit {
 
   }
 
-  deleteUsuario(form) {
-    console.log("El nombre a eliminar", this.idDelete);
+  deleteUsuario(usuario) {
+    console.log("El nombre a eliminar", usuario);
+    for(var reclamo of this.reclamos)
+    {
+      if(reclamo.administrador==usuario&&reclamo.estado!="Finalizado")
+      {
+        reclamo.administrador="Desconocido";
+        this.Actualizar(reclamo);
+        alert("Los reclamos que fueron asignados al administrador y no han sido solucionados tendra que derivarlos la secretaria a otro administrador");
+
+      }
     this.nombre =
       {
-        'nombre': this.idDelete
+        'nombre': usuario
       };
-    this.comunidadAdmin(this.nombre);
+    //this.comunidadAdmin(this.nombre);
+    }
   }
 
 
@@ -383,6 +396,24 @@ export class GerenteComponent implements OnInit {
       },
       error => {
         console.log(<any>error);
+
+      }
+
+    )
+  }
+
+  updateUser(usuario)
+  {
+    
+
+    this._usuarioService.UpdateUsuario(usuario).subscribe(
+      response => {
+        console.log(response);
+        alert("El usuario "+usuario.nombre+" fue actualizado" );
+      },
+      error => {
+        console.log(<any>error);
+
 
       }
 
