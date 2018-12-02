@@ -315,7 +315,7 @@ app.delete('/reclamodelete', function (req, res) {
 
         });
     });
-
+    
     // Actualiza un reclamo
     app.put('/reclamo/:_id', function (req, res) {
         Reclamo.findById(req.params._id, function (error, reclamo) {
@@ -348,7 +348,7 @@ app.delete('/reclamodelete', function (req, res) {
             reclamo.remove(function (removingError) {
                 if (removingError) return res.status(500).send({ error: removingError });
 
-                res.json({ message: "Pingüino removido exitosamente" });
+                res.json({ message: "reclamo removido exitosamente" });
             });
         });
     });
@@ -444,7 +444,7 @@ app.delete('/comunidadDelete', function (req, res) {
             comunidad.remove(function (removingError) {
                 if (removingError) return res.status(500).send({ error: removingError });
 
-                res.json({ message: "Pingüino removido exitosamente" });
+                res.json({ message: "Comunidad removido exitosamente" });
             });
         });
     });
@@ -558,7 +558,7 @@ app.delete('/usuarioDelete', function (req, res) {
             usuario.remove(function (removingError) {
                 if (removingError) return res.status(500).send({ error: removingError });
 
-                res.json({ message: "Pingüino removido exitosamente" });
+                res.json({ message: "Usuario removido exitosamente" });
             });
         });
     });

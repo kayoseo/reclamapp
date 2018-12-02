@@ -42,13 +42,15 @@ export class GerenteComponent implements OnInit {
 
   public comunidades: any;
 
+  public repetido: boolean; // booleano para verificar que no se ingresan datos repetidos de otros usuarios
+
   public listaUser: any; //de gerentes y administradores
   public allUser: any; //todos los tipos de usuarios
   public resultado: any;
 
   public nombre: any; //nombre del cual quiero eliminar
 
-  public userEdit:any //nombre del usuario quien deseeo eliminar
+  public userEdit: any //nombre del usuario quien deseeo eliminar
 
 
 
@@ -57,7 +59,7 @@ export class GerenteComponent implements OnInit {
     this.contador = 0;
     this.opcion = 'nada';
     this.accion = 'nada';
-    this.nuevoUsuario = new Usuario('', '', '', '');
+    this.nuevoUsuario = new Usuario('', '@sercolex.cl', '', '');
     this.nuevaComun = new Comunidad('', '', '', []);
 
     this.traerValoresAllUser();
@@ -144,6 +146,7 @@ export class GerenteComponent implements OnInit {
   }
 
   newComuni(form) {
+    this.nuevaComun.nombre=this.nuevaComun.nombre.trim();
     this._comunidadService.AddComun(this.nuevaComun).subscribe(
       response => {
         console.log(response);
@@ -163,49 +166,86 @@ export class GerenteComponent implements OnInit {
     this.repetir = new Array(this.numeros);
   }
   newUsuario(form) {
+    this.repetido = false;
     this.nuevoUsuario.mail = this.nuevoUsuario.mail.toLocaleLowerCase();
-    this._usuarioService.AddUsuario(this.nuevoUsuario).subscribe(
-      response => {
-        console.log(response);
-        alert("Usuario creado con exito");
-        form.reset();
-        this.traerValoresAllUser();
-      },
-      error => {
-        console.log(<any>error);
-        alert(({
-          title: 'Alert!',
-          content: 'Existio un problema al crear el usuario',
-        })
-        );
+    this.nuevoUsuario.mail = this.nuevoUsuario.mail.trim();
+    this.nuevoUsuario.nombre = this.nuevoUsuario.nombre.trim();
+    
+    for (var user of this.allUser) {
+      if (user.mail == this.nuevoUsuario.mail) {
+        this.repetido = true;
+        alert("El correo ingresado ya se encuentra registrado. Para crer un nuevo usuario el nombre y el correo deben ser diferentes para cada usuario ");
+      }
 
+      if (user.nombre == this.nuevoUsuario.nombre) {
+        this.repetido = true;
+        alert("El nombre del empleado ingresado ya se encuentra registrado. Para crer un nuevo usuario el nombre y el correo deben ser diferentes para cada usuario ");
+      }
+    }
+      if (this.repetido == false) {
+        this._usuarioService.AddUsuario(this.nuevoUsuario).subscribe(
+          response => {
+            console.log(response);
+            alert("Usuario creado con exito");
+            form.reset();
+            this.traerValoresAllUser();
+          },
+          error => {
+            console.log(<any>error);
+            alert(({
+              title: 'Alert!',
+              content: 'Existio un problema al crear el usuario',
+            })
+            );
+
+
+          }
+        )
 
       }
-    )
-
-
+    
   }
 
   deleteUsuario(usuario) {
+    var contador = 0;
     console.log("El nombre a eliminar", usuario);
-    for(var reclamo of this.reclamos)
-    {
-      if(reclamo.administrador==usuario&&reclamo.estado!="Finalizado")
-      {
-        reclamo.administrador="Desconocido";
+    for (var reclamo of this.reclamos) {
+      if (reclamo.administrador == usuario && reclamo.estado != "Finalizado") {
+        reclamo.administrador = "Desconocido";
         this.Actualizar(reclamo);
         alert("Los reclamos que fueron asignados al administrador y no han sido solucionados tendra que derivarlos la secretaria a otro administrador");
 
       }
-    this.nombre =
-      {
-        'nombre': usuario
-      };
-    //this.comunidadAdmin(this.nombre);
+
+
     }
+
+    for (var user of this.allUser) {
+      if (user.nombre == usuario) {
+        this.idDelete = user._id;
+        console.log("entrar a borrar");
+        this.BorrarUsuarioService(this.idDelete);
+        this.allUser.splice(contador, 1);
+      }
+      contador = contador + 1;
+    }
+
   }
 
+  BorrarUsuarioService(id) {
+    this._usuarioService.DeleteUsuario(id).subscribe(
+      request => {
+        this.resultado = request;
+        console.log(request);
+        console.log("Usuario Eliminador", this.resultado)
+      },
+      error => {
+        console.log(<any>error);
 
+
+      }
+    )
+  }
 
   traerValoresAllUser() {
 
@@ -402,14 +442,13 @@ export class GerenteComponent implements OnInit {
     )
   }
 
-  updateUser(usuario)
-  {
-    
+  updateUser(usuario) {
+
 
     this._usuarioService.UpdateUsuario(usuario).subscribe(
       response => {
         console.log(response);
-        alert("El usuario "+usuario.nombre+" fue actualizado" );
+        alert("El usuario " + usuario.nombre + " fue actualizado");
       },
       error => {
         console.log(<any>error);
