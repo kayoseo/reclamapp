@@ -21,7 +21,7 @@
   </div>
   <div class="form-group">
     <label for="telefono">Telefono</label>
-    <input type="text" class="form-control" name="telefono" #telefono="ngModel" [(ngModel)]="reclamoForm.telefono" required>
+    <input type="number" class="form-control" name="telefono" #telefono="ngModel" [(ngModel)]="reclamoForm.telefono" required>
     <div class="alert alert-danger" *ngIf="telefono.touched && !telefono.valid">
       <strong>¡Error!</strong> Campo obligatorio
     </div>

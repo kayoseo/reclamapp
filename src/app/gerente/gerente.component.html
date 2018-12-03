@@ -201,7 +201,7 @@
       </div>
       <div class="form-group">
         <label>Mail</label>
-        <input type="email" class="form-control"  pattern="[a-z0-9._%+-]+@sercolex\.cl" name="mail" #mail="ngModel" [(ngModel)]="nuevoUsuario.mail" required>
+        <input type="email" class="form-control"  pattern="[A-Za-z0-9._%+-]+@sercolex\.cl" name="mail" #mail="ngModel" [(ngModel)]="nuevoUsuario.mail" required>
         <div class="alert alert-danger" *ngIf="mail.touched && !mail.valid">
           <strong>¡Error!</strong> Este campo es obligatorio y el correo tiene que ser @sercolex.cl
         </div>
