@@ -310,7 +310,7 @@
               <td>
                   <div class="form-group col-md-12 col-xl-12 col-xs-12">
                     <select id="inputState" class="form-control"  name="comu" #comu="ngModel" [(ngModel)]="reclamo.comunidad" required>
-                      <option selected *ngFor="let item of allComunidad">{{item.nombre}}</option>
+                      <option *ngFor="let comuni of allComunidad">{{comuni.nombre}}</option>
                     </select>
                   </div>
               </td>
@@ -320,7 +320,7 @@
               <td>
                 <div class="form-group col-md-12 col-xl-12 col-xs-12">
                   <select id="inputState" class="form-control" name="estado" #estado="ngModel" [(ngModel)]="reclamo.estado" required>
-                    <option selected>{{reclamo.estado}}</option>
+                    <option >{{reclamo.estado}}</option>
                     <option *ngIf="reclamo.estado!='En proceso'">En proceso</option>
                     <option *ngIf="reclamo.estado!='Externo'">Externo</option>
                     <option *ngIf="reclamo.estado!='Finalizado'">Finalizado</option>
@@ -340,6 +340,62 @@
           </tbody>
         </table>
         </div>
+
+        <div class="card bg-light mb-3" id="card">
+          <h2 class="card-title">Sin comunidad</h2>
+          <table class="table table-striped ">
+            <thead>
+              <tr>
+                <th scope="col">Fecha</th>
+                <th scope="col">Transcurrido</th>
+                <th scope="col">Comunidad</th>
+                <th scope="col">Dirección</th>
+                <th scope="col">Residente</th>
+                <th scope="col">Descripción</th>
+                <th scope="col">Estado</th>
+                <th scope="col">Solucion</th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngFor="let reclamo of reclamos;let indice = index">
+              <tr *ngIf="reclamo.comunidad===''" >
+                <td>{{fechaDate[indice]}}</td>
+                <td>{{transcurrido[indice]}}</td>
+                
+                <td>
+                    <div class="form-group col-md-12 col-xl-12 col-xs-12">
+                      <select id="inputState" class="form-control"  name="comu" #comu="ngModel" [(ngModel)]="reclamo.comunidad" required>
+                        <option *ngFor="let comuni of allComunidad">{{comuni.nombre}}</option>
+                      </select>
+                    </div>
+                </td>
+                <td>{{reclamo.direccion}}</td>
+                <td>{{reclamo.nombre}}</td>
+                <td>{{reclamo.problema}}</td>
+                <td>
+                  <div class="form-group col-md-12 col-xl-12 col-xs-12">
+                    <select id="inputState" class="form-control" name="estado" #estado="ngModel" [(ngModel)]="reclamo.estado" required>
+                      <option >{{reclamo.estado}}</option>
+                      <option *ngIf="reclamo.estado!='En proceso'">En proceso</option>
+                      <option *ngIf="reclamo.estado!='Externo'">Externo</option>
+                      <option *ngIf="reclamo.estado!='Finalizado'">Finalizado</option>
+                    </select>
+                  </div>
+                </td>
+                <td>
+                  <div class="form-group" >
+                    <input  type="text" class="form-control" name="solucion" #solucion="ngModel" [(ngModel)]="reclamo.solucion" required>
+                  </div>
+                </td>
+                <td>
+                <button type="submit" (click)="Actualizar(reclamo)" class="btn btn-primary">Actualizar</button>
+              </td>
+              </tr>
+            </ng-container>
+            </tbody>
+          </table>
+          </div>
         
         <div *ngFor="let comunidad of allComunidad">
             <div class="card bg-light mb-3" id="card">
@@ -369,7 +425,7 @@
               <td>
                   <div class="form-group col-md-12 col-xl-12 col-xs-12">
                     <select id="inputState" class="form-control"  name="comu" #comu="ngModel" [(ngModel)]="reclamo.comunidad" required>
-                      <option selected *ngFor="let item of comunidades">{{item.nombre}}</option>
+                      <option *ngFor="let comuni of allComunidad">{{comuni.nombre}}</option>
                     </select>
                   </div>
               </td>
@@ -379,7 +435,7 @@
               <td>
                 <div class="form-group col-md-12 col-xl-12 col-xs-12">
                   <select id="inputState" class="form-control" name="estado" #estado="ngModel" [(ngModel)]="reclamo.estado" required>
-                    <option selected>{{reclamo.estado}}</option>
+                    <option >{{reclamo.estado}}</option>
                     <option *ngIf="reclamo.estado!='En proceso'">En proceso</option>
                     <option *ngIf="reclamo.estado!='Externo'">Externo</option>
                     <option *ngIf="reclamo.estado!='Finalizado'">Finalizado</option>
