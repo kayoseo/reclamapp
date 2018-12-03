@@ -3,7 +3,9 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "app": "ng serve",
+    "api": "cd node-api-back && node index.js",
+    "start": "concurrently \"npm run app\" \"npm run api\"",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
@@ -21,6 +23,7 @@
     "@angular/platform-browser-dynamic": "^6.1.0",
     "@angular/router": "^6.1.0",
     "bootstrap": "^4.0.0-alpha.6",
+    "concurrently": "^4.1.0",
     "core-js": "^2.5.4",
     "jquery": "^3.3.1",
     "jquery-confirm": "^3.3.2",

@@ -7,16 +7,16 @@
     <title>Administrador</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
-<body >
-    <section id="global" style="text-align:center">
+<body id="global">
+    <section>
         <header>
-           
-            <div id="icono">
-                    <img src="/src/assets/cropped-Dibujo3.jpg" >
-            </div>
-          
+            <div class="text-center">
+                <img class="img-fluid" src="/src/assets/cropped-Dibujo3.jpg" >
+            </div>     
         </header>
     </section> 
-    <router-outlet></router-outlet>
+    <div class="container-fluid">
+        <router-outlet></router-outlet>
+    </div>
 </body>
 </html>
