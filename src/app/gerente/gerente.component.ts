@@ -51,6 +51,8 @@ export class GerenteComponent implements OnInit {
   public nombre: any; //nombre del cual quiero eliminar
 
   public userEdit: any //nombre del usuario quien deseeo eliminar
+  public comunidadEdit:any //nombre de la comunidad que deseo editar o eliminar
+  public comunidadDelete:any; //nombre de la comunidad a eliminar
 
 
 
@@ -121,17 +123,17 @@ export class GerenteComponent implements OnInit {
 
 
     var año = reclamosAdmin.getFullYear();
-    console.log("", año);
+   // console.log("", año);
     var mes = reclamosAdmin.getMonth() + 1;
-    console.log("", mes);
+   // console.log("", mes);
     var dia = reclamosAdmin.getDate();
-    console.log("", dia);
+    // console.log("", dia);
     var minutos = reclamosAdmin.getMinutes();
-    console.log("", minutos);
+   // console.log("", minutos);
     var segundos = reclamosAdmin.getSeconds();
-    console.log("", segundos);
+   // console.log("", segundos);
     var horas = reclamosAdmin.getHours();
-    console.log("", horas);
+   // console.log("", horas);
 
 
     this.fechaDate[this.contador] = mes + '/' + dia + '/' + año + ' ' + horas + ':' + minutos + ':' + segundos;
@@ -151,6 +153,7 @@ export class GerenteComponent implements OnInit {
       response => {
         console.log(response);
         alert("Comunidad creada con exito");
+        this.Comunidad();
       },
       error => {
         console.log(<any>error);
@@ -237,7 +240,7 @@ export class GerenteComponent implements OnInit {
       request => {
         this.resultado = request;
         console.log(request);
-        console.log("Usuario Eliminador", this.resultado)
+       alert("El usuario fue eliminado. Si el usuario era un administrador modificar las comunidades asignadas al empleado")
       },
       error => {
         console.log(<any>error);
@@ -354,7 +357,105 @@ export class GerenteComponent implements OnInit {
     )
 
   }
+ ActualizaComunidad(nombreComunidad)
+{
+for(var reclamo1 of this.reclamos)
+{
+  if(reclamo1.comunidad==nombreComunidad.nombre)
+  {
+    reclamo1.administrador=nombreComunidad.administrador;
+    this.ActualizarReclamoComunidad(reclamo1);
+  }
+}
+this.ActualizarComunidad(nombreComunidad);
+}
+  ActualizarReclamoComunidad(item: any) {
+    //console.log("primero");
+    item.fecha = new Date(item.fecha);
+    this.idReclamo = item._id;
+    this._reclamoService.UpdateReclamo(item).subscribe(
+      response => {
+        console.log(response);
+        var año = item.fecha.getFullYear();
 
+        var mes = item.fecha.getMonth() + 1;
+
+        var dia = item.fecha.getDate();
+
+        var minutos = item.fecha.getMinutes();
+
+        var segundos = item.fecha.getSeconds();
+
+        var horas = item.fecha.getHours();
+
+        item.fecha = mes + '/' + dia + '/' + año + ' ' + horas + ':' + minutos + ':' + segundos;
+        
+      },
+      error => {
+        console.log(<any>error);
+
+
+      }
+
+    )
+  }
+ 
+  ActualizarComunidad(comunidad)
+  {
+    //console.log("segundo");
+    this._comunidadService.UpdateComun(comunidad).subscribe(
+      response => {
+        //console.log(response);
+      alert("Comunidad editada con exito. Los reclamos han sido re asignados al nuevo administrador")
+      },
+      error => {
+        console.log(<any>error);
+
+
+      }
+
+    )
+  }
+  EliminarComunidad(comunidad)
+  {
+    for(var reclamo1 of this.reclamos)
+    {
+      if(reclamo1.comunidad==comunidad.nombre)
+      {
+        console.log("primero");
+        this.EliminarReclamo(reclamo1._id);
+      }
+    }
+    this._comunidadService. DeleteComun(comunidad._id).subscribe(
+      request => {
+        console.log("segundo");
+        this.resultado = request;
+        console.log(request);
+       alert("La comunidad y los reclamos asociados a ella fueron eliminados.")
+      },
+      error => {
+        console.log(<any>error);
+
+
+      }
+    )
+   
+  }
+
+  EliminarReclamo(id)
+  {
+    this._reclamoService. DeleteReclamo(id).subscribe(
+      request => {
+        this.resultado = request;
+        console.log(request);
+      },
+      error => {
+        console.log(<any>error);
+
+
+      }
+    )
+  }
 
   Actualizar(item: any) {
     item.fecha = new Date(item.fecha);

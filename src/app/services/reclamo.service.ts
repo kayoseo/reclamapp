@@ -40,10 +40,10 @@ export class ReclamoService {
         return this._http.post(this.url+'reclamo/',params, {headers:headers});
     }
 
-    DeleteReclamo(id: any): Observable<any> {
+    DeleteReclamo(id:any): Observable<any> {
         let headers = new HttpHeaders().set('Content-Type', 'application/json');
 
-        return this._http.delete(this.url + 'reclamo/', { headers: headers });
+        return this._http.delete(this.url + 'reclamo/'+id, { headers: headers });
     }
 
     UpdateReclamo(reclamo): Observable<any> {

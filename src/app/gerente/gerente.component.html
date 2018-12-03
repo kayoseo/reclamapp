@@ -133,21 +133,26 @@
       </div>
     </div>
     <div class="form-group">
-      <label for="exampleFormControlSelect1">Comunidad</label>
-      <select class="form-control" id="exampleFormControlSelect1">
-        <option>Manuel Montt</option>
-        <option>Ejercito</option>
+      <label >Comunidad</label>
+      <select class="form-control" name="comunidadEditar" #comunidadEditar="ngModel" [(ngModel)]="comunidadEdit"
+      required>
+        <option *ngFor="let comunidad of allComunidad;let i = index">{{comunidad.nombre}}</option>
       </select>
+    </div>
 
-    </div>
     <div class="form-group">
-      <label for="exampleFormControlSelect1">Administrador</label>
-      <select class="form-control" id="exampleFormControlSelect1">
-        <option>Sergio Román</option>
-        <option>Ejercito</option>
+        <ng-container *ngFor="let comunidad of allComunidad">
+            <ng-container *ngIf="comunidad.nombre==comunidadEdit">
+      <label >Administrador</label>
+      <select class="form-control" name="adminComunidad" #adminComunidad="ngModel" [(ngModel)]="comunidad.administrador"
+      required>
+        <option *ngFor="let usuario of listaUser;let i = index">{{usuario.nombre}}</option>
       </select>
+      <button type="button" class="btn btn-primary" (click)="ActualizaComunidad(comunidad)">Editar</button>
+    </ng-container>
+  </ng-container>
     </div>
-    <button type="button" class="btn btn-primary">Editar</button>
+    
 
   </div>
 
@@ -160,13 +165,17 @@
       </div>
     </div>
     <div class="form-group">
-      <label for="exampleFormControlSelect1">Comunidad</label>
-      <select class="form-control" id="exampleFormControlSelect1">
-        <option>Manuel Montt</option>
-        <option>Ejercito</option>
+      <label >Comunidad</label>
+      <select class="form-control" name="Comunidad" #Comunidad="ngModel" [(ngModel)]="comunidadDelete"
+      required>
+        <option *ngFor="let comunidad of allComunidad">{{comunidad.nombre}}</option>
       </select>
     </div>
-    <button type="button" class="btn btn-danger">Eliminar</button>
+    <ng-container *ngFor="let comunidad of allComunidad">
+        <ng-container *ngIf="comunidad.nombre==comunidadDelete">
+    <button type="button" class="btn btn-danger" (click)=" EliminarComunidad(comunidad)">Eliminar</button>
+  </ng-container>
+</ng-container>
   </div>
 
 

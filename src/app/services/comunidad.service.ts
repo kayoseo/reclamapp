@@ -28,13 +28,13 @@ export class ComunidadService {
     DeleteComun(id:any):Observable<any>{
         let headers=new HttpHeaders().set('Content-Type','application/json');
     
-        return this._http.delete(this.url+'comunidad', {headers:headers});
+        return this._http.delete(this.url+'comunidad/'+id, {headers:headers});
     }
     
     UpdateComun(comunidad:any):Observable<any>{
         let params=JSON.stringify(comunidad);
         let headers=new HttpHeaders().set('Content-Type','application/json');
     
-        return this._http.put(this.url+'comunidad',params, {headers:headers});
+        return this._http.put(this.url+'comunidad/'+comunidad._id,params, {headers:headers});
     }
 }
