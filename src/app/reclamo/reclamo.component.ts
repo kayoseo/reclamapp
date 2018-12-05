@@ -78,7 +78,7 @@ export class ReclamoComponent implements OnInit {
 
 
     //this.reclamoForm = new Reclamos(this.numero, this.fecha, '', '', '', '', '', '', 'kl', 'kl');
-    this.reclamoForm = new Reclamos(this.fecha,'','', '','', '', '', '', '', '', '');
+    this.reclamoForm = new Reclamos(this.fecha,'','', '','', '', '', '', '', '', '','');
     this.buscador = new Numero('');
 
 
@@ -87,6 +87,15 @@ export class ReclamoComponent implements OnInit {
   ngOnInit() {
 
   }
+
+ home()
+ {
+  this.mostrarForm = true;
+  this.fecha = new Date();
+  this.reclamoForm = new Reclamos(this.fecha,'','', '','', '', '', '', '', '', '','');
+    this.buscador = new Numero('');
+
+ }
 
   onSubmit(form) {
     console.log("submit lanzado", this.reclamoForm);
@@ -111,7 +120,7 @@ export class ReclamoComponent implements OnInit {
 
         //this.reclamoForm = new Reclamos(this.numero, this.fecha, '', '', '', '', '', '', '', '');
         this.correo();
-        this.reclamoForm = new Reclamos(this.fecha,'','','', '', '', '', '', '', '', '');
+        this.reclamoForm = new Reclamos(this.fecha,'','','', '', '', '', '', '', '', '','');
         form.reset();
         
       },

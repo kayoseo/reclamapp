@@ -53,10 +53,12 @@ var reclamoSchema = new mongoose.Schema({
     email: { type: String },
     administrador: { type: String },
     comunidad: { type: String },
+    torreDpto: {type:String},
     direccion: { type: String },
     problema: { type: String },
     estado: { type: String },
-    solucion: { type: String }
+    solucion: { type: String },
+    encuesta: {type: String}
 });
 
 var Reclamo = mongoose.model('Reclamo', reclamoSchema);
@@ -303,10 +305,12 @@ app.delete('/reclamodelete', function (req, res) {
         reclamo.email = req.body.email;
         reclamo.administrador = req.body.administrador;
         reclamo.comunidad = req.body.comunidad;
+        reclamo.torreDpto=req.body.torreDpto;
         reclamo.direccion = req.body.direccion;
         reclamo.problema = req.body.problema;
         reclamo.estado = req.body.estado || 'No informado';
         reclamo.solucion = req.body.solucion || 'Esperando solución...';
+        reclamo.encuesta=req.body.encuesta || 'false';
 
         reclamo.save(function (error, savedReclamo) {
             if (error) return res.status(500).send(error);
@@ -327,10 +331,12 @@ app.delete('/reclamodelete', function (req, res) {
             reclamo.email = req.body.email;
             reclamo.administrador = req.body.administrador;
             reclamo.comunidad = req.body.comunidad;
+            reclamo.torreDpto=req.body.torreDpto;
             reclamo.direccion = req.body.direccion;
             reclamo.problema = req.body.problema;
             reclamo.estado = req.body.estado || 'No informado';
             reclamo.solucion = req.body.solucion || 'Esperando solución...';
+            reclamo.encuesta=req.body.encuesta || 'false';
 
             reclamo.save(function (savingError, savedReclamo) {
                 if (savingError) return res.status(500).send(savingError);

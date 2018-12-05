@@ -95,17 +95,15 @@
           <strong>¡Error!</strong> Campo obligatorio
         </div>
       </div>
-      <form>
         <div class="form-group">
           <label>Numero de Edificios</label>
           <input type="number" class="form-control" name="numeross" #numeross="ngModel" [(ngModel)]="numeros" required>
           <div class="alert alert-danger" *ngIf="numeross.touched && !numeross.valid">
             <strong>¡Error!</strong> Campo obligatorio
           </div>
-          <button class="btn btn-primary" type="submit" (click)="asignar(numeros)">Asignar nombres</button>
+          <button class="btn btn-primary" type="button" (click)="asignar(numeros)">Asignar nombres</button>
         </div>
-
-        <form #formTorres="ngForm" id="torre" *ngIf="numeros">
+       <ng-container *ngIf="numeros">
           <div id="nombreEdificios" *ngFor="let item of repetir;let i = index">
             <div class="form-group">
               <label>Edificio {{i+1}}</label>
@@ -113,9 +111,10 @@
                 required placeholder="Nombre, letra o número">
             </div>
           </div>
-        </form>
-      </form>
-      <button type="submit" class="btn btn-primary">Crear</button>
+        </ng-container>
+      
+    
+      <button type="submit" class="btn btn-primary" [disabled]="!formComunidad.valid">Crear</button>
 
     </form>
 
@@ -143,7 +142,7 @@
       <label >Administrador</label>
       <select class="form-control" name="adminComunidad" #adminComunidad="ngModel" [(ngModel)]="comunidad.administrador"
       required>
-        <option *ngFor="let usuario of listaUser;let i = index">{{usuario.nombre}}</option>
+        <option *ngFor="let usuario of listaUser">{{usuario.nombre}}</option>
       </select>
       <button type="button" class="btn btn-primary" (click)="ActualizaComunidad(comunidad)">Editar</button>
     </ng-container>
@@ -198,7 +197,8 @@
       </div>
       <div class="form-group">
         <label>Mail</label>
-        <input type="email" class="form-control"  pattern="[A-Za-z0-9._%+-]+@sercolex\.cl" name="mail" #mail="ngModel" [(ngModel)]="nuevoUsuario.mail" required>
+        <!--<input type="email" class="form-control"  pattern="[A-Za-z0-9._%+-]+@sercolex\.cl" name="mail" #mail="ngModel" [(ngModel)]="nuevoUsuario.mail" required>-->
+        <input type="email" class="form-control"  pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}" name="mail" #mail="ngModel" [(ngModel)]="nuevoUsuario.mail" required>
         <div class="alert alert-danger" *ngIf="mail.touched && !mail.valid">
           <strong>¡Error!</strong> Este campo es obligatorio y el correo tiene que ser @sercolex.cl
         </div>
@@ -250,7 +250,7 @@
         <h4><i class="fas fa-user-tie" aria-hidden="true"></i> Editar</h4>
       </div>
     </div>
-    <form>
+    <form #formEditAdmin="ngForm" id="formulario">
     <div class="form-group">
       <label for="exampleFormControlSelect1">Empleado</label>
       <select class="form-control" class="form-control" name="usuarioEditar" #usuarioEditar="ngModel" [(ngModel)]="userEdit"
@@ -262,15 +262,23 @@
     <ng-container *ngIf="user.nombre==userEdit">
     <div class="form-group" >
       <label for="exampleFormControlInput1">Mail</label>
-      <input type="text" class="form-control" name="mail" #mail="ngModel" [(ngModel)]="user.mail"
+      <!--<input type="text" class="form-control" pattern="[A-Za-z0-9._%+-]+@sercolex\.cl" name="mail" #mail="ngModel" [(ngModel)]="user.mail"
+      required>-->
+      <input type="text" class="form-control" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}" name="mail" #mail="ngModel" [(ngModel)]="user.mail"
       required>
+      <div class="alert alert-danger" *ngIf="mail.touched && !mail.valid">
+        <strong>¡Error!</strong> Campo obligatorio
+      </div>
     </div>
     <div class="form-group">
       <label for="exampleFormControlInput1">Contraseña</label>
       <input type="password" class="form-control" name="clave" #clave="ngModel" [(ngModel)]="user.clave"
       required>
+      <div class="alert alert-danger" *ngIf="clave.touched && !clave.valid">
+        <strong>¡Error!</strong> Campo obligatorio
+      </div>
     </div>
-    <button type="button" class="btn btn-primary" (click)="updateUser(user)">Editar</button>
+    <button type="button" class="btn btn-primary" [disabled]="!formEditAdmin.valid" (click)="updateUser(user)">Editar</button>
   </ng-container>
   </ng-container>
   </form>

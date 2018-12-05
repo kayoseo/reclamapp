@@ -13,6 +13,7 @@
       <th scope="col">Fecha</th>
       <th scope="col">Transcurrido</th>
       <th scope="col">Comunidad</th>
+      <th scope="col">Torre</th>
       <th scope="col">Dirección</th>
       <th scope="col">Residente</th>
       <th scope="col">Descripción</th>
@@ -31,6 +32,17 @@
           <div class="form-group col-md-12 col-xl-12 col-xs-12">
             <select id="inputState" class="form-control"  name="comu" #comu="ngModel" [(ngModel)]="reclamo.comunidad" required>
               <option selected *ngFor="let item of comunidades">{{item.nombre}}</option>
+            </select>
+          </div>
+      </td>
+      <td>
+          <div class="form-group col-md-12 col-xl-12 col-xs-12">
+            <select id="inputState" class="form-control"  name="torre" #torre="ngModel" [(ngModel)]="reclamo.torreDpto" required>
+              <ng-container *ngFor="let comun of comunidades">
+                <ng-container *ngIf="comun.nombre==reclamo.comunidad">
+              <option selected *ngFor="let torre of comun.torreDpto">{{torre}}</option>
+            </ng-container>
+          </ng-container>
             </select>
           </div>
       </td>
@@ -70,6 +82,7 @@
       <th scope="col">Fecha</th>
       <th scope="col">Transcurrido</th>
       <th scope="col">Comunidad</th>
+      <th scope="col">Torre</th>
       <th scope="col">Dirección</th>
       <th scope="col">Residente</th>
       <th scope="col">Descripción</th>
@@ -93,6 +106,18 @@
             </select>
           </div>
       </td>
+      <td>
+        <div class="form-group col-md-12 col-xl-12 col-xs-12">
+          <select id="inputState" class="form-control"  name="torre" #torre="ngModel" [(ngModel)]="reclamo.torreDpto" required>
+            <ng-container *ngFor="let comun of comunidades">
+              <ng-container *ngIf="comun.nombre==reclamo.comunidad">
+            <option selected *ngFor="let torre of comun.torreDpto">{{torre}}</option>
+          </ng-container>
+        </ng-container>
+          </select>
+        </div>
+    </td>
+
       <td>{{reclamo.direccion}}</td>
       <td>{{reclamo.nombre}}</td>
       <td>{{reclamo.problema}}</td>

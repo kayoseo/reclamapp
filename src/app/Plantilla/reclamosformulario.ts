@@ -11,7 +11,8 @@ export class Reclamos{
         public direccion:string,
         public problema:string,
         public estado:string,
-        public solucion:string
+        public solucion:string,
+        public encuesta:string
     )
     {}
 }

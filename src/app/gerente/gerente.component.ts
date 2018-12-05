@@ -61,7 +61,8 @@ export class GerenteComponent implements OnInit {
     this.contador = 0;
     this.opcion = 'nada';
     this.accion = 'nada';
-    this.nuevoUsuario = new Usuario('', '@sercolex.cl', '', '');
+    //this.nuevoUsuario = new Usuario('', '@sercolex.cl', '', '');
+    this.nuevoUsuario = new Usuario('', '', '', '');
     this.nuevaComun = new Comunidad('', '', '', []);
 
     this.traerValoresAllUser();
@@ -149,6 +150,12 @@ export class GerenteComponent implements OnInit {
 
   newComuni(form) {
     this.nuevaComun.nombre=this.nuevaComun.nombre.trim();
+    if(this.nuevaComun.torreDpto.length<this.numeros)
+    {
+      alert("Error!! Faltan asignar torres");
+    }
+    else
+    {
     this._comunidadService.AddComun(this.nuevaComun).subscribe(
       response => {
         console.log(response);
@@ -161,6 +168,7 @@ export class GerenteComponent implements OnInit {
 
       }
     )
+  }
   }
 
 
@@ -418,6 +426,7 @@ this.ActualizarComunidad(nombreComunidad);
   }
   EliminarComunidad(comunidad)
   {
+    var contador=0;
     for(var reclamo1 of this.reclamos)
     {
       if(reclamo1.comunidad==comunidad.nombre)
@@ -431,6 +440,13 @@ this.ActualizarComunidad(nombreComunidad);
         console.log("segundo");
         this.resultado = request;
         console.log(request);
+
+    for (var comun of this.allComunidad) {
+      if (comun.nombre == this.comunidadDelete) {
+        this.allComunidad.splice(contador, 1);
+      }
+      contador = contador + 1;
+    }
        alert("La comunidad y los reclamos asociados a ella fueron eliminados.")
       },
       error => {
@@ -461,6 +477,16 @@ this.ActualizarComunidad(nombreComunidad);
     item.fecha = new Date(item.fecha);
     console.log("se presiono el objeto", item);
     this.idReclamo = item._id;
+    if(item.comunidad=="")
+    {
+      alert("Error al actualizar. Se requiere asignar la Comunidad perteneciente al reclamo")
+    }
+    else{
+      if(item.estado=="No informado")
+    {
+      alert("Error al actualizar. Debe cambiar el estado del reclamo")
+    }
+    else{
     this._reclamoService.UpdateReclamo(item).subscribe(
       response => {
         console.log(response);
@@ -487,6 +513,8 @@ this.ActualizarComunidad(nombreComunidad);
       }
 
     )
+    }
+  }
   }
   //aviso al residente
   correo(item) {

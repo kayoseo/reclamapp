@@ -3,6 +3,10 @@
 -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="collapse navbar-collapse">
+      <div class="my-2 my-lg-0">
+          <!--<button type="button" class="btn btn-success" [routerLink]="''">HOME</button>-->
+          <button type="button" class="btn btn-success" (click)="home()">HOME</button>
+        </div>
     <div class="navbar-nav mr-auto mt-2 mt-lg-0">
       <form class="form-inline" #formBuscar="ngForm" >
         <input class="form-control mr-sm-2" type="search" placeholder="Buscar por nº reclamo" aria-label="Buscar" name="buscar" #buscar="ngModel" [(ngModel)]="buscador.numero" required>
@@ -31,10 +35,10 @@
     </div>
   </div>
   <div class="form-group">
-    <label for="email">Email</label>
-    <input type="email" class="form-control" name="email" #email="ngModel" [(ngModel)]="reclamoForm.email" placeholder="name@example.com" required>
+    <label >Email</label>
+    <input type="email" class="form-control" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}"  name="email" #email="ngModel" [(ngModel)]="reclamoForm.email" placeholder="name@example.com"  required>
     <div class="alert alert-danger" *ngIf="email.touched && !email.valid">
-      <strong>¡Error!</strong> Campo obligatorio
+      <strong>¡Error!</strong> El campo es obligatorio y debe ingresarse un correo valido
     </div>
   </div>
   <div class="form-group">

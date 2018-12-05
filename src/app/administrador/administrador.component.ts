@@ -144,6 +144,16 @@ export class AdministradorComponent implements OnInit {
 
     console.log("se presiono el objeto", item);
     this.idReclamo = item._id;
+    if(item.comunidad=="")
+    {
+      alert("Error al actualizar. Se requiere asignar la Comunidad perteneciente al reclamo");
+    }
+    else{
+    if(item.estado=="No informado")
+    {
+      alert("Error al actualizar. Debe cambiar el estado del reclamo")
+    }
+    else{
     this._reclamoService.UpdateReclamo(item).subscribe(
       response => {
         console.log(response);
@@ -171,6 +181,8 @@ export class AdministradorComponent implements OnInit {
       }
 
     )
+  }
+}
   }
 
   correo(item) {

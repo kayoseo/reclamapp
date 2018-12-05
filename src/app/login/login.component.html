@@ -16,9 +16,9 @@
   </div>
   <form #formLogin="ngForm" (ngSubmit)="Logearse(formLogin)">
     <div class="form-group">
-      <input type="text" class="form-control" id="user_id" placeholder="Correo" name="usuario" #usuario="ngModel" [(ngModel)]="acceso.mail" required>
+      <input type="text" class="form-control" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}" id="user_id" placeholder="Correo" name="usuario" #usuario="ngModel" [(ngModel)]="acceso.mail" required>
       <div class="alert alert-danger" *ngIf="usuario.touched && !usuario.valid">
-        <strong>¡Error!</strong> Campo obligatorio
+        <strong>¡Error!</strong> El campo es obligatorio y debe ingresarse un correo valido
       </div>
     </div>
     <div class="form-group">
