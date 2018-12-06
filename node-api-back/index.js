@@ -48,6 +48,7 @@ mongoose.connect('mongodb://localhost/sercolex-api', { useMongoClient: true });
 var reclamoSchema = new mongoose.Schema({
     numero: { type: String }, //required: true demtrp del parentesis so es qie es obligatorio.
     fecha: { type: String },
+    fechaTermino: {type: String},
     nombre: { type: String }, //nombre residente
     telefono: { type: String },
     email: { type: String },
@@ -61,7 +62,17 @@ var reclamoSchema = new mongoose.Schema({
     encuesta: {type: String}
 });
 
+
+
 var Reclamo = mongoose.model('Reclamo', reclamoSchema);
+
+var encuestaSchema = new mongoose.Schema({
+    administrador: { type: String }, //required: true demtrp del parentesis so es qie es obligatorio.
+    reclamo: { type: String },
+    nota: { type: String }
+});
+
+var Encuesta = mongoose.model('Encuesta', encuestaSchema);
 
 var usuarioSchema = new mongoose.Schema({
     nombre: { type: String }, //required: true demtrp del parentesis so es qie es obligatorio.
@@ -300,6 +311,7 @@ app.delete('/reclamodelete', function (req, res) {
     app.post('/reclamo', function (req, res) {
         var reclamo = new Reclamo();
         reclamo.fecha = req.body.fecha; //required= true demtrp del parentesis so es qie es obligatorio.
+        reclamo.fechaTermino = req.body.fechaTermino; 
         reclamo.nombre = req.body.nombre; //nombre residente
         reclamo.telefono = req.body.telefono;
         reclamo.email = req.body.email;
@@ -326,6 +338,7 @@ app.delete('/reclamodelete', function (req, res) {
             if (error) return res.status(500).send(error);
 
             reclamo.fecha = req.body.fecha; //required= true demtrp del parentesis so es qie es obligatorio.
+            reclamo.fechaTermino = req.body.fechaTermino;
             reclamo.nombre = req.body.nombre; //nombre residente
             reclamo.telefono = req.body.telefono;
             reclamo.email = req.body.email;
@@ -359,7 +372,65 @@ app.delete('/reclamodelete', function (req, res) {
         });
     });
 
-     
+     /**************************** 
+     *        ENDPOINTS  Encuesta     *
+     ****************************
+    */
+// Obtiene todas las encuesta
+app.get('/encuesta', function (req, res) {
+    Encuesta.find({}, function (error, encuesta) {
+        if (error) return res.status(500).send(error);
+
+        res.json(encuesta);
+    });
+});
+
+
+    // Crea una encuesta nueva
+    app.post('/encuesta', function (req, res) {
+        var encuesta = new Encuesta();
+        encuesta.reclamo= req.body.reclamo; //required= true demtrp del parentesis so es qie es obligatorio.
+        encuesta.nota = req.body.nota; //nombre residente
+        encuesta.administrador = req.body.administrador;
+        
+        encuesta.save(function (error, savedEncuesta) {
+            if (error) return res.status(500).send(error);
+            res.status(201).json(savedEncuesta);
+
+        });
+    });
+
+
+app.delete('/encuestadelete', function (req, res) {
+    Encuesta.find({}, function (error, encuesta) {
+        if (error) return res.status(500).send(error);
+        for(var item of encuesta)
+        {
+        item.remove(function (removingError) {
+            if (removingError) return res.status(500).send({ error: removingError });
+
+          
+        });
+    }
+    });
+    res.json({ message: "Todas las encuesta fueron Borradas" });
+    });
+
+
+    app.delete('/encuesta/:id', function (req, res) {
+        Encuesta.findById(req.params.id, function (error, encuesta) {
+            if (error) return res.status(500).send(error);
+
+            encuesta.remove(function (removingError) {
+                if (removingError) return res.status(500).send({ error: removingError });
+
+                res.json({ message: "encuesta removido exitosamente" });
+            });
+        });
+    });
+
+
+
 
     /**************************** 
      *        ENDPOINTS  Comunidad     *

@@ -30,19 +30,40 @@ export class AdministradorComponent implements OnInit {
   public fechaDate:any;
   public transcurrido:any;
 
+  public  fechaTermino:any;
+
   public contador:any;
 
   public correosGerenteSecreataria: any;
 
+  public estado:string; //estado para navbar card reclamo
+
   public datosGerente: any; //objeto para enviarlo al servicio de correo del gerente
 
+  public comunidadSeleccionada: any; //muestra la comunidad que seleccion en el nav
+
+
+  //para el badge
+  //
+public Noinformado:number;
+public EnProceso:number;
+public Externo:number;
+public Finalizado:number;
+
+  //
+  //
 
   constructor(private _route: ActivatedRoute,
     private _router: Router, private _usuarioService: UsuarioService, private _comunidadService: ComunidadService, private _reclamoService: ReclamoService, private _correoService: CorreoService) {
     this.usuario = 0;
+    this.fechaTermino = new Date();
     this.actualizar = true;
     this.rut = localStorage.getItem("rut");
-
+    this.estado='No informado'
+    this.Noinformado=0;
+this.EnProceso=0;
+this.Externo=0;
+this.Finalizado=0;
  
 
     this.contador=0;
@@ -50,9 +71,9 @@ export class AdministradorComponent implements OnInit {
     //buscando nombre del usuario para el respectivo id
     this._usuarioService.VerUsuario(this.rut).subscribe(
       response => {
-        console.log("usuario es:", response);
+        //console.log("usuario es:", response);
         this.usuario = response.nombre;
-        console.log("nombre:", this.usuario);
+        //console.log("nombre:", this.usuario);
         this.Recuperar(this.usuario);
       },
       error => {
@@ -64,7 +85,7 @@ export class AdministradorComponent implements OnInit {
 
 
     this.fechan = Date.now();
-    console.log(this.fechan);
+    //console.log(this.fechan);
     this.fecha = new Date();
    
 
@@ -79,7 +100,7 @@ export class AdministradorComponent implements OnInit {
 
   mostrarDetalle(indice) {
     this.indices = indice;
-    console.log("el index es:", this.indices);
+    //console.log("el index es:", this.indices);
   }
   ngOnInit() {
 
@@ -93,10 +114,10 @@ export class AdministradorComponent implements OnInit {
 
     this.Comunidad();
     //buscando reclamos
-    console.log("nombre:", this.nombre);
+    //console.log("nombre:", this.nombre);
     this._reclamoService.VerReclamosAdmin(this.nombre).subscribe(
       response => {
-        console.log("reclamo son:", response);
+        //console.log("reclamo son:", response);
         this.reclamos = response;
         this.fechaDate=new Array(this.reclamos.length);
         this.transcurrido=new Array(this.reclamos.length);
@@ -106,7 +127,7 @@ export class AdministradorComponent implements OnInit {
           this.Convertfecha(reclamo.fecha);
 
         }
-        console.log("los reclamo son:", this.reclamos);
+        //console.log("los reclamo son:", this.reclamos);
       },
       error => {
         console.log(<any>error);
@@ -121,9 +142,9 @@ export class AdministradorComponent implements OnInit {
 
     this._comunidadService.VerComunidades(this.nombre).subscribe(
       response => {
-        console.log("las comunidades son:", response);
+        //console.log("las comunidades son:", response);
         this.comunidades = response;
-        console.log("los comunidades son:", this.comunidades);
+        //console.log("los comunidades son:", this.comunidades);
       },
       error => {
         console.log(<any>error);
@@ -142,7 +163,7 @@ export class AdministradorComponent implements OnInit {
 
 
 
-    console.log("se presiono el objeto", item);
+    //console.log("se presiono el objeto", item);
     this.idReclamo = item._id;
     if(item.comunidad=="")
     {
@@ -154,9 +175,14 @@ export class AdministradorComponent implements OnInit {
       alert("Error al actualizar. Debe cambiar el estado del reclamo")
     }
     else{
+      if(item.estado=='Finalizado')
+      {
+        this.fechaTermino = new Date();
+        item.fechaTermino=this.fechaTermino;
+      }
     this._reclamoService.UpdateReclamo(item).subscribe(
       response => {
-        console.log(response);
+        //console.log(response);
         var año = item.fecha.getFullYear();
     
     var mes = item.fecha.getMonth() + 1;
@@ -188,7 +214,7 @@ export class AdministradorComponent implements OnInit {
   correo(item) {
     this._correoService.correoupdate(item).subscribe(
       response => {
-        console.log(response);
+        //console.log(response);
         if (item.estado == "Externo") {
           this.mailGerente();
         }
@@ -204,9 +230,9 @@ export class AdministradorComponent implements OnInit {
   mailGerente() {
     this._usuarioService.VerAdmin().subscribe(
       response => {
-        console.log(response);
+        //console.log(response);
         this.correosGerenteSecreataria = response;
-        console.log("correos secretarias y gerentes:", this.correosGerenteSecreataria);
+        //console.log("correos secretarias y gerentes:", this.correosGerenteSecreataria);
         for (var item of this.correosGerenteSecreataria) {
           if (item.usuario == "gerente")
             this.correoGerente(item);
@@ -227,7 +253,7 @@ export class AdministradorComponent implements OnInit {
       };
     this._correoService.reclamogerente(this.datosGerente).subscribe(
       response => {
-        console.log(response);
+        //console.log(response);
       },
       error => {
         console.log(<any>error);
@@ -267,17 +293,17 @@ this.transcurrido[this.contador]= days + " días, " + hours + " horas, " + minut
 
 
     var año = reclamosAdmin.getFullYear();
-    console.log("",año);
+    //console.log("",año);
     var mes = reclamosAdmin.getMonth() + 1;
-    console.log("",mes);
+    //console.log("",mes);
     var dia = reclamosAdmin.getDate();
-    console.log("",dia);
+    //console.log("",dia);
     var minutos = reclamosAdmin.getMinutes();
-    console.log("",minutos);
+    //console.log("",minutos);
     var segundos = reclamosAdmin.getSeconds();
-    console.log("",segundos);
+    //console.log("",segundos);
     var horas=reclamosAdmin.getHours();
-    console.log("",horas);
+    //console.log("",horas);
    
     
    this.fechaDate[this.contador]=mes+'/'+dia+'/'+año+' '+horas+':'+minutos+':'+segundos;
@@ -286,5 +312,48 @@ this.contador=this.contador+1;
 
   }
 
+  cambiarEstado(estado)
+  {
+    this.estado=estado;
+    //console.log("El estado es:",this.estado )
+  }
+ cambiarComunidad(nombre)
+ {
+this.comunidadSeleccionada=nombre;
 
+this.SumarNoInformado();
+ }
+
+ SumarNoInformado()
+ {
+   
+  for(var reclamo of this.reclamos)
+  {
+    if(reclamo.nombre==this.comunidadSeleccionada)
+    {
+      if(reclamo.estado=='No informado')
+      {
+        this.Noinformado=this.Noinformado+1;
+      }
+
+      if(reclamo.estado=='En proceso')
+      {
+        this.EnProceso=this.EnProceso+1;
+      }
+
+      if(reclamo.estado=='Finalizado')
+      {
+        this.Finalizado=this.Finalizado+1;
+      }
+
+      if(reclamo.estado=='Externo')
+      {
+        this.Externo=this.Externo+1;
+      }
+    }
+  }
+  
+  
+
+ }
 }

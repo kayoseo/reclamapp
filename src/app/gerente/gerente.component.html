@@ -15,41 +15,54 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="collapse navbar-collapse">
     <div class="navbar-nav mr-auto mt-2 mt-lg-0">
-    <div class="btn-group  mr-sm-1">
-    <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-      aria-expanded="false" (click)="cambiarOp('admin')">
-      <i class="fas fa-user-tie"></i> Empleado
-    </button>
-    <div class="dropdown-menu">
-      <a class="dropdown-item" (click)="cambiarAc('nuevo')"><i class="fas fa-plus-circle"></i> Nuevo</a>
-      <a class="dropdown-item" (click)="cambiarAc('editar')"><i class="fas fa-edit"></i> Editar</a>
-      <a class="dropdown-item" (click)="cambiarAc('eliminar')"><i class="fas fa-trash-alt"></i> Eliminar</a>
+      <div class="btn-group  mr-sm-1">
+        <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+          aria-expanded="false" (click)="cambiarOp('admin')">
+          <i class="fas fa-user-tie"></i> Empleado
+        </button>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" (click)="cambiarAc('nuevo')"><i class="fas fa-plus-circle"></i> Nuevo</a>
+          <a class="dropdown-item" (click)="cambiarAc('editar')"><i class="fas fa-edit"></i> Editar</a>
+          <a class="dropdown-item" (click)="cambiarAc('eliminar')"><i class="fas fa-trash-alt"></i> Eliminar</a>
 
-    </div>
-  </div>
-  <div class="btn-group mr-sm-1"> 
-    <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-      aria-expanded="false" (click)="cambiarOp('comu')">
-      <i   class="fas fa-building"></i> Comunidad
-    </button>
-    <div class="dropdown-menu">
-      <a class="dropdown-item" (click)="cambiarAc('nuevo')"><i class="fas fa-plus-circle"></i> Nuevo</a>
-      <a class="dropdown-item" (click)="cambiarAc('editar')"><i class="fas fa-edit"></i> Editar</a>
-      <a class="dropdown-item" (click)="cambiarAc('eliminar')"><i class="fas fa-trash-alt"></i> Eliminar</a>
+        </div>
+      </div>
+      <div class="btn-group mr-sm-1">
+        <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+          aria-expanded="false" (click)="cambiarOp('comu')">
+          <i class="fas fa-building"></i> Comunidad
+        </button>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" (click)="cambiarAc('nuevo')"><i class="fas fa-plus-circle"></i> Nuevo</a>
+          <a class="dropdown-item" (click)="cambiarAc('editar')"><i class="fas fa-edit"></i> Editar</a>
+          <a class="dropdown-item" (click)="cambiarAc('eliminar')"><i class="fas fa-trash-alt"></i> Eliminar</a>
 
+        </div>
+      </div>
+      <div class="btn-group mr-sm-1">
+        <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+          aria-expanded="false" (click)="cambiarOp('reclamo')">
+          <i class="fas fa-exclamation-triangle"></i> Reclamos
+        </button>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" (click)="cambiarComunidad('Externo')">Externo</a>
+          <a class="dropdown-item" (click)="cambiarComunidad('Sin comunidad')">Sin comunidad</a>
+          <a class="dropdown-item" *ngFor="let comun of allComunidad" (click)="cambiarComunidad(comun.nombre)">{{comun.nombre}}</a>
+
+        </div>
+      </div>
+      <div class="btn-group mr-sm-1">
+          <button type="button" class="btn btn-light" (click)="cambiarOp('encuesta')">
+            Evaluaciones
+          </button>
+        </div>
     </div>
-  </div>
-  <div class="btn-group mr-sm-1">
-    <button type="button" class="btn btn-light"  (click)="cambiarOp('reclamo')">
-      <i class="fas fa-exclamation-triangle"></i> Reclamos
-    </button>
+    
+    <div>
+      <button type="button" class="btn btn-light" (click)="borrarStorage()">
+        <i class="fas fa-sign-out-alt"></i> Cerrar sesión
+      </button>
     </div>
-  </div>
-  <div>
-    <button type="button" class="btn btn-light"   (click)="borrarStorage()">
-      <i class="fas fa-sign-out-alt"></i> Cerrar sesión
-    </button>
-  </div>
 
   </div>
 </nav>
@@ -60,7 +73,7 @@
 <!--
   Comunidad
 -->
-<div >
+<div>
   <!--Nueva comunidad-->
   <div *ngIf="opcion=='comu'&&accion=='nuevo'" id="formulario">
     <div class="login-popup-wrap new_login_popup">
@@ -89,31 +102,31 @@
         <label for="exampleFormControlSelect1">Administrador</label>
         <select class="form-control" name="administrador" #administrador="ngModel" [(ngModel)]="nuevaComun.administrador"
           required>
-          <option *ngFor="let usuario of listaUser" >{{usuario.nombre}}</option>
+          <option *ngFor="let usuario of listaUser">{{usuario.nombre}}</option>
         </select>
         <div class="alert alert-danger" *ngIf="administrador.touched && !administrador.valid">
           <strong>¡Error!</strong> Campo obligatorio
         </div>
       </div>
-        <div class="form-group">
-          <label>Numero de Edificios</label>
-          <input type="number" class="form-control" name="numeross" #numeross="ngModel" [(ngModel)]="numeros" required>
-          <div class="alert alert-danger" *ngIf="numeross.touched && !numeross.valid">
-            <strong>¡Error!</strong> Campo obligatorio
-          </div>
-          <button class="btn btn-primary" type="button" (click)="asignar(numeros)">Asignar nombres</button>
+      <div class="form-group">
+        <label>Numero de Edificios</label>
+        <input type="number" class="form-control" name="numeross" #numeross="ngModel" [(ngModel)]="numeros" required>
+        <div class="alert alert-danger" *ngIf="numeross.touched && !numeross.valid">
+          <strong>¡Error!</strong> Campo obligatorio
         </div>
-       <ng-container *ngIf="numeros">
-          <div id="nombreEdificios" *ngFor="let item of repetir;let i = index">
-            <div class="form-group">
-              <label>Edificio {{i+1}}</label>
-              <input type="text" class="form-control" name="nombreDep" #nombreDep="ngModel" [(ngModel)]="nuevaComun.torreDpto[i]"
-                required placeholder="Nombre, letra o número">
-            </div>
+        <button class="btn btn-primary" type="button" (click)="asignar(numeros)">Asignar nombres</button>
+      </div>
+      <ng-container *ngIf="numeros">
+        <div id="nombreEdificios" *ngFor="let item of repetir;let i = index">
+          <div class="form-group">
+            <label>Edificio {{i+1}}</label>
+            <input type="text" class="form-control" name="nombreDep" #nombreDep="ngModel" [(ngModel)]="nuevaComun.torreDpto[i]"
+              required placeholder="Nombre, letra o número">
           </div>
-        </ng-container>
-      
-    
+        </div>
+      </ng-container>
+
+
       <button type="submit" class="btn btn-primary" [disabled]="!formComunidad.valid">Crear</button>
 
     </form>
@@ -129,26 +142,26 @@
       </div>
     </div>
     <div class="form-group">
-      <label >Comunidad</label>
+      <label>Comunidad</label>
       <select class="form-control" name="comunidadEditar" #comunidadEditar="ngModel" [(ngModel)]="comunidadEdit"
-      required>
+        required>
         <option *ngFor="let comunidad of allComunidad;let i = index">{{comunidad.nombre}}</option>
       </select>
     </div>
 
     <div class="form-group">
-        <ng-container *ngFor="let comunidad of allComunidad">
-            <ng-container *ngIf="comunidad.nombre==comunidadEdit">
-      <label >Administrador</label>
-      <select class="form-control" name="adminComunidad" #adminComunidad="ngModel" [(ngModel)]="comunidad.administrador"
-      required>
-        <option *ngFor="let usuario of listaUser">{{usuario.nombre}}</option>
-      </select>
-      <button type="button" class="btn btn-primary" (click)="ActualizaComunidad(comunidad)">Editar</button>
-    </ng-container>
-  </ng-container>
+      <ng-container *ngFor="let comunidad of allComunidad">
+        <ng-container *ngIf="comunidad.nombre==comunidadEdit">
+          <label>Administrador</label>
+          <select class="form-control" name="adminComunidad" #adminComunidad="ngModel" [(ngModel)]="comunidad.administrador"
+            required>
+            <option *ngFor="let usuario of listaUser">{{usuario.nombre}}</option>
+          </select>
+          <button type="button" class="btn btn-primary" (click)="ActualizaComunidad(comunidad)">Editar</button>
+        </ng-container>
+      </ng-container>
     </div>
-    
+
 
   </div>
 
@@ -161,17 +174,16 @@
       </div>
     </div>
     <div class="form-group">
-      <label >Comunidad</label>
-      <select class="form-control" name="Comunidad" #Comunidad="ngModel" [(ngModel)]="comunidadDelete"
-      required>
+      <label>Comunidad</label>
+      <select class="form-control" name="Comunidad" #Comunidad="ngModel" [(ngModel)]="comunidadDelete" required>
         <option *ngFor="let comunidad of allComunidad">{{comunidad.nombre}}</option>
       </select>
     </div>
     <ng-container *ngFor="let comunidad of allComunidad">
-        <ng-container *ngIf="comunidad.nombre==comunidadDelete">
-    <button type="button" class="btn btn-danger" (click)=" EliminarComunidad(comunidad)">Eliminar</button>
-  </ng-container>
-</ng-container>
+      <ng-container *ngIf="comunidad.nombre==comunidadDelete">
+        <button type="button" class="btn btn-danger" (click)=" EliminarComunidad(comunidad)">Eliminar</button>
+      </ng-container>
+    </ng-container>
   </div>
 
 
@@ -180,7 +192,7 @@
 -->
 
   <!--Agregar Administrador-->
-  <div id="formulario" *ngIf="opcion=='admin'&&accion=='nuevo'" >
+  <div id="formulario" *ngIf="opcion=='admin'&&accion=='nuevo'">
     <div class="login-popup-wrap new_login_popup">
       <div class="login-popup-heading text-center">
         <h4><i class="fas fa-user-tie" aria-hidden="true"></i> Nuevo</h4>
@@ -198,7 +210,8 @@
       <div class="form-group">
         <label>Mail</label>
         <!--<input type="email" class="form-control"  pattern="[A-Za-z0-9._%+-]+@sercolex\.cl" name="mail" #mail="ngModel" [(ngModel)]="nuevoUsuario.mail" required>-->
-        <input type="email" class="form-control"  pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}" name="mail" #mail="ngModel" [(ngModel)]="nuevoUsuario.mail" required>
+        <input type="email" class="form-control" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}" name="mail" #mail="ngModel"
+          [(ngModel)]="nuevoUsuario.mail" required>
         <div class="alert alert-danger" *ngIf="mail.touched && !mail.valid">
           <strong>¡Error!</strong> Este campo es obligatorio y el correo tiene que ser @sercolex.cl
         </div>
@@ -230,18 +243,18 @@
         <h4><i class="fas fa-user-tie" aria-hidden="true"></i> Eliminar</h4>
       </div>
     </div>
-    <form #formEliminarAdmin="ngForm" id="formulario" >
-    <div class="form-group">
-      <label >Empleado</label>
-      <select class="form-control" name="idUsuario" #idUsuario="ngModel" [(ngModel)]="idDelete">
-        <option *ngFor="let usuario of allUser">{{usuario.nombre}}</option>
-      
-      </select>
-    </div>
-    <button type="submit" class="btn btn-danger" (click)=deleteUsuario(idDelete)>Eliminar</button>
-  
-</form>
-</div>
+    <form #formEliminarAdmin="ngForm" id="formulario">
+      <div class="form-group">
+        <label>Empleado</label>
+        <select class="form-control" name="idUsuario" #idUsuario="ngModel" [(ngModel)]="idDelete">
+          <option *ngFor="let usuario of allUser">{{usuario.nombre}}</option>
+
+        </select>
+      </div>
+      <button type="submit" class="btn btn-danger" (click)=deleteUsuario(idDelete)>Eliminar</button>
+
+    </form>
+  </div>
 
   <!--Editar Administrador-->
   <div id="editar" *ngIf="opcion=='admin'&&accion=='editar'" id="formulario">
@@ -251,196 +264,83 @@
       </div>
     </div>
     <form #formEditAdmin="ngForm" id="formulario">
-    <div class="form-group">
-      <label for="exampleFormControlSelect1">Empleado</label>
-      <select class="form-control" class="form-control" name="usuarioEditar" #usuarioEditar="ngModel" [(ngModel)]="userEdit"
-      required>
-        <option *ngFor="let user of allUser">{{user.nombre}}</option>
-      </select>
-    </div>
-    <ng-container *ngFor="let user of allUser">
-    <ng-container *ngIf="user.nombre==userEdit">
-    <div class="form-group" >
-      <label for="exampleFormControlInput1">Mail</label>
-      <!--<input type="text" class="form-control" pattern="[A-Za-z0-9._%+-]+@sercolex\.cl" name="mail" #mail="ngModel" [(ngModel)]="user.mail"
+      <div class="form-group">
+        <label for="exampleFormControlSelect1">Empleado</label>
+        <select class="form-control" class="form-control" name="usuarioEditar" #usuarioEditar="ngModel" [(ngModel)]="userEdit"
+          required>
+          <option *ngFor="let user of allUser">{{user.nombre}}</option>
+        </select>
+      </div>
+      <ng-container *ngFor="let user of allUser">
+        <ng-container *ngIf="user.nombre==userEdit">
+          <div class="form-group">
+            <label for="exampleFormControlInput1">Mail</label>
+            <!--<input type="text" class="form-control" pattern="[A-Za-z0-9._%+-]+@sercolex\.cl" name="mail" #mail="ngModel" [(ngModel)]="user.mail"
       required>-->
-      <input type="text" class="form-control" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}" name="mail" #mail="ngModel" [(ngModel)]="user.mail"
-      required>
-      <div class="alert alert-danger" *ngIf="mail.touched && !mail.valid">
-        <strong>¡Error!</strong> Campo obligatorio
-      </div>
-    </div>
-    <div class="form-group">
-      <label for="exampleFormControlInput1">Contraseña</label>
-      <input type="password" class="form-control" name="clave" #clave="ngModel" [(ngModel)]="user.clave"
-      required>
-      <div class="alert alert-danger" *ngIf="clave.touched && !clave.valid">
-        <strong>¡Error!</strong> Campo obligatorio
-      </div>
-    </div>
-    <button type="button" class="btn btn-primary" [disabled]="!formEditAdmin.valid" (click)="updateUser(user)">Editar</button>
-  </ng-container>
-  </ng-container>
-  </form>
+            <input type="text" class="form-control" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}" name="mail" #mail="ngModel"
+              [(ngModel)]="user.mail" required>
+            <div class="alert alert-danger" *ngIf="mail.touched && !mail.valid">
+              <strong>¡Error!</strong> Campo obligatorio
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="exampleFormControlInput1">Contraseña</label>
+            <input type="password" class="form-control" name="clave" #clave="ngModel" [(ngModel)]="user.clave" required>
+            <div class="alert alert-danger" *ngIf="clave.touched && !clave.valid">
+              <strong>¡Error!</strong> Campo obligatorio
+            </div>
+          </div>
+          <button type="button" class="btn btn-primary" [disabled]="!formEditAdmin.valid" (click)="updateUser(user)">Editar</button>
+        </ng-container>
+      </ng-container>
+    </form>
   </div>
 </div>
-  <!--
+<!--
   Reclamos
 -->
 
-<div  *ngIf="opcion=='reclamo'" id="reclamo">
-    
-    <div class="card bg-light mb-3" id="card">
-        <h2 class="card-title">Externos</h2>
-        <table class="table table-striped ">
-          <thead>
-            <tr>
-              <th scope="col">Fecha</th>
-              <th scope="col">Transcurrido</th>
-              <th scope="col">Comunidad</th>
-              <th scope="col">Dirección</th>
-              <th scope="col">Residente</th>
-              <th scope="col">Descripción</th>
-              <th scope="col">Estado</th>
-              <th scope="col">Solucion</th>
-              <th scope="col"></th>
-            </tr>
-          </thead>
-          <tbody>
-              <ng-container *ngFor="let reclamo of reclamos;let indice = index">
-            <tr *ngIf="reclamo.estado==='Externo'" >
+<div *ngIf="opcion=='reclamo'" id="reclamo">
+
+  <div class="card bg-light mb-3" *ngIf="comunidadSeleccionada=='Externo'">
+    <div class="card text-center">
+      <h2 class="card-title">Externos</h2>
+      <table class="table table-striped ">
+        <thead>
+          <tr>
+            <th scope="col">Fecha</th>
+            <th scope="col">Transcurrido</th>
+            <th scope="col">Comunidad</th>
+            <th scope="col">Dirección</th>
+            <th scope="col">Residente</th>
+            <th scope="col">Descripción</th>
+            <th scope="col">Estado</th>
+            <th scope="col">Solucion</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngFor="let reclamo of reclamos;let indice = index">
+            <tr *ngIf="reclamo.estado==='Externo'">
               <td>{{fechaDate[indice]}}</td>
               <td>{{transcurrido[indice]}}</td>
-              
-              <td>
-                  <div class="form-group col-md-12 col-xl-12 col-xs-12">
-                    <select id="inputState" class="form-control"  name="comu" #comu="ngModel" [(ngModel)]="reclamo.comunidad" required>
-                      <option *ngFor="let comuni of allComunidad">{{comuni.nombre}}</option>
-                    </select>
-                  </div>
-              </td>
-              <td>{{reclamo.direccion}}</td>
-              <td>{{reclamo.nombre}}</td>
-              <td>{{reclamo.problema}}</td>
+
               <td>
                 <div class="form-group col-md-12 col-xl-12 col-xs-12">
-                  <select id="inputState" class="form-control" name="estado" #estado="ngModel" [(ngModel)]="reclamo.estado" required>
-                    <option >{{reclamo.estado}}</option>
-                    <option *ngIf="reclamo.estado!='En proceso'">En proceso</option>
-                    <option *ngIf="reclamo.estado!='Externo'">Externo</option>
-                    <option *ngIf="reclamo.estado!='Finalizado'">Finalizado</option>
+                  <select id="inputState" class="form-control" name="comu" #comu="ngModel" [(ngModel)]="reclamo.comunidad"
+                    required>
+                    <option *ngFor="let comuni of allComunidad">{{comuni.nombre}}</option>
                   </select>
                 </div>
               </td>
-              <td>
-                <div class="form-group" >
-                  <input  type="text" class="form-control" name="solucion" #solucion="ngModel" [(ngModel)]="reclamo.solucion" required>
-                </div>
-              </td>
-              <td>
-              <button type="submit" (click)="Actualizar(reclamo)" class="btn btn-primary">Actualizar</button>
-            </td>
-            </tr>
-          </ng-container>
-          </tbody>
-        </table>
-        </div>
-
-        <div class="card bg-light mb-3" id="card">
-          <h2 class="card-title">Sin comunidad</h2>
-          <table class="table table-striped ">
-            <thead>
-              <tr>
-                <th scope="col">Fecha</th>
-                <th scope="col">Transcurrido</th>
-                <th scope="col">Comunidad</th>
-                <th scope="col">Dirección</th>
-                <th scope="col">Residente</th>
-                <th scope="col">Descripción</th>
-                <th scope="col">Estado</th>
-                <th scope="col">Solucion</th>
-                <th scope="col"></th>
-              </tr>
-            </thead>
-            <tbody>
-                <ng-container *ngFor="let reclamo of reclamos;let indice = index">
-              <tr *ngIf="reclamo.comunidad===''" >
-                <td>{{fechaDate[indice]}}</td>
-                <td>{{transcurrido[indice]}}</td>
-                
-                <td>
-                    <div class="form-group col-md-12 col-xl-12 col-xs-12">
-                      <select id="inputState" class="form-control"  name="comu" #comu="ngModel" [(ngModel)]="reclamo.comunidad" required>
-                        <option *ngFor="let comuni of allComunidad">{{comuni.nombre}}</option>
-                      </select>
-                    </div>
-                </td>
-                <td>{{reclamo.direccion}}</td>
-                <td>{{reclamo.nombre}}</td>
-                <td>{{reclamo.problema}}</td>
-                <td>
-                  <div class="form-group col-md-12 col-xl-12 col-xs-12">
-                    <select id="inputState" class="form-control" name="estado" #estado="ngModel" [(ngModel)]="reclamo.estado" required>
-                      <option >{{reclamo.estado}}</option>
-                      <option *ngIf="reclamo.estado!='En proceso'">En proceso</option>
-                      <option *ngIf="reclamo.estado!='Externo'">Externo</option>
-                      <option *ngIf="reclamo.estado!='Finalizado'">Finalizado</option>
-                    </select>
-                  </div>
-                </td>
-                <td>
-                  <div class="form-group" >
-                    <input  type="text" class="form-control" name="solucion" #solucion="ngModel" [(ngModel)]="reclamo.solucion" required>
-                  </div>
-                </td>
-                <td>
-                <button type="submit" (click)="Actualizar(reclamo)" class="btn btn-primary">Actualizar</button>
-              </td>
-              </tr>
-            </ng-container>
-            </tbody>
-          </table>
-          </div>
-        
-        <div *ngFor="let comunidad of allComunidad">
-            <div class="card bg-light mb-3" id="card">
-                <h2 class="card-title">{{comunidad.nombre}}</h2>
-        <table class="table table-striped">
-          <thead>
-            <tr>
-              <th scope="col">Fecha</th>
-              <th scope="col">Transcurrido</th>
-              <th scope="col">Comunidad</th>
-              <th scope="col">Dirección</th>
-              <th scope="col">Residente</th>
-              <th scope="col">Descripción</th>
-              <th scope="col">Estado</th>
-              <th scope="col">Solucion</th>
-              <th scope="col"></th>
-            </tr>
-          </thead>
-          <tbody>
-              <ng-container *ngFor="let reclamo of reclamos;let indice = index">
-             
-            <tr *ngIf="reclamo.comunidad===comunidad.nombre">
-              
-              <td >{{fechaDate[indice]}}</td>
-              <td>{{transcurrido[indice]}}</td>
-              
-              <td>
-                  <div class="form-group col-md-12 col-xl-12 col-xs-12">
-                    <select id="inputState" class="form-control"  name="comu" #comu="ngModel" [(ngModel)]="reclamo.comunidad" required>
-                      <option *ngFor="let comuni of allComunidad">{{comuni.nombre}}</option>
-                    </select>
-                  </div>
-              </td>
               <td>{{reclamo.direccion}}</td>
               <td>{{reclamo.nombre}}</td>
               <td>{{reclamo.problema}}</td>
               <td>
                 <div class="form-group col-md-12 col-xl-12 col-xs-12">
-                  <select id="inputState" class="form-control" name="estado" #estado="ngModel" [(ngModel)]="reclamo.estado" required>
-                    <option >{{reclamo.estado}}</option>
+                  <select id="inputState" class="form-control" name="estado" #estado="ngModel" [(ngModel)]="reclamo.estado"
+                    required>
+                    <option>{{reclamo.estado}}</option>
                     <option *ngIf="reclamo.estado!='En proceso'">En proceso</option>
                     <option *ngIf="reclamo.estado!='Externo'">Externo</option>
                     <option *ngIf="reclamo.estado!='Finalizado'">Finalizado</option>
@@ -449,20 +349,460 @@
               </td>
               <td>
                 <div class="form-group">
-                  <input type="text"  class="form-control" name="solucion" #solucion="ngModel" [(ngModel)]="reclamo.solucion" required>
+                  <input type="text" class="form-control" name="solucion" #solucion="ngModel" [(ngModel)]="reclamo.solucion"
+                    required>
                 </div>
               </td>
               <td>
-              <button type="submit" (click)="Actualizar(reclamo)" class="btn btn-primary">Actualizar</button>
-            </td>
+                <button type="submit" (click)="Actualizar(reclamo)" class="btn btn-primary">Actualizar</button>
+              </td>
             </tr>
           </ng-container>
-        
-          </tbody>
-        </table>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="card bg-light mb-3" *ngIf="comunidadSeleccionada=='Sin comunidad'">
+    <div class="card text-center">
+      <h3 class="card-title">Sin comunidad</h3>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Fecha</th>
+            <th scope="col">Transcurrido</th>
+            <th scope="col">Comunidad</th>
+            <th scope="col">Torre</th>
+            <th scope="col">Dirección</th>
+            <th scope="col">Residente</th>
+            <th scope="col">Descripción</th>
+            <th scope="col">Estado</th>
+            <th scope="col">Solucion</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngFor="let reclamo of reclamos;let indice = index">
+            <tr *ngIf="reclamo.comunidad===''">
+              <td>{{fechaDate[indice]}}</td>
+              <td>{{transcurrido[indice]}}</td>
+
+              <td>
+                <div class="form-group col-md-12 col-xl-12 col-xs-12">
+                  <select id="inputState" class="form-control" name="comu" #comu="ngModel" [(ngModel)]="reclamo.comunidad"
+                    required>
+                    <option selected *ngFor="let item of allComunidad">{{item.nombre}}</option>
+                  </select>
+                </div>
+              </td>
+              <td>
+                <div class="form-group col-md-12 col-xl-12 col-xs-12">
+                  <select id="inputState" class="form-control" name="torre" #torre="ngModel" [(ngModel)]="reclamo.torreDpto"
+                    required>
+                    <ng-container *ngFor="let comun of allComunidad">
+                      <ng-container *ngIf="comun.nombre==reclamo.comunidad">
+                        <option selected *ngFor="let torre of comun.torreDpto">{{torre}}</option>
+                      </ng-container>
+                    </ng-container>
+                  </select>
+                </div>
+              </td>
+              <td>{{reclamo.direccion}}</td>
+              <td>{{reclamo.nombre}}</td>
+              <td>{{reclamo.problema}}</td>
+              <td>
+                <div class="form-group col-md-12 col-xl-12 col-xs-12">
+                  <select id="inputState" class="form-control" name="estado" #estado="ngModel" [(ngModel)]="reclamo.estado"
+                    required>
+                    <option selected>{{reclamo.estado}}</option>
+                    <option *ngIf="reclamo.estado!='En proceso'">En proceso</option>
+                    <option *ngIf="reclamo.estado!='Externo'">Externo</option>
+                    <option *ngIf="reclamo.estado!='Finalizado'">Finalizado</option>
+                  </select>
+                </div>
+              </td>
+              <td>
+                <div class="form-group">
+                  <input type="text" class="form-control" name="solucion" #solucion="ngModel" [(ngModel)]="reclamo.solucion"
+                    required>
+                </div>
+              </td>
+              <td>
+                <button type="submit" (click)="Actualizar(reclamo)" class="btn btn-primary">Actualizar</button>
+              </td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+  <div *ngFor="let comunidad of allComunidad">
+    <ng-container *ngIf="comunidad.nombre==comunidadSeleccionada">
+      <div class="card bg-light mb-3" style="margin-bottom: 30ps;">
+        <div class="card text-center">
+          <div class="card-header">
+            <ng-container *ngIf="comunidadSeleccionada!='Sin comunidad'">
+              <h2 class="card-title">{{comunidad.nombre}}</h2>
+            </ng-container>
+          </div>
+          <div class="card-header">
+            <ul class="nav nav-tabs card-header-tabs">
+              <li class="nav-item" (click)="cambiarEstado('No informado')">
+                <a class="nav-link" [ngClass]="{'active': estado=='No informado'}">No informado</a>
+              </li>
+              <li class="nav-item" (click)="cambiarEstado('En proceso')">
+                <a class="nav-link" [ngClass]="{'active': estado=='En proceso'}">En proceso</a>
+              </li>
+              <li class="nav-item" (click)="cambiarEstado('Externalizado')">
+                <a class="nav-link" [ngClass]="{'active': estado=='Externalizado'}">Externalizado</a>
+              </li>
+              <li class="nav-item" (click)="cambiarEstado('Finalizado')">
+                <a class="nav-link" [ngClass]="{'active': estado=='Finalizado'}">Finalizado</a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="card-body" *ngIf="estado=='No informado'">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">Fecha</th>
+                  <th scope="col">Transcurrido</th>
+                  <th scope="col">Comunidad</th>
+                  <th scope="col">Torre</th>
+                  <th scope="col">Dirección</th>
+                  <th scope="col">Residente</th>
+                  <th scope="col">Descripción</th>
+                  <th scope="col">Estado</th>
+                  <th scope="col">Solucion</th>
+                  <th scope="col"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <ng-container *ngFor="let reclamo of reclamos;let indice = index">
+
+                  <tr *ngIf="reclamo.comunidad===comunidad.nombre">
+                    <ng-container *ngIf="reclamo.estado=='No informado'">
+
+                      <td>{{fechaDate[indice]}}</td>
+                      <td>{{transcurrido[indice]}}</td>
+
+                      <td>
+                        <div class="form-group col-md-12 col-xl-12 col-xs-12">
+                          <select id="inputState" class="form-control" name="comu" #comu="ngModel" [(ngModel)]="reclamo.comunidad"
+                            required>
+                            <option selected *ngFor="let item of allComunidad">{{item.nombre}}</option>
+                          </select>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="form-group col-md-12 col-xl-12 col-xs-12">
+                          <select id="inputState" class="form-control" name="torre" #torre="ngModel" [(ngModel)]="reclamo.torreDpto"
+                            required>
+                            <ng-container *ngFor="let comun of allComunidad">
+                              <ng-container *ngIf="comun.nombre==reclamo.comunidad">
+                                <option selected *ngFor="let torre of comun.torreDpto">{{torre}}</option>
+                              </ng-container>
+                            </ng-container>
+                          </select>
+                        </div>
+                      </td>
+
+                      <td>{{reclamo.direccion}}</td>
+                      <td>{{reclamo.nombre}}</td>
+                      <td>{{reclamo.problema}}</td>
+                      <td>
+                        <div class="form-group col-md-12 col-xl-12 col-xs-12">
+                          <select id="inputState" class="form-control" name="estado" #estado="ngModel" [(ngModel)]="reclamo.estado"
+                            required>
+                            <option selected>{{reclamo.estado}}</option>
+                            <option *ngIf="reclamo.estado!='En proceso'">En proceso</option>
+                            <option *ngIf="reclamo.estado!='Externo'">Externo</option>
+                            <option *ngIf="reclamo.estado!='Finalizado'">Finalizado</option>
+                          </select>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="form-group">
+                          <input type="text" class="form-control" name="solucion" #solucion="ngModel" [(ngModel)]="reclamo.solucion"
+                            required>
+                        </div>
+                      </td>
+                      <td>
+                        <button type="submit" (click)="Actualizar(reclamo)" class="btn btn-primary">Actualizar</button>
+                      </td>
+                    </ng-container>
+                  </tr>
+                </ng-container>
+
+              </tbody>
+            </table>
+          </div>
+
+          <div class="card-body" *ngIf="estado=='En proceso'">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">Fecha</th>
+                  <th scope="col">Transcurrido</th>
+                  <th scope="col">Comunidad</th>
+                  <th scope="col">Torre</th>
+                  <th scope="col">Dirección</th>
+                  <th scope="col">Residente</th>
+                  <th scope="col">Descripción</th>
+                  <th scope="col">Estado</th>
+                  <th scope="col">Solucion</th>
+                  <th scope="col"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <ng-container *ngFor="let reclamo of reclamos;let indice = index">
+
+                  <tr *ngIf="reclamo.comunidad===comunidad.nombre">
+                    <ng-container *ngIf="reclamo.estado=='En proceso'">
+
+                      <td>{{fechaDate[indice]}}</td>
+                      <td>{{transcurrido[indice]}}</td>
+
+                      <td>
+                        <div class="form-group col-md-12 col-xl-12 col-xs-12">
+                          <select id="inputState" class="form-control" name="comu" #comu="ngModel" [(ngModel)]="reclamo.comunidad"
+                            required>
+                            <option selected *ngFor="let item of allComunidad">{{item.nombre}}</option>
+                          </select>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="form-group col-md-12 col-xl-12 col-xs-12">
+                          <select id="inputState" class="form-control" name="torre" #torre="ngModel" [(ngModel)]="reclamo.torreDpto"
+                            required>
+                            <ng-container *ngFor="let comun of allComunidad">
+                              <ng-container *ngIf="comun.nombre==reclamo.comunidad">
+                                <option selected *ngFor="let torre of comun.torreDpto">{{torre}}</option>
+                              </ng-container>
+                            </ng-container>
+                          </select>
+                        </div>
+                      </td>
+
+                      <td>{{reclamo.direccion}}</td>
+                      <td>{{reclamo.nombre}}</td>
+                      <td>{{reclamo.problema}}</td>
+                      <td>
+                        <div class="form-group col-md-12 col-xl-12 col-xs-12">
+                          <select id="inputState" class="form-control" name="estado" #estado="ngModel" [(ngModel)]="reclamo.estado"
+                            required>
+                            <option selected>{{reclamo.estado}}</option>
+                            <option *ngIf="reclamo.estado!='En proceso'">En proceso</option>
+                            <option *ngIf="reclamo.estado!='Externo'">Externo</option>
+                            <option *ngIf="reclamo.estado!='Finalizado'">Finalizado</option>
+                          </select>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="form-group">
+                          <input type="text" class="form-control" name="solucion" #solucion="ngModel" [(ngModel)]="reclamo.solucion"
+                            required>
+                        </div>
+                      </td>
+                      <td>
+                        <button type="submit" (click)="Actualizar(reclamo)" class="btn btn-primary">Actualizar</button>
+                      </td>
+                    </ng-container>
+                  </tr>
+                </ng-container>
+
+              </tbody>
+            </table>
+          </div>
+
+          <div class="card-body" *ngIf="estado=='Externalizado'">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">Fecha</th>
+                  <th scope="col">Transcurrido</th>
+                  <th scope="col">Comunidad</th>
+                  <th scope="col">Torre</th>
+                  <th scope="col">Dirección</th>
+                  <th scope="col">Residente</th>
+                  <th scope="col">Descripción</th>
+                  <th scope="col">Estado</th>
+                  <th scope="col">Solucion</th>
+                  <th scope="col"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <ng-container *ngFor="let reclamo of reclamos;let indice = index">
+
+                  <tr *ngIf="reclamo.comunidad===comunidad.nombre">
+                    <ng-container *ngIf="reclamo.estado=='Externo'">
+                      <td>{{fechaDate[indice]}}</td>
+                      <td>{{transcurrido[indice]}}</td>
+
+                      <td>
+                        <div class="form-group col-md-12 col-xl-12 col-xs-12">
+                          <select id="inputState" class="form-control" name="comu" #comu="ngModel" [(ngModel)]="reclamo.comunidad"
+                            required>
+                            <option selected *ngFor="let item of allComunidad">{{item.nombre}}</option>
+                          </select>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="form-group col-md-12 col-xl-12 col-xs-12">
+                          <select id="inputState" class="form-control" name="torre" #torre="ngModel" [(ngModel)]="reclamo.torreDpto"
+                            required>
+                            <ng-container *ngFor="let comun of allComunidad">
+                              <ng-container *ngIf="comun.nombre==reclamo.comunidad">
+                                <option selected *ngFor="let torre of comun.torreDpto">{{torre}}</option>
+                              </ng-container>
+                            </ng-container>
+                          </select>
+                        </div>
+                      </td>
+
+                      <td>{{reclamo.direccion}}</td>
+                      <td>{{reclamo.nombre}}</td>
+                      <td>{{reclamo.problema}}</td>
+                      <td>
+                        <div class="form-group col-md-12 col-xl-12 col-xs-12">
+                          <select id="inputState" class="form-control" name="estado" #estado="ngModel" [(ngModel)]="reclamo.estado"
+                            required>
+                            <option selected>{{reclamo.estado}}</option>
+                            <option *ngIf="reclamo.estado!='En proceso'">En proceso</option>
+                            <option *ngIf="reclamo.estado!='Externo'">Externo</option>
+                            <option *ngIf="reclamo.estado!='Finalizado'">Finalizado</option>
+                          </select>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="form-group">
+                          <input type="text" class="form-control" name="solucion" #solucion="ngModel" [(ngModel)]="reclamo.solucion"
+                            required>
+                        </div>
+                      </td>
+                      <td>
+                        <button type="submit" (click)="Actualizar(reclamo)" class="btn btn-primary">Actualizar</button>
+                      </td>
+                    </ng-container>
+                  </tr>
+                </ng-container>
+
+              </tbody>
+            </table>
+          </div>
+
+          <div class="card-body" *ngIf="estado=='Finalizado'">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">Fecha</th>
+                  <th scope="col">Transcurrido</th>
+                  <th scope="col">Comunidad</th>
+                  <th scope="col">Torre</th>
+                  <th scope="col">Dirección</th>
+                  <th scope="col">Residente</th>
+                  <th scope="col">Descripción</th>
+                  <th scope="col">Estado</th>
+                  <th scope="col">Solucion</th>
+                  <th scope="col"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <ng-container *ngFor="let reclamo of reclamos;let indice = index">
+
+                  <tr *ngIf="reclamo.comunidad===comunidad.nombre">
+                    <ng-container *ngIf="reclamo.estado=='Finalizado'">
+                      <td>{{fechaDate[indice]}}</td>
+                      <td>{{transcurrido[indice]}}</td>
+
+                      <td>
+                        <div class="form-group col-md-12 col-xl-12 col-xs-12">
+                          <select id="inputState" class="form-control" name="comu" #comu="ngModel" [(ngModel)]="reclamo.comunidad"
+                            required>
+                            <option selected *ngFor="let item of allComunidad">{{item.nombre}}</option>
+                          </select>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="form-group col-md-12 col-xl-12 col-xs-12">
+                          <select id="inputState" class="form-control" name="torre" #torre="ngModel" [(ngModel)]="reclamo.torreDpto"
+                            required>
+                            <ng-container *ngFor="let comun of allComunidad">
+                              <ng-container *ngIf="comun.nombre==reclamo.comunidad">
+                                <option selected *ngFor="let torre of comun.torreDpto">{{torre}}</option>
+                              </ng-container>
+                            </ng-container>
+                          </select>
+                        </div>
+                      </td>
+
+                      <td>{{reclamo.direccion}}</td>
+                      <td>{{reclamo.nombre}}</td>
+                      <td>{{reclamo.problema}}</td>
+                      <td>
+                        <div class="form-group col-md-12 col-xl-12 col-xs-12">
+                          <select id="inputState" class="form-control" name="estado" #estado="ngModel" [(ngModel)]="reclamo.estado"
+                            required>
+                            <option selected>{{reclamo.estado}}</option>
+                            <option *ngIf="reclamo.estado!='En proceso'">En proceso</option>
+                            <option *ngIf="reclamo.estado!='Externo'">Externo</option>
+                            <option *ngIf="reclamo.estado!='Finalizado'">Finalizado</option>
+                          </select>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="form-group">
+                          <input type="text" class="form-control" name="solucion" #solucion="ngModel" [(ngModel)]="reclamo.solucion"
+                            required>
+                        </div>
+                      </td>
+                      <td>
+                        <button type="submit" (click)="Actualizar(reclamo)" class="btn btn-primary">Actualizar</button>
+                      </td>
+                    </ng-container>
+                  </tr>
+                </ng-container>
+
+              </tbody>
+            </table>
+          </div>
+
         </div>
-        </div>
-        
+      </div>
+    </ng-container>
+  </div>
+
 
 
 </div>
+
+
+<div  *ngIf="opcion=='encuesta'">
+    <div class="card bg-light mb-3" >
+        <div class="card text-center">
+          <h2 class="card-title">¿La solución al reclamo fue la esperada?</h2>
+          <table class="table table-striped ">
+            <thead>
+              <tr>
+                <th scope="col">Nº reclamo</th>
+                <th scope="col">Administrador</th>
+                <th scope="col">Nota</th>
+              </tr>
+            </thead>
+            <tbody>
+              <ng-container *ngFor="let encuest of encuesta;let indice = index">
+                <tr >
+                  <td>{{encuest.reclamo}}</td>
+                  <td>{{encuest.administrador}}</td>
+                  <td>{{encuest.nota}}</td>
+                </tr>
+              </ng-container>
+            </tbody>
+          </table>
+        </div>
+      </div>
+     
+    
+  </div>

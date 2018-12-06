@@ -3,6 +3,7 @@ export class Reclamos{
         //public numero:string,
         public fecha: Date,
         public nombre:string, //nombre residente
+        public fechaTermino: Date,
         public telefono:string,
         public email:string, 
         public administrador:string,

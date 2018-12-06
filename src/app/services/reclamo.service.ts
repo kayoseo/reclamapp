@@ -21,7 +21,7 @@ export class ReclamoService {
 
     VerReclamosAdmin(nombre): Observable<any> {
         let params=JSON.stringify(nombre);
-        console.log("esto va a mandar el servicio",params);
+        //console.log("esto va a mandar el servicio",params);
         let headers=new HttpHeaders().set('Content-Type','application/json');
         return this._http.post(this.url + 'adminrec',params, {headers:headers});
     }
@@ -34,7 +34,7 @@ export class ReclamoService {
 
     AddReclamo(reclamo:any):Observable<any>{
         let params=JSON.stringify(reclamo);
-        console.log(params);
+        //console.log(params);
         let headers=new HttpHeaders().set('Content-Type','application/json');
     
         return this._http.post(this.url+'reclamo/',params, {headers:headers});

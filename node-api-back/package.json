@@ -1,12 +1,12 @@
 {
   "name": "node-api",
   "version": "1.0.0",
-  "description": "Un api de pingüinos :D",
+  "description": "Api de administracion de inmuebles",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
   },
-  "author": "Arturo Coronel <aoitsu3@gmail.com> (http://datyayu.xyz)",
+  "author": "Juan Román <juanromanmontes@gmail.com> ",
   "license": "MIT",
   "dependencies": {
     "body-parser": "^1.15.2",

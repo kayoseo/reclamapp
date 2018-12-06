@@ -22,20 +22,18 @@ export class SecretariaComponent implements OnInit {
   public nuevoAdmin: any;
   public actualizar: boolean;
   public DatosCorreo: any;
+  public transcurrido: any;
+  public contador: any;
+  public fechaDate: any;
   constructor(private _route: ActivatedRoute,
     private _router: Router, private _reclamoService: ReclamoService, private _usuarioService: UsuarioService, private _correoService: CorreoService) {
     this.actualizar = true;
+    this.contador = 0;
     this._usuarioService.VerAdmin().subscribe(
       request => {
         this.resultado = request;
-        console.log(request);
-        for (var admin of this.resultado) {
-          if (admin.usuario === "administrador") {
-            //console.log(admin);
-            this.admini = this.resultado;
-          }
-        }
-        console.log(this.admini);
+        //console.log('los usuarios son',request);
+        this.admini = this.resultado;
       },
       error => {
         console.log(<any>error);
@@ -46,11 +44,15 @@ export class SecretariaComponent implements OnInit {
     this._reclamoService.VerReclamosSecre().subscribe(
       response => {
         this.reclamos = response;
-        console.log(response);
-        for (var reclamos of response) {
-          reclamos = this.resultado;
+        //console.log(response);
+        this.fechaDate = new Array(this.reclamos.length);
+        this.transcurrido = new Array(this.reclamos.length);
+        for (var reclamo of this.reclamos) {
+          reclamo.fecha = new Date(reclamo.fecha);
+          this.Convertfecha(reclamo.fecha);
+
         }
-        console.log("reclamos: ", this.reclamos);
+        //console.log("reclamos: ", this.reclamos);
       },
       error => {
         console.log(<any>error);
@@ -72,12 +74,12 @@ export class SecretariaComponent implements OnInit {
 
   Actualizar(item: any, indice: any) {
     //this.nuevoReclamo = new Reclamos(item._id,item.fecha,item.nombre,item.telefono,item.email,this.nuevoAdmin,item.direccion,item.problema,item.estado,item.solucion);
-    console.log("el rut es", this.rut);
-    console.log("se presiono el objeto", item);
+    //console.log("el rut es", this.rut);
+    //console.log("se presiono el objeto", item);
 
     this._reclamoService.UpdateReclamo(item).subscribe(
       response => {
-        console.log(response);
+        //console.log(response);
         this.correoAdmin(item);
         alert("Administrador asignado con exito");
       },
@@ -111,14 +113,62 @@ export class SecretariaComponent implements OnInit {
     }
     this._correoService.reclamoadministrador(this.DatosCorreo).subscribe(
       response => {
-        console.log(response);
+        //console.log(response);
       },
       error => {
         console.log(<any>error);
-        
+
 
       }
 
     )
+  }
+
+  Convertfecha(reclamosAdmin) {
+
+    var msecPerMinute = 1000 * 60;
+    var msecPerHour = msecPerMinute * 60;
+    var msecPerDay = msecPerHour * 24;
+
+    var horaActual = new Date();
+
+    // Get the difference in milliseconds.
+    var diferencia = horaActual.getTime() - reclamosAdmin.getTime();
+
+    // Calculate how many days the interval contains. Subtract that
+    // many days from the interval to determine the remainder.
+    var days = Math.floor(diferencia / msecPerDay);
+    diferencia = diferencia - (days * msecPerDay);
+
+    // Calculate the hours, minutes, and seconds.
+    var hours = Math.floor(diferencia / msecPerHour);
+    diferencia = diferencia - (hours * msecPerHour);
+
+    var minutes = Math.floor(diferencia / msecPerMinute);
+    diferencia = diferencia - (minutes * msecPerMinute);
+
+    var seconds = Math.floor(diferencia / 1000);
+
+    this.transcurrido[this.contador] = days + " días, " + hours + " horas, " + minutes + " minutos, " + seconds + " segundos."
+
+
+    var año = reclamosAdmin.getFullYear();
+    //console.log("",año);
+    var mes = reclamosAdmin.getMonth() + 1;
+    //console.log("",mes);
+    var dia = reclamosAdmin.getDate();
+    //console.log("",dia);
+    var minutos = reclamosAdmin.getMinutes();
+    //console.log("",minutos);
+    var segundos = reclamosAdmin.getSeconds();
+    //console.log("",segundos);
+    var horas = reclamosAdmin.getHours();
+    //console.log("",horas);
+
+
+    this.fechaDate[this.contador] = mes + '/' + dia + '/' + año + ' ' + horas + ':' + minutos + ':' + segundos;
+    this.contador = this.contador + 1;
+
+
   }
 }

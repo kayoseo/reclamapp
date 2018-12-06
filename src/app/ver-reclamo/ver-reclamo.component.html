@@ -2,12 +2,12 @@
   Ver reclamo
 -->
 <div class="text-right">
-  <button type="button" class="btn btn-outline-success">
+  <button type="button" class="btn btn-outline-success" routerLink="/">
     <i class="fas fa-arrow-left"></i>Volver
   </button>
 </div>
 <br>
-<div id="verReclamo" *ngIf="reclamo">
+<div id="verReclamo"  *ngIf="imprime=='Si'">
 
   <table class="table">
     <thead>
@@ -27,32 +27,27 @@
       </tr>
     </tbody>
   </table>
-  <div *ngIf="reclamo.estado==terminado">
-  <h3>Evaluación</h3>
-  <p>Por favor evalue del 1 al 5.</p>
-  <div class="form-check form-check-inline">
-    <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
-    <label class="form-check-label" for="inlineCheckbox1">1</label>
-  </div>
-  <div class="form-check form-check-inline">
-    <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
-    <label class="form-check-label" for="inlineCheckbox2">2</label>
-  </div>
-  <div class="form-check form-check-inline">
-    <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
-    <label class="form-check-label" for="inlineCheckbox2">3</label>
-  </div>
-  <div class="form-check form-check-inline">
-    <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
-    <label class="form-check-label" for="inlineCheckbox2">4</label>
-  </div>
-  <div class="form-check form-check-inline">
-    <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
-    <label class="form-check-label" for="inlineCheckbox2">5</label>
-  </div>
-  <button type="button" class="btn btn-success">Enviar Opinión</button>
-</div>
-</div>
+ 
+
 <div class="alert alert-danger" *ngIf="existe==false">
   <strong>¡Error!</strong> El numero de reclamo no existe
 </div>
+
+<div class="card text-center" *ngIf="reclamo.estado=='Finalizado'" style="margin-top:100px;">
+    <h3>¿La solución al reclamo fue la esperada?</h3>
+    <form #Encuesta="ngForm">
+        <div class="form-group">
+        <select class="form-control" name="nota" #nota="ngModel" [(ngModel)]="encuesta.nota" required>
+            <option>1-Totalmente en desacuerdo</option>
+            <option >2-En desacuerdo</option>
+            <option>3-Indeciso</option>
+            <option>4-De acuerdo</option>
+            <option>5-Totalmente de acuerdo</option>
+          </select>
+        </div>
+        <input class="btn btn-success" type="button" (click)="Nuevaencuesta(Encuesta)" value="Enviar" [disabled]="!Encuesta.valid"/>
+      </form>
+  </div>
+</div>
+
+

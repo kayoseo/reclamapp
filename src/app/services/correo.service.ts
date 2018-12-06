@@ -15,42 +15,42 @@ export class CorreoService {
    
     reclamogerente(datos): Observable<any> {
         let params=JSON.stringify(datos);
-        console.log("esto va a mandar el servicio",params);
+      //  console.log("esto va a mandar el servicio",params);
         let headers=new HttpHeaders().set('Content-Type','application/json');
         return this._http.post(this.url + 'reclamogerente',params, {headers:headers});
     }
 
     correoupdate(datos): Observable<any> {
         let params=JSON.stringify(datos);
-        console.log("esto va a mandar el servicio",params);
+      //  console.log("esto va a mandar el servicio",params);
         let headers=new HttpHeaders().set('Content-Type','application/json');
         return this._http.post(this.url + 'updatereclamo',params, {headers:headers});
     }
 
     reclamoresidente(datos): Observable<any> {
         let params=JSON.stringify(datos);
-        console.log("esto va a mandar el servicio",params);
+     //   console.log("esto va a mandar el servicio",params);
         let headers=new HttpHeaders().set('Content-Type','application/json');
         return this._http.post(this.url + 'reclamoresidente',params, {headers:headers});
     }
 
     reclamoadministrador(datos): Observable<any> {
         let params=JSON.stringify(datos);
-        console.log("esto va a mandar el servicio",params);
+     //   console.log("esto va a mandar el servicio",params);
         let headers=new HttpHeaders().set('Content-Type','application/json');
         return this._http.post(this.url + 'reclamoadministrador',params, {headers:headers});
     }
 
     updateadministrador(datos): Observable<any> {
         let params=JSON.stringify(datos);
-        console.log("esto va a mandar el servicio",params);
+     //   console.log("esto va a mandar el servicio",params);
         let headers=new HttpHeaders().set('Content-Type','application/json');
         return this._http.post(this.url + 'updateadministrador',params, {headers:headers});
     }
 
     reclamosecretaria(datos): Observable<any> {
         let params=JSON.stringify(datos);
-        console.log("esto va a mandar el servicio",params);
+     //   console.log("esto va a mandar el servicio",params);
         let headers=new HttpHeaders().set('Content-Type','application/json');
         return this._http.post(this.url + 'reclamosecretaria',params, {headers:headers});
     }

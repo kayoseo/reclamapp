@@ -12,8 +12,15 @@
 
 }
 
-.card
-{
-    margin-top: 35px;
-    margin-bottom: 40px;
+a{
+    color: #258b47;
+    font-size: 18px;
+}
+
+a:hover {
+    cursor: pointer;
+}
+
+li:hover {
+    cursor: pointer;
 }

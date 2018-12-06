@@ -1,12 +1,57 @@
-<div>  
-  <button type="button" class="btn btn-outline-danger float-right "   (click)="borrarStorage()">
-    <i class="fas fa-sign-out-alt"></i>Cerrar sesión
-  </button>
-  <br>
-</div>
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz"
+      crossorigin="anonymous">
+    <script>$('.dropdown-toggle').dropdown()</script>
+  </head>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="collapse navbar-collapse">
+      <div class="navbar-nav mr-auto mt-2 mt-lg-0">
+    <div class="btn-group mr-sm-1"> 
+      <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+        aria-expanded="false" >
+        <i   class="fas fa-building"></i> Comunidad
+      </button>
+      <div class="dropdown-menu">  
+          <a class="dropdown-item" id="opcion" (click)="cambiarComunidad('Sin comunidad')">Sin comunidad</a>
+        <a class="dropdown-item" *ngFor="let comun of comunidades" (click)="cambiarComunidad(comun.nombre)">{{comun.nombre}}</a>
+      </div>
+    </div>
+    </div>
+    <div>
+      <button type="button" class="btn btn-light"   (click)="borrarStorage()">
+        <i class="fas fa-sign-out-alt"></i> Cerrar sesión
+      </button>
+    </div>
+  
+    </div>
+  </nav>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div>
-<div class="card bg-light mb-3">
-  <h3 class="card-title">Comunidad pendiente</h3>
+<div class="card bg-light mb-3"  *ngIf="comunidadSeleccionada=='Sin comunidad'">
+    <div class="card text-center">
+  <h3 class="card-title">Sin comunidad</h3>
 <table class="table table-striped">
   <thead>
     <tr>
@@ -72,11 +117,108 @@
   </tbody>
 </table>
 </div>
+</div>
 
 <div *ngFor="let comunidad of comunidades">
+  <ng-container *ngIf="comunidad.nombre==comunidadSeleccionada">
   <div class="card bg-light mb-3" style="margin-bottom: 30ps;">
-  <h2 class="card-title">{{comunidad.nombre}}</h2>
-<table class="table table-striped">
+      <div class="card text-center">
+    <div class="card-header">
+      <ng-container *ngIf="comunidadSeleccionada!='Sin comunidad'">
+        <h3 class="card-title">{{comunidad.nombre}}</h3>
+      </ng-container>
+      </div>
+      <div class="card-header">
+      <ul class="nav nav-tabs card-header-tabs">
+          <li class="nav-item" (click)="cambiarEstado('No informado')">
+              <a class="nav-link" [ngClass]="{'active': estado=='No informado'}" >No informado </a>
+            </li>
+        <li class="nav-item" (click)="cambiarEstado('En proceso')">
+          <a class="nav-link" [ngClass]="{'active': estado=='En proceso'}" >En proceso</a>
+        </li>
+        <li class="nav-item" (click)="cambiarEstado('Externalizado')">
+          <a class="nav-link" [ngClass]="{'active': estado=='Externalizado'}">Externalizado</a>
+        </li>
+        <li class="nav-item" (click)="cambiarEstado('Finalizado')">
+          <a class="nav-link" [ngClass]="{'active': estado=='Finalizado'}">Finalizado</a>
+        </li>
+      </ul>
+    </div>
+   
+    <div class="card-body" *ngIf="estado=='No informado'">
+        <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Fecha</th>
+            <th scope="col">Transcurrido</th>
+            <th scope="col">Comunidad</th>
+            <th scope="col">Torre</th>
+            <th scope="col">Dirección</th>
+            <th scope="col">Residente</th>
+            <th scope="col">Descripción</th>
+            <th scope="col">Estado</th>
+            <th scope="col">Solucion</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+            <ng-container *ngFor="let reclamo of reclamos;let indice = index">
+           
+          <tr *ngIf="reclamo.comunidad===comunidad.nombre">
+            <ng-container *ngIf="reclamo.estado=='No informado'" >
+            <td >{{fechaDate[indice]}}</td>
+            <td>{{transcurrido[indice]}}</td>
+        
+            <td>
+                <div class="form-group col-md-12 col-xl-12 col-xs-12">
+                  <select id="inputState" class="form-control"  name="comu" #comu="ngModel" [(ngModel)]="reclamo.comunidad" required>
+                    <option selected *ngFor="let item of comunidades">{{item.nombre}}</option>
+                  </select>
+                </div>
+            </td>
+            <td>
+              <div class="form-group col-md-12 col-xl-12 col-xs-12">
+                <select id="inputState" class="form-control"  name="torre" #torre="ngModel" [(ngModel)]="reclamo.torreDpto" required>
+                  <ng-container *ngFor="let comun of comunidades">
+                    <ng-container *ngIf="comun.nombre==reclamo.comunidad">
+                  <option selected *ngFor="let torre of comun.torreDpto">{{torre}}</option>
+                </ng-container>
+              </ng-container>
+                </select>
+              </div>
+          </td>
+      
+            <td>{{reclamo.direccion}}</td>
+            <td>{{reclamo.nombre}}</td>
+            <td>{{reclamo.problema}}</td>
+            <td>
+              <div class="form-group col-md-12 col-xl-12 col-xs-12">
+                <select id="inputState" class="form-control" name="estado" #estado="ngModel" [(ngModel)]="reclamo.estado" required>
+                  <option selected>{{reclamo.estado}}</option>
+                  <option *ngIf="reclamo.estado!='En proceso'">En proceso</option>
+                  <option *ngIf="reclamo.estado!='Externo'">Externo</option>
+                  <option *ngIf="reclamo.estado!='Finalizado'">Finalizado</option>
+                </select>
+              </div>
+            </td>
+            <td>
+              <div class="form-group">
+                <input type="text"  class="form-control" name="solucion" #solucion="ngModel" [(ngModel)]="reclamo.solucion" required>
+              </div>
+            </td>
+            <td>
+            <button type="submit" (click)="Actualizar(reclamo)" class="btn btn-primary">Actualizar</button>
+          </td>
+        </ng-container>
+          </tr>
+        </ng-container>
+      
+        </tbody>
+      </table>
+      </div>
+  
+      <div class="card-body" *ngIf="estado=='En proceso'">
+  <table class="table table-striped">
   <thead>
     <tr>
       <th scope="col">Fecha</th>
@@ -95,6 +237,7 @@
       <ng-container *ngFor="let reclamo of reclamos;let indice = index">
      
     <tr *ngIf="reclamo.comunidad===comunidad.nombre">
+      <ng-container *ngIf="reclamo.estado=='En proceso'">
       
       <td >{{fechaDate[indice]}}</td>
       <td>{{transcurrido[indice]}}</td>
@@ -139,12 +282,161 @@
       <td>
       <button type="submit" (click)="Actualizar(reclamo)" class="btn btn-primary">Actualizar</button>
     </td>
+  </ng-container>
     </tr>
   </ng-container>
 
   </tbody>
 </table>
 </div>
+
+<div class="card-body" *ngIf="estado=='Externalizado'">
+    <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Fecha</th>
+        <th scope="col">Transcurrido</th>
+        <th scope="col">Comunidad</th>
+        <th scope="col">Torre</th>
+        <th scope="col">Dirección</th>
+        <th scope="col">Residente</th>
+        <th scope="col">Descripción</th>
+        <th scope="col">Estado</th>
+        <th scope="col">Solucion</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+        <ng-container *ngFor="let reclamo of reclamos;let indice = index">
+       
+      <tr *ngIf="reclamo.comunidad===comunidad.nombre">
+          <ng-container *ngIf="reclamo.estado=='Externo'">
+        <td >{{fechaDate[indice]}}</td>
+        <td>{{transcurrido[indice]}}</td>
+        
+        <td>
+            <div class="form-group col-md-12 col-xl-12 col-xs-12">
+              <select id="inputState" class="form-control"  name="comu" #comu="ngModel" [(ngModel)]="reclamo.comunidad" required>
+                <option selected *ngFor="let item of comunidades">{{item.nombre}}</option>
+              </select>
+            </div>
+        </td>
+        <td>
+          <div class="form-group col-md-12 col-xl-12 col-xs-12">
+            <select id="inputState" class="form-control"  name="torre" #torre="ngModel" [(ngModel)]="reclamo.torreDpto" required>
+              <ng-container *ngFor="let comun of comunidades">
+                <ng-container *ngIf="comun.nombre==reclamo.comunidad">
+              <option selected *ngFor="let torre of comun.torreDpto">{{torre}}</option>
+            </ng-container>
+          </ng-container>
+            </select>
+          </div>
+      </td>
+  
+        <td>{{reclamo.direccion}}</td>
+        <td>{{reclamo.nombre}}</td>
+        <td>{{reclamo.problema}}</td>
+        <td>
+          <div class="form-group col-md-12 col-xl-12 col-xs-12">
+            <select id="inputState" class="form-control" name="estado" #estado="ngModel" [(ngModel)]="reclamo.estado" required>
+              <option selected>{{reclamo.estado}}</option>
+              <option *ngIf="reclamo.estado!='En proceso'">En proceso</option>
+              <option *ngIf="reclamo.estado!='Externo'">Externo</option>
+              <option *ngIf="reclamo.estado!='Finalizado'">Finalizado</option>
+            </select>
+          </div>
+        </td>
+        <td>
+          <div class="form-group">
+            <input type="text"  class="form-control" name="solucion" #solucion="ngModel" [(ngModel)]="reclamo.solucion" required>
+          </div>
+        </td>
+        <td>
+        <button type="submit" (click)="Actualizar(reclamo)" class="btn btn-primary">Actualizar</button>
+      </td>
+    </ng-container>
+      </tr>
+    </ng-container>
+  
+    </tbody>
+  </table>
+  </div>
+
+  <div class="card-body" *ngIf="estado=='Finalizado'">
+      <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">Fecha</th>
+          <th scope="col">Transcurrido</th>
+          <th scope="col">Comunidad</th>
+          <th scope="col">Torre</th>
+          <th scope="col">Dirección</th>
+          <th scope="col">Residente</th>
+          <th scope="col">Descripción</th>
+          <th scope="col">Estado</th>
+          <th scope="col">Solucion</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+          <ng-container *ngFor="let reclamo of reclamos;let indice = index">
+         
+        <tr *ngIf="reclamo.comunidad===comunidad.nombre">
+            <ng-container *ngIf="reclamo.estado=='Finalizado'">
+          <td >{{fechaDate[indice]}}</td>
+          <td>{{transcurrido[indice]}}</td>
+          
+          <td>
+              <div class="form-group col-md-12 col-xl-12 col-xs-12">
+                <select id="inputState" class="form-control"  name="comu" #comu="ngModel" [(ngModel)]="reclamo.comunidad" required>
+                  <option selected *ngFor="let item of comunidades">{{item.nombre}}</option>
+                </select>
+              </div>
+          </td>
+          <td>
+            <div class="form-group col-md-12 col-xl-12 col-xs-12">
+              <select id="inputState" class="form-control"  name="torre" #torre="ngModel" [(ngModel)]="reclamo.torreDpto" required>
+                <ng-container *ngFor="let comun of comunidades">
+                  <ng-container *ngIf="comun.nombre==reclamo.comunidad">
+                <option selected *ngFor="let torre of comun.torreDpto">{{torre}}</option>
+              </ng-container>
+            </ng-container>
+              </select>
+            </div>
+        </td>
+    
+          <td>{{reclamo.direccion}}</td>
+          <td>{{reclamo.nombre}}</td>
+          <td>{{reclamo.problema}}</td>
+          <td>
+            <div class="form-group col-md-12 col-xl-12 col-xs-12">
+              <select id="inputState" class="form-control" name="estado" #estado="ngModel" [(ngModel)]="reclamo.estado" required>
+                <option selected>{{reclamo.estado}}</option>
+                <option *ngIf="reclamo.estado!='En proceso'">En proceso</option>
+                <option *ngIf="reclamo.estado!='Externo'">Externo</option>
+                <option *ngIf="reclamo.estado!='Finalizado'">Finalizado</option>
+              </select>
+            </div>
+          </td>
+          <td>
+            <div class="form-group">
+              <input type="text"  class="form-control" name="solucion" #solucion="ngModel" [(ngModel)]="reclamo.solucion" required>
+            </div>
+          </td>
+          <td>
+          <button type="submit" (click)="Actualizar(reclamo)" class="btn btn-primary">Actualizar</button>
+        </td>
+      </ng-container>
+        </tr>
+      </ng-container>
+    
+      </tbody>
+    </table>
+    </div>
+
+</div>
+</div>
+</ng-container>
 </div>
 </div>
 <div class="alert alert-danger" *ngIf="actualizar==false">
