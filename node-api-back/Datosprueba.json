@@ -1,0 +1,53 @@
+{
+    "nombre": "Juan Roman",
+    "mail": "reclamo.sercolex.cl",
+    "clave": "123",
+    "usuario":"gerente"
+}
+
+{
+    "nombre": "Giorgio Caro",
+    "mail": "juanromanmontes@gmail.com",
+    "clave": "123",
+    "usuario":"administrador"
+}
+
+{
+    "nombre": "Josefa Gonzalez",
+    "mail": "juan_i_roman@hotmail.com",
+    "clave": "123",
+    "usuario":"secretaria"
+}
+
+//Comunidades
+
+    {
+        "nombre": "Ejercito",
+        "direccion" : "Ejercito 123",
+        "administrador" :"Giorgio Caro" ,
+        "torreDpto" :["A","B"]
+        
+ }
+
+ {
+    "nombre": "Vergara",
+    "direccion" : "Vergara 123",
+    "administrador" :"Giorgio Caro" ,
+    "torreDpto" :["A","B","C"]
+}
+
+{
+    "nombre": "Sazie",
+    "direccion" : "Sazie 123",
+    "administrador" :"Juan Roman" ,
+    "torreDpto" :["A"]
+}
+
+{
+    "nombre": "Alameda",
+    "direccion" : "Alameda 123",
+    "administrador" :"Juan Roman" ,
+    "torreDpto" :["A","B","C","D"]
+}
+
+
